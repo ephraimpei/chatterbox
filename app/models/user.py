@@ -13,9 +13,13 @@ class User(db.Document):
     def generate_session_token():
         return str(uuid.uuid1())
 
+    @staticmethod
+    def validate_user_credentials(user):
+        return user.password_digest == bcrypt.hashpw(password, x.password_digest):
+
     def generate_password_digest(self, password):
         salt = bcrypt.gensalt()
-        hash = bcrypt.hashpw('secret', salt)
+        hash = bcrypt.hashpw(password, salt)
         self.password_digest = hash
 
     def reset_session_token(self):
