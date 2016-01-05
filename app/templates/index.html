@@ -1,11 +1,10 @@
 <html>
   <head>
     <title>Chatterbox</title>
-    <script src="https://fb.me/react-0.14.5.js"></script>
-    <script src="https://fb.me/react-dom-0.14.5.js"></script>
-    <script src="https://npmcdn.com/react-router/umd/ReactRouter.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="/javascripts/build/main.js"></script>
+    {% assets "scss_all" %}
+      <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+    {% endassets %}
   </head>
   <body>
     <div id="wrapper">
@@ -13,23 +12,23 @@
 
       <footer class="footer-wrapper">
         <div class="footer group">
-          <label class="footer-about">Copyright © 2015 Ephraim Pei</label>
+          <label class="about">Copyright © 2015 Ephraim Pei</label>
 
-          <ul class="footer-links group">
+          <ul class="links group">
             <a class="my-website-icon" href="http://www.ephraimpei.com">
               <img
                 class="social-media-icon"
-                src="static/images/icons/ephraim.png"/>
+                src="/images/icons/ephraim.png"/>
             </a>
             <a href="https://www.linkedin.com/in/ephraimpei">
               <img
                 class="social-media-icon"
-                src="static/images/icons/linkedin.png"/>
+                src="/images/icons/linkedin.png"/>
             </a>
             <a href="https://github.com/ephraimpei">
               <img
                 class="social-media-icon"
-                src="static/images/icons/github.png"/>
+                src="/images/icons/github.png"/>
             </a>
           </ul>
         </div>

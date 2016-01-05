@@ -4,3 +4,6 @@ venv/
 manage.py
 __init__.py
 .DS_Store
+node_modules
+bundle.js
+package.json

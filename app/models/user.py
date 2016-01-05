@@ -15,7 +15,7 @@ class User(db.Document):
 
     @staticmethod
     def validate_user_credentials(user):
-        return user.password_digest == bcrypt.hashpw(password, x.password_digest):
+        return user.password_digest == bcrypt.hashpw(password, x.password_digest)
 
     def generate_password_digest(self, password):
         salt = bcrypt.gensalt()
