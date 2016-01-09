@@ -6,4 +6,3 @@ __init__.py
 .DS_Store
 node_modules
 bundle.js
-package.json
