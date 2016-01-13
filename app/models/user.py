@@ -9,12 +9,12 @@ class User(db.Document):
     session_token = db.StringField(max_length=255, required=True)
     friends = db.ListField(db.EmbeddedDocumentField('User'))
 
-    @staticmethod
-    def generate_session_token():
+    @classmethod
+    def generate_session_token(cls):
         return str(uuid.uuid1())
 
-    @staticmethod
-    def validate_user_credentials(user):
+    @classmethod
+    def validate_user_credentials(cls, user):
         return user.password_digest == bcrypt.hashpw(password, x.password_digest)
 
     def generate_password_digest(self, password):
