@@ -2,7 +2,7 @@
 tmp/
 venv/
 manage.py
-__init__.py
+app/__init__.py
 .DS_Store
 node_modules
 .sass-cache
