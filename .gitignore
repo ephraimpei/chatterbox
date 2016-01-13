@@ -6,3 +6,4 @@ __init__.py
 .DS_Store
 node_modules
 .sass-cache
+*.log
