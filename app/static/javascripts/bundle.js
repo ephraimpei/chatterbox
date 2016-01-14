@@ -70,11 +70,11 @@
 	
 	var _login_page2 = _interopRequireDefault(_login_page);
 	
-	var _sign_up_page = __webpack_require__(227);
+	var _sign_up_page = __webpack_require__(221);
 	
 	var _sign_up_page2 = _interopRequireDefault(_sign_up_page);
 	
-	var _current_user_store = __webpack_require__(221);
+	var _current_user_store = __webpack_require__(225);
 	
 	var _current_user_store2 = _interopRequireDefault(_current_user_store);
 	
@@ -33663,7 +33663,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\nbutton {\n  padding: 3px;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      display: block; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\na {\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      display: block; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
 	
 	// exports
 
@@ -34013,7 +34013,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#wrapper {\n  position: relative; }\n\n#content {\n  padding-bottom: 77px;\n  /* Height of the footer element */ }\n", ""]);
+	exports.push([module.id, "#wrapper {\n  position: relative; }\n\n.main-app {\n  padding-bottom: 73px;\n  /* Height of the footer element */ }\n", ""]);
 	
 	// exports
 
@@ -34133,7 +34133,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n.group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 10px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 20px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 20px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n", ""]);
 	
 	// exports
 
@@ -34144,17 +34144,275 @@
 
 	'use strict';
 	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	var _dispatcher = __webpack_require__(222);
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(160);
+	
+	var _sign_up_form = __webpack_require__(222);
+	
+	var _sign_up_form2 = _interopRequireDefault(_sign_up_form);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	__webpack_require__(223);
+	
+	var SignUpPage = (function (_React$Component) {
+	  _inherits(SignUpPage, _React$Component);
+	
+	  function SignUpPage() {
+	    _classCallCheck(this, SignUpPage);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).apply(this, arguments));
+	  }
+	
+	  _createClass(SignUpPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'sign-up-page' },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Welcome to Chatterbox!'
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Create a new user to get going!'
+	        ),
+	        _react2.default.createElement(_sign_up_form2.default, null)
+	      );
+	    }
+	  }]);
+	
+	  return SignUpPage;
+	})(_react2.default.Component);
+	
+	exports.default = SignUpPage;
+
+/***/ },
+/* 222 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(160);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SignUpForm = (function (_React$Component) {
+	  _inherits(SignUpForm, _React$Component);
+	
+	  function SignUpForm(props) {
+	    _classCallCheck(this, SignUpForm);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props));
+	
+	    _this.state = {
+	      isValid: true,
+	      errors: [],
+	      username: "",
+	      password: ""
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(SignUpForm, [{
+	    key: 'handleSignUpSubmission',
+	    value: function handleSignUpSubmission(e) {}
+	  }, {
+	    key: 'handleKeyPress',
+	    value: function handleKeyPress(e) {}
+	  }, {
+	    key: 'changeUsername',
+	    value: function changeUsername(e) {
+	      // this.setState({
+	      //   username: e.currentTarget.value
+	      // });
+	    }
+	  }, {
+	    key: 'changePassword',
+	    value: function changePassword(e) {
+	      // this.setState({
+	      //   password: e.currentTarget.value
+	      // });
+	    }
+	  }, {
+	    key: 'changeFile',
+	    value: function changeFile(e) {
+	      var reader = new FileReader();
+	      var file = e.currentTarget.files[0];
+	
+	      reader.onloadend = (function () {
+	        this.setState({ imageUrl: reader.result, imageFile: file });
+	      }).bind(this);
+	
+	      if (file) {
+	        reader.readAsDataURL(file);
+	      } else {
+	        this.setState({ imageUrl: "", imageFile: null });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var errors = undefined;
+	
+	      if (this.isValid) {
+	        errors = this.state.errors;
+	      }
+	
+	      return _react2.default.createElement(
+	        'form',
+	        { className: 'sign-up-form', onKeyPress: this.handleKeyPress, onSubmit: this.handleSignUpSubmission },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'sign-up-error-wrapper' },
+	          errors
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'sign-up-form-wrapper' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Username',
+	            _react2.default.createElement('input', {
+	              className: 'sign-up-form-username',
+	              type: 'text',
+	              onChange: this.changeUsername })
+	          ),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Password',
+	            _react2.default.createElement('input', {
+	              className: 'sign-up-form-password',
+	              type: 'password',
+	              onChange: this.changePassword })
+	          ),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Avatar Upload',
+	            _react2.default.createElement('input', {
+	              className: 'sign-up-form-avatar',
+	              type: 'file',
+	              onChange: this.changeFile })
+	          ),
+	          _react2.default.createElement('img', { className: 'sign-up-form-avatar-preview', src: this.state.imageUrl }),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'submit', type: 'submit' },
+	            'Sign Up!'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/' },
+	              'Already have an account?'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return SignUpForm;
+	})(_react2.default.Component);
+	
+	exports.default = SignUpForm;
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(224);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(215)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_sign_up_page.scss", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_sign_up_page.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(214)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\na {\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(226);
 	
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var EventEmitter = __webpack_require__(226);
+	var EventEmitter = __webpack_require__(230);
 	
 	var CHANGE_EVENT = "change";
 	
@@ -34190,7 +34448,7 @@
 	exports.default = CurrentUserStore;
 
 /***/ },
-/* 222 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34199,13 +34457,13 @@
 	  value: true
 	});
 	
-	var _flux = __webpack_require__(223);
+	var _flux = __webpack_require__(227);
 	
 	var AppDispatcher = new _flux.Dispatcher();
 	exports.default = AppDispatcher;
 
 /***/ },
-/* 223 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34217,11 +34475,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(224);
+	module.exports.Dispatcher = __webpack_require__(228);
 
 
 /***/ },
-/* 224 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34243,7 +34501,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(225);
+	var invariant = __webpack_require__(229);
 	
 	var _prefix = 'ID_';
 	
@@ -34458,7 +34716,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 225 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34513,7 +34771,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 226 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34781,264 +35039,6 @@
 
 
 /***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(160);
-	
-	var _sign_up_form = __webpack_require__(228);
-	
-	var _sign_up_form2 = _interopRequireDefault(_sign_up_form);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	__webpack_require__(229);
-	
-	var SignUpPage = (function (_React$Component) {
-	  _inherits(SignUpPage, _React$Component);
-	
-	  function SignUpPage() {
-	    _classCallCheck(this, SignUpPage);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).apply(this, arguments));
-	  }
-	
-	  _createClass(SignUpPage, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'sign-up-page' },
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Welcome to Chatterbox!'
-	        ),
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Create a new user to get going!'
-	        ),
-	        _react2.default.createElement(_sign_up_form2.default, null)
-	      );
-	    }
-	  }]);
-	
-	  return SignUpPage;
-	})(_react2.default.Component);
-	
-	exports.default = SignUpPage;
-
-/***/ },
-/* 228 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(160);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SignUpForm = (function (_React$Component) {
-	  _inherits(SignUpForm, _React$Component);
-	
-	  function SignUpForm(props) {
-	    _classCallCheck(this, SignUpForm);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props));
-	
-	    _this.state = {
-	      isValid: true,
-	      errors: [],
-	      username: "",
-	      password: ""
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(SignUpForm, [{
-	    key: 'handleSignUpSubmission',
-	    value: function handleSignUpSubmission(e) {}
-	  }, {
-	    key: 'handleKeyPress',
-	    value: function handleKeyPress(e) {}
-	  }, {
-	    key: 'changeUsername',
-	    value: function changeUsername(e) {
-	      // this.setState({
-	      //   username: e.currentTarget.value
-	      // });
-	    }
-	  }, {
-	    key: 'changePassword',
-	    value: function changePassword(e) {
-	      // this.setState({
-	      //   password: e.currentTarget.value
-	      // });
-	    }
-	  }, {
-	    key: 'changeFile',
-	    value: function changeFile(e) {
-	      var reader = new FileReader();
-	      var file = e.currentTarget.files[0];
-	
-	      reader.onloadend = (function () {
-	        this.setState({ imageUrl: reader.result, imageFile: file });
-	      }).bind(this);
-	
-	      if (file) {
-	        reader.readAsDataURL(file);
-	      } else {
-	        this.setState({ imageUrl: "", imageFile: null });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var errors = undefined;
-	
-	      if (this.isValid) {
-	        errors = this.state.errors;
-	      }
-	
-	      return _react2.default.createElement(
-	        'form',
-	        { className: 'sign-up-form', onKeyPress: this.handleKeyPress, onSubmit: this.handleSignUpSubmission },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'sign-up-error-wrapper' },
-	          errors
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'sign-up-form-wrapper' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Username',
-	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-username',
-	              type: 'text',
-	              onChange: this.changeUsername })
-	          ),
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Password',
-	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-password',
-	              type: 'password',
-	              onChange: this.changePassword })
-	          ),
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Avatar Upload',
-	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-avatar',
-	              type: 'file',
-	              onChange: this.changeFile })
-	          ),
-	          _react2.default.createElement('img', { className: 'sign-up-form-avatar-preview', src: this.state.imageUrl }),
-	          _react2.default.createElement(
-	            'button',
-	            { className: 'submit', type: 'submit' },
-	            'Sign Up!'
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Already have an account?'
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return SignUpForm;
-	})(_react2.default.Component);
-	
-	exports.default = SignUpForm;
-
-/***/ },
-/* 229 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(230);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(215)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_sign_up_page.scss", function() {
-				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_sign_up_page.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(214)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\nbutton {\n  padding: 3px;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n", ""]);
-	
-	// exports
-
-
-/***/ },
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -35073,7 +35073,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\na, button {\n  cursor: pointer; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n", ""]);
 	
 	// exports
 
@@ -35113,7 +35113,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\nbutton {\n  padding: 3px;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\na {\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n", ""]);
 	
 	// exports
 
