@@ -1,3 +1,5 @@
+@import "../modules/variables";
+
 html, body, h1, h2, h3, div, ul, li, a, figure, button, textarea, form, label {
   padding: 0;
   border: 0;
@@ -36,12 +38,4 @@ img {
 
 a, button {
   cursor: pointer;
-}
-
-#content {
-  height: 100%;
-
-  div {
-    height: 100%;
-  }
 }

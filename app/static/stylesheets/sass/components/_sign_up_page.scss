@@ -1,4 +1,5 @@
 @import "../modules/variables";
+@import "../partials/base";
 
 .sign-up-page {
   h1, h2 { text-align: center; }
@@ -15,11 +16,11 @@
       label {
         text-align: center;
       }
-      input {
-        width: $sign-up-input-box-width;
-        padding: $input-box-padding;
-      }
 
+      input {
+        width: 100%;
+      }
+      
       display: flex;
       flex-direction: column;
       justify-content: center;

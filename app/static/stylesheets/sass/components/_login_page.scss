@@ -1,4 +1,5 @@
 @import "../modules/variables";
+@import "../partials/base";
 
 .login-page {
   h1, h2 { text-align: center; }
@@ -8,16 +9,20 @@
     margin: auto;
 
     .login-form-wrapper {
-      * {
+      button, label, input {
         margin: $login-form-item-margin;
+      }
+
+      a {
+        display: block;
       }
 
       label {
         text-align: center;
       }
+
       input {
-        width: $login-input-box-width;
-        padding: $input-box-padding;
+        width: 100%;
       }
 
       display: flex;

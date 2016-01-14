@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	var _jquery = __webpack_require__(1);
 	
@@ -80,6 +80,13 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// reset sass
+	__webpack_require__(231);
+	
+	// base sass
+	__webpack_require__(233);
+	
+	// footer sass
 	__webpack_require__(219);
 	
 	// core modules
@@ -92,8 +99,8 @@
 	  var routes = _react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(_reactRouter.Route, { path: '/', components: _chatterbox_app2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/users/new', components: _sign_up_page2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: "/", components: _chatterbox_app2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "/users/new", components: _sign_up_page2.default })
 	  );
 	
 	  (0, _reactDom.render)(routes, document.getElementById('wrapper'));
@@ -33656,7 +33663,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* colors */\n/* icons */\n/* borders */\n/* buttons */\n/* input boxes */\n/* header or footer */\n/* footer */\n/* login page */\n/* sign up page */\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper * {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%;\n      padding: 5px 2.5px; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\nbutton {\n  padding: 3px;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      display: block; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
 	
 	// exports
 
@@ -34126,7 +34133,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* colors */\n/* icons */\n/* borders */\n/* buttons */\n/* input boxes */\n/* header or footer */\n/* footer */\n/* login page */\n/* sign up page */\n.group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 10px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 20px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n      #footer-wrapper .footer .links .social-media-icon {\n        width: 32px;\n        height: 32px;\n        border-radius: 10px; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n.group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 10px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 20px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n", ""]);
 	
 	// exports
 
@@ -35026,7 +35033,87 @@
 	
 	
 	// module
-	exports.push([module.id, "/* colors */\n/* icons */\n/* borders */\n/* buttons */\n/* input boxes */\n/* header or footer */\n/* footer */\n/* login page */\n/* sign up page */\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%;\n      padding: 5px 2.5px; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\nbutton {\n  padding: 3px;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(232);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(215)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_reset.scss", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_reset.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(214)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\na, button {\n  cursor: pointer; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(234);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(215)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_base.scss", function() {
+				var newContent = require("!!./../../../../../node_modules/css-loader/index.js!./../../../../../node_modules/sass-loader/index.js!./_base.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(214)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\nbutton {\n  padding: 3px;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n", ""]);
 	
 	// exports
 

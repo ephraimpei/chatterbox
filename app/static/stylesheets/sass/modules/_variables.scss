@@ -1,7 +1,16 @@
-/* colors */
+/* font weights */
+$light: 100;
+$regular: 400;
+$bold: 700;
+
+/* base background */
 $body-bg: #eee;
-$footer-bg: #ffab62;
-$border-color: #ccc;
+
+/* base font */
+$base-font-family: sans-serif;
+$base-font-weight: $regular;
+$base-font-size: 14px;
+$base-line-height: 1.4;
 
 /* icons */
 $icon-width: 32px;
@@ -9,18 +18,22 @@ $icon-height: 32px;
 $icon-border-radius: 10px;
 
 /* borders */
-$standard-border: 1px solid $border-color;
+$standard-border: 1px solid #ccc;
 $border-radius: 10px;
 
 /* buttons */
-$button-padding: 5px;
-$button-font-size: 14px;
+$button-padding: 3px;
+$button-font-size: 16px;
+$button-border: 1px solid darkgrey;
+$button-border-radius: 10px;
+
+/* headers */
+$h1-font-size: 36px;
+$h2-font-size: 24px;
 
 /* input boxes */
 $input-box-padding: 5px 2.5px;
-
-/* header or footer */
-$banner-border: $standard-border;
+$input-box-border-radius: 10px;
 
 /* footer */
 $footer-font-size: 16px;
@@ -28,6 +41,7 @@ $footer-font-color: #fff;
 $footer-width: 1000px;
 $footer-margin: auto;
 $footer-padding: 10px 0;
+$footer-bg: #ffab62;
 $about-me-opacity: .7;
 $about-me-margin-top: 20px;
 $icon-list-margin: 10px;

@@ -1,3 +1,10 @@
+// reset sass
+require("../static/stylesheets/sass/partials/_reset.scss");
+
+// base sass
+require("../static/stylesheets/sass/partials/_base.scss");
+
+// footer sass
 require("../static/stylesheets/sass/components/_footer.scss");
 
 // core modules

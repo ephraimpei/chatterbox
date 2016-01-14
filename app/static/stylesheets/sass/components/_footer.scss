@@ -1,9 +1,10 @@
 @import "../modules/variables";
 @import "../modules/clearfix";
+@import "../partials/icons";
 
 #footer-wrapper {
   background: $footer-bg;
-  border-top: $banner-border;
+  border-top: $standard-border;
 	position: absolute;
   width: 100%;
 	bottom: 0;
@@ -28,12 +29,6 @@
       a {
         margin-left: $icon-list-margin;
         display: inline-block;
-      }
-
-      .social-media-icon {
-        width: $icon-width;
-        height: $icon-height;
-        border-radius: $icon-border-radius;
       }
     }
   }
