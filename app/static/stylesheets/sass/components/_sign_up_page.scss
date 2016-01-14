@@ -1,29 +1,29 @@
 @import "../modules/variables";
 
-.login-page {
+.sign-up-page {
   h1, h2 { text-align: center; }
 
-  .login-form {
-    width: $login-form-width;
+  .sign-up-form {
+    width: $sign-up-form-width;
     margin: auto;
 
-    .login-form-wrapper {
+    .sign-up-form-wrapper {
       * {
-        margin: $login-form-item-margin;
+        margin: $sign-up-form-item-margin;
       }
 
       label {
         text-align: center;
       }
       input {
-        width: $login-input-box-width;
+        width: $sign-up-input-box-width;
         padding: $input-box-padding;
       }
 
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin-top: $login-form-margin-top;
+      margin-top: $sign-up-form-margin-top;
     }
   }
 }

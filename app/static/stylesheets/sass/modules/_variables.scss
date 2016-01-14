@@ -8,8 +8,19 @@ $icon-width: 32px;
 $icon-height: 32px;
 $icon-border-radius: 10px;
 
+/* borders */
+$standard-border: 1px solid $border-color;
+$border-radius: 10px;
+
+/* buttons */
+$button-padding: 5px;
+$button-font-size: 14px;
+
+/* input boxes */
+$input-box-padding: 5px 2.5px;
+
 /* header or footer */
-$banner-border: 1px solid $border-color;
+$banner-border: $standard-border;
 
 /* footer */
 $footer-font-size: 16px;
@@ -20,3 +31,15 @@ $footer-padding: 10px 0;
 $about-me-opacity: .7;
 $about-me-margin-top: 20px;
 $icon-list-margin: 10px;
+
+/* login page */
+$login-form-item-margin: 5px 0;
+$login-form-width: 200px;
+$login-form-margin-top: 100px;
+$login-input-box-width: 100%;
+
+/* sign up page */
+$sign-up-form-item-margin: 5px 0;
+$sign-up-form-width: 200px;
+$sign-up-form-margin-top: 100px;
+$sign-up-input-box-width: 100%;

@@ -8,12 +8,10 @@ class LoginForm extends React.Component {
         isValid: true,
         errors: [],
         username: "",
-        password: ""
+        password: "",
+        imageUrl: null,
+        imageFile: ""
     };
-  }
-
-  goToSignUpPage () {
-    this.history.pushState(null, "/users/new");
   }
 
   handleLoginSubmission (e) {
@@ -28,15 +26,15 @@ class LoginForm extends React.Component {
 
   }
 
-  updateUsername (e) {
+  changeUsername (e) {
     // this.setState({
-    //   username: e.target.value
+    //   username: e.currentTarget.value
     // });
   }
 
-  updatePassword (e) {
+  changePassword (e) {
     // this.setState({
-    //   password: e.target.value
+    //   password: e.currentTarget.value
     // });
   }
 
@@ -46,31 +44,31 @@ class LoginForm extends React.Component {
     if (this.isValid) { errors = this.state.errors; }
 
     return (
-      <form className={this.props.klass} onKeyPress={this.handleKeyPress} onSubmit={this.handleLoginSubmission}>
+      <form className="login-form" onKeyPress={this.handleKeyPress} onSubmit={this.handleLoginSubmission}>
         <div className="login-error-wrapper">
           { errors }
         </div>
 
         <div className="login-form-wrapper">
           <button className="login-form-demo-account"
-            onClick={this.logIntoDemoAccount}>Demo Account</button>
+            onClick={ this.logIntoDemoAccount }>Demo Account</button>
 
           <label>Username
           <input
             className="login-form-username"
             type="text"
-            onChange={this.updateUsername("username")}/>
+            onChange={ this.changeUsername }/>
           </label>
 
           <label>Password
           <input
             className="login-form-password"
             type="password"
-            onChange={this.updatePassword("password")}/>
+            onChange={ this.changePassword }/>
           </label>
 
           <button className="submit" type="submit">Log In!</button>
-          <button onClick={this.goToSignUpPage}>Sign Up</button>
+          <button><Link to={ `/users/new` }>Sign Up</Link></button>
         </div>
       </form>
     );

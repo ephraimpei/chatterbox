@@ -8,9 +8,9 @@ class LoginPage extends React.Component {
   render () {
     return (
       <div className="login-page">
-        <div className="login-form">
-          <LoginForm />
-        </div>
+        <h1>Welcome to Chatterbox!</h1>
+        <h2>Please login to continue.</h2>
+        <LoginForm />
       </div>
     );
   }
