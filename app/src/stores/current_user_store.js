@@ -1,28 +1,30 @@
 import AppDispatcher from '../dispatcher/dispatcher.js';
-
-const EventEmitter = require('eventemitter3');
+import CurrentUserConstants from "../constants/current_user_constants.js";
+import EventEmitter from 'eventemitter3';
 
 const CHANGE_EVENT = "change";
 
-let _currentUser = {username: "ephdawg"};
+class CurrentUserStore extends EventEmitter {
+  constructor() {
+    this.currentUser = {};
+  }
 
-let CurrentUserStore = Object.assign(EventEmitter.prototype, {
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
-  removeChangeListener: function (callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  currentUser: function () {
+  currentUser() {
     return $.extend({}, _currentUser);
-  },
+  }
 
-  isLoggedIn: function () {
+  isLoggedIn() {
     return (typeof _currentUser.username !== "undefined");
-  },
-});
+  }
+}
 
 AppDispatcher.register(function (payload) {
   switch (payload.actionType) {
@@ -33,4 +35,4 @@ AppDispatcher.register(function (payload) {
   }
 });
 
-export default CurrentUserStore;
+export default new CurrentUserStore();

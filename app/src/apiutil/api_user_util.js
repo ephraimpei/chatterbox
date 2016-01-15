@@ -1,5 +1,5 @@
 import $ from "jquery";
-import UserActions from "../actions/user_actions.js";
+import UserActions from "../actions/current_user_actions.js";
 
 class ApiUserUtil {
   create (formData, success, failure) {
@@ -11,7 +11,6 @@ class ApiUserUtil {
       dataType: "json",
       data: formData,
       success: function (data) {
-        debugger;
         UserActions.receiveCurrentUser(data);
         success();
       },
@@ -22,4 +21,4 @@ class ApiUserUtil {
   }
 }
 
-export default ApiUserUtil;
+export default new ApiUserUtil();

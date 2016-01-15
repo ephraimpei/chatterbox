@@ -19,7 +19,6 @@ class SignUpForm extends React.Component {
 
     $(".submit").addClass("disabled").prop("disabled", true);
 
-    let UserUtil = new ApiUserUtil();
     let formData = new FormData();
 
     formData.append("user[username]", this.state.username);
@@ -39,7 +38,7 @@ class SignUpForm extends React.Component {
       });
     }.bind(this);
 
-    UserUtil.create(formData, success, failure);
+    ApiUserUtil.create(formData, success, failure);
   }
 
   handleKeyPress (e) {

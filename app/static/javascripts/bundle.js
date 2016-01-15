@@ -74,7 +74,7 @@
 	
 	var _sign_up_page2 = _interopRequireDefault(_sign_up_page);
 	
-	var _current_user_store = __webpack_require__(225);
+	var _current_user_store = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./stores/current_user_store.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
 	var _current_user_store2 = _interopRequireDefault(_current_user_store);
 	
@@ -34259,7 +34259,6 @@
 	
 	      (0, _jquery2.default)(".submit").addClass("disabled").prop("disabled", true);
 	
-	      var UserUtil = new _api_user_util2.default();
 	      var formData = new FormData();
 	
 	      formData.append("user[username]", this.state.username);
@@ -34279,7 +34278,7 @@
 	        });
 	      }).bind(this);
 	
-	      UserUtil.create(formData, success, failure);
+	      _api_user_util2.default.create(formData, success, failure);
 	    }
 	  }, {
 	    key: 'handleKeyPress',
@@ -34423,57 +34422,7 @@
 
 
 /***/ },
-/* 225 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _dispatcher = __webpack_require__(226);
-	
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var EventEmitter = __webpack_require__(230);
-	
-	var CHANGE_EVENT = "change";
-	
-	var _currentUser = { username: "ephdawg" };
-	
-	var CurrentUserStore = Object.assign(EventEmitter.prototype, {
-	  addChangeListener: function addChangeListener(callback) {
-	    this.on(CHANGE_EVENT, callback);
-	  },
-	
-	  removeChangeListener: function removeChangeListener(callback) {
-	    this.removeListener(CHANGE_EVENT, callback);
-	  },
-	
-	  currentUser: function currentUser() {
-	    return $.extend({}, _currentUser);
-	  },
-	
-	  isLoggedIn: function isLoggedIn() {
-	    return typeof _currentUser.username !== "undefined";
-	  }
-	});
-	
-	_dispatcher2.default.register(function (payload) {
-	  switch (payload.actionType) {
-	    case CurrentUserConstants.RECEIVE_CURRENT_USER:
-	      _currentUser = payload.currentUser;
-	      CurrentUserStore.emit(CHANGE_EVENT);
-	      break;
-	  }
-	});
-	
-	exports.default = CurrentUserStore;
-
-/***/ },
+/* 225 */,
 /* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34797,274 +34746,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	//
-	// We store our EE objects in a plain object whose properties are event names.
-	// If `Object.create(null)` is not supported we prefix the event names with a
-	// `~` to make sure that the built-in object properties are not overridden or
-	// used as an attack vector.
-	// We also assume that `Object.create(null)` is available when the event name
-	// is an ES6 Symbol.
-	//
-	var prefix = typeof Object.create !== 'function' ? '~' : false;
-	
-	/**
-	 * Representation of a single EventEmitter function.
-	 *
-	 * @param {Function} fn Event handler to be called.
-	 * @param {Mixed} context Context for function execution.
-	 * @param {Boolean} once Only emit once
-	 * @api private
-	 */
-	function EE(fn, context, once) {
-	  this.fn = fn;
-	  this.context = context;
-	  this.once = once || false;
-	}
-	
-	/**
-	 * Minimal EventEmitter interface that is molded against the Node.js
-	 * EventEmitter interface.
-	 *
-	 * @constructor
-	 * @api public
-	 */
-	function EventEmitter() { /* Nothing to set */ }
-	
-	/**
-	 * Holds the assigned EventEmitters by name.
-	 *
-	 * @type {Object}
-	 * @private
-	 */
-	EventEmitter.prototype._events = undefined;
-	
-	/**
-	 * Return a list of assigned event listeners.
-	 *
-	 * @param {String} event The events that should be listed.
-	 * @param {Boolean} exists We only need to know if there are listeners.
-	 * @returns {Array|Boolean}
-	 * @api public
-	 */
-	EventEmitter.prototype.listeners = function listeners(event, exists) {
-	  var evt = prefix ? prefix + event : event
-	    , available = this._events && this._events[evt];
-	
-	  if (exists) return !!available;
-	  if (!available) return [];
-	  if (available.fn) return [available.fn];
-	
-	  for (var i = 0, l = available.length, ee = new Array(l); i < l; i++) {
-	    ee[i] = available[i].fn;
-	  }
-	
-	  return ee;
-	};
-	
-	/**
-	 * Emit an event to all registered event listeners.
-	 *
-	 * @param {String} event The name of the event.
-	 * @returns {Boolean} Indication if we've emitted an event.
-	 * @api public
-	 */
-	EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
-	  var evt = prefix ? prefix + event : event;
-	
-	  if (!this._events || !this._events[evt]) return false;
-	
-	  var listeners = this._events[evt]
-	    , len = arguments.length
-	    , args
-	    , i;
-	
-	  if ('function' === typeof listeners.fn) {
-	    if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
-	
-	    switch (len) {
-	      case 1: return listeners.fn.call(listeners.context), true;
-	      case 2: return listeners.fn.call(listeners.context, a1), true;
-	      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
-	      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
-	      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
-	      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
-	    }
-	
-	    for (i = 1, args = new Array(len -1); i < len; i++) {
-	      args[i - 1] = arguments[i];
-	    }
-	
-	    listeners.fn.apply(listeners.context, args);
-	  } else {
-	    var length = listeners.length
-	      , j;
-	
-	    for (i = 0; i < length; i++) {
-	      if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
-	
-	      switch (len) {
-	        case 1: listeners[i].fn.call(listeners[i].context); break;
-	        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
-	        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
-	        default:
-	          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
-	            args[j - 1] = arguments[j];
-	          }
-	
-	          listeners[i].fn.apply(listeners[i].context, args);
-	      }
-	    }
-	  }
-	
-	  return true;
-	};
-	
-	/**
-	 * Register a new EventListener for the given event.
-	 *
-	 * @param {String} event Name of the event.
-	 * @param {Functon} fn Callback function.
-	 * @param {Mixed} context The context of the function.
-	 * @api public
-	 */
-	EventEmitter.prototype.on = function on(event, fn, context) {
-	  var listener = new EE(fn, context || this)
-	    , evt = prefix ? prefix + event : event;
-	
-	  if (!this._events) this._events = prefix ? {} : Object.create(null);
-	  if (!this._events[evt]) this._events[evt] = listener;
-	  else {
-	    if (!this._events[evt].fn) this._events[evt].push(listener);
-	    else this._events[evt] = [
-	      this._events[evt], listener
-	    ];
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Add an EventListener that's only called once.
-	 *
-	 * @param {String} event Name of the event.
-	 * @param {Function} fn Callback function.
-	 * @param {Mixed} context The context of the function.
-	 * @api public
-	 */
-	EventEmitter.prototype.once = function once(event, fn, context) {
-	  var listener = new EE(fn, context || this, true)
-	    , evt = prefix ? prefix + event : event;
-	
-	  if (!this._events) this._events = prefix ? {} : Object.create(null);
-	  if (!this._events[evt]) this._events[evt] = listener;
-	  else {
-	    if (!this._events[evt].fn) this._events[evt].push(listener);
-	    else this._events[evt] = [
-	      this._events[evt], listener
-	    ];
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Remove event listeners.
-	 *
-	 * @param {String} event The event we want to remove.
-	 * @param {Function} fn The listener that we need to find.
-	 * @param {Mixed} context Only remove listeners matching this context.
-	 * @param {Boolean} once Only remove once listeners.
-	 * @api public
-	 */
-	EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
-	  var evt = prefix ? prefix + event : event;
-	
-	  if (!this._events || !this._events[evt]) return this;
-	
-	  var listeners = this._events[evt]
-	    , events = [];
-	
-	  if (fn) {
-	    if (listeners.fn) {
-	      if (
-	           listeners.fn !== fn
-	        || (once && !listeners.once)
-	        || (context && listeners.context !== context)
-	      ) {
-	        events.push(listeners);
-	      }
-	    } else {
-	      for (var i = 0, length = listeners.length; i < length; i++) {
-	        if (
-	             listeners[i].fn !== fn
-	          || (once && !listeners[i].once)
-	          || (context && listeners[i].context !== context)
-	        ) {
-	          events.push(listeners[i]);
-	        }
-	      }
-	    }
-	  }
-	
-	  //
-	  // Reset the array, or remove it completely if we have no more listeners.
-	  //
-	  if (events.length) {
-	    this._events[evt] = events.length === 1 ? events[0] : events;
-	  } else {
-	    delete this._events[evt];
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Remove all listeners or only the listeners for the specified event.
-	 *
-	 * @param {String} event The event want to remove all listeners for.
-	 * @api public
-	 */
-	EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
-	  if (!this._events) return this;
-	
-	  if (event) delete this._events[prefix ? prefix + event : event];
-	  else this._events = prefix ? {} : Object.create(null);
-	
-	  return this;
-	};
-	
-	//
-	// Alias methods names because people roll like that.
-	//
-	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-	EventEmitter.prototype.addListener = EventEmitter.prototype.on;
-	
-	//
-	// This function doesn't apply anymore.
-	//
-	EventEmitter.prototype.setMaxListeners = function setMaxListeners() {
-	  return this;
-	};
-	
-	//
-	// Expose the prefix.
-	//
-	EventEmitter.prefixed = prefix;
-	
-	//
-	// Expose the module.
-	//
-	if (true) {
-	  module.exports = EventEmitter;
-	}
-
-
-/***/ },
+/* 230 */,
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -35160,9 +34842,9 @@
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _user_actions = __webpack_require__(236);
+	var _current_user_actions = __webpack_require__(238);
 	
-	var _user_actions2 = _interopRequireDefault(_user_actions);
+	var _current_user_actions2 = _interopRequireDefault(_current_user_actions);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -35184,8 +34866,7 @@
 	        dataType: "json",
 	        data: formData,
 	        success: function success(data) {
-	          debugger;
-	          _user_actions2.default.receiveCurrentUser(data);
+	          _current_user_actions2.default.receiveCurrentUser(data);
 	          _success();
 	        },
 	        error: function error(data) {
@@ -35198,46 +34879,54 @@
 	  return ApiUserUtil;
 	})();
 	
-	exports.default = ApiUserUtil;
+	exports.default = new ApiUserUtil();
 
 /***/ },
-/* 236 */
+/* 236 */,
+/* 237 */,
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	var _user_constants = __webpack_require__(237);
-	
-	var _user_constants2 = _interopRequireDefault(_user_constants);
-	
 	var _dispatcher = __webpack_require__(226);
 	
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 	
+	var _current_user_constants = __webpack_require__(239);
+	
+	var _current_user_constants2 = _interopRequireDefault(_current_user_constants);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = {
-	  receiveUsers: function receiveUsers(users) {
-	    _dispatcher2.default.dispatch({
-	      actionType: _user_constants2.default.RECEIVE_USERS,
-	      users: users
-	    });
-	  },
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  receiveSingleUser: function receiveSingleUser(user) {
-	    _dispatcher2.default.dispatch({
-	      actionType: _user_constants2.default.RECEIVE_SINGLE_USER,
-	      user: user
-	    });
+	exports.default = new ((function () {
+	  function _class() {
+	    _classCallCheck(this, _class);
 	  }
-	};
+	
+	  _createClass(_class, [{
+	    key: "receiveCurrentUser",
+	    value: function receiveCurrentUser(user) {
+	      _dispatcher2.default.dispatch({
+	        actionType: _current_user_constants2.default.RECEIVE_CURRENT_USER,
+	        user: user
+	      });
+	    }
+	  }]);
+	
+	  return _class;
+	})())();
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -35246,8 +34935,7 @@
 	  value: true
 	});
 	exports.default = {
-	  RECEIVE_USERS: "RECEIVE_USERS",
-	  RECEIVE_SINGLE_USER: "RECEIVE_SINGLE_USER"
+	  RECEIVE_CURRENT_USER: "RECEIVE_CURRENT_USER"
 	};
 
 /***/ }
