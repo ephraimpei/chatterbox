@@ -1,0 +1,10 @@
+@import "../modules/variables";
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}

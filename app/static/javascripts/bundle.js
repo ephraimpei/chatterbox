@@ -33460,10 +33460,10 @@
 	var LoginPage = (function (_React$Component) {
 	  _inherits(LoginPage, _React$Component);
 	
-	  function LoginPage() {
+	  function LoginPage(props, context) {
 	    _classCallCheck(this, LoginPage);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginPage).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginPage).call(this, props, context));
 	  }
 	
 	  _createClass(LoginPage, [{
@@ -33521,18 +33521,16 @@
 	var LoginForm = (function (_React$Component) {
 	  _inherits(LoginForm, _React$Component);
 	
-	  function LoginForm(props) {
+	  function LoginForm(props, context) {
 	    _classCallCheck(this, LoginForm);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginForm).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginForm).call(this, props, context));
 	
 	    _this.state = {
 	      isValid: true,
 	      errors: [],
 	      username: "",
-	      password: "",
-	      imageUrl: null,
-	      imageFile: ""
+	      password: ""
 	    };
 	    return _this;
 	  }
@@ -33542,23 +33540,23 @@
 	    value: function handleLoginSubmission(e) {}
 	  }, {
 	    key: 'handleKeyPress',
-	    value: function handleKeyPress(e) {}
+	    value: function handleKeyPress(e) {
+	      if (e.charCode === 13) {
+	        this.handleSignUpSubmission();
+	      }
+	    }
 	  }, {
 	    key: 'logIntoDemoAccount',
 	    value: function logIntoDemoAccount(e) {}
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
-	      // this.setState({
-	      //   username: e.currentTarget.value
-	      // });
+	      this.setState({ username: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
-	      // this.setState({
-	      //   password: e.currentTarget.value
-	      // });
+	      this.setState({ password: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'render',
@@ -33571,7 +33569,7 @@
 	
 	      return _react2.default.createElement(
 	        'form',
-	        { className: 'login-form', onKeyPress: this.handleKeyPress, onSubmit: this.handleLoginSubmission },
+	        { className: 'login-form', onKeyPress: this.handleKeyPress.bind(this), onSubmit: this.handleLoginSubmission.bind(this) },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'login-error-wrapper' },
@@ -33583,7 +33581,7 @@
 	          _react2.default.createElement(
 	            'button',
 	            { className: 'login-form-demo-account',
-	              onClick: this.logIntoDemoAccount },
+	              onClick: this.logIntoDemoAccount.bind(this) },
 	            'Demo Account'
 	          ),
 	          _react2.default.createElement(
@@ -33593,7 +33591,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'login-form-username',
 	              type: 'text',
-	              onChange: this.changeUsername })
+	              onChange: this.changeUsername.bind(this) })
 	          ),
 	          _react2.default.createElement(
 	            'label',
@@ -33602,7 +33600,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'login-form-password',
 	              type: 'password',
-	              onChange: this.changePassword })
+	              onChange: this.changePassword.bind(this) })
 	          ),
 	          _react2.default.createElement(
 	            'button',
@@ -33610,13 +33608,9 @@
 	            'Log In!'
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/users/new' },
-	              'Sign Up'
-	            )
+	            _reactRouter.Link,
+	            { to: '/users/new' },
+	            'Create a user'
 	          )
 	        )
 	      );
@@ -33663,7 +33657,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\na {\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      display: block; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
 	
 	// exports
 
@@ -34173,10 +34167,10 @@
 	var SignUpPage = (function (_React$Component) {
 	  _inherits(SignUpPage, _React$Component);
 	
-	  function SignUpPage() {
+	  function SignUpPage(props, context) {
 	    _classCallCheck(this, SignUpPage);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).call(this, props, context));
 	  }
 	
 	  _createClass(SignUpPage, [{
@@ -34223,6 +34217,14 @@
 	
 	var _reactRouter = __webpack_require__(160);
 	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _api_user_util = __webpack_require__(235);
+	
+	var _api_user_util2 = _interopRequireDefault(_api_user_util);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34234,10 +34236,10 @@
 	var SignUpForm = (function (_React$Component) {
 	  _inherits(SignUpForm, _React$Component);
 	
-	  function SignUpForm(props) {
+	  function SignUpForm(props, context) {
 	    _classCallCheck(this, SignUpForm);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props, context));
 	
 	    _this.state = {
 	      isValid: true,
@@ -34250,23 +34252,51 @@
 	
 	  _createClass(SignUpForm, [{
 	    key: 'handleSignUpSubmission',
-	    value: function handleSignUpSubmission(e) {}
+	    value: function handleSignUpSubmission(e) {
+	      if (e) {
+	        e.preventDefault();
+	      }
+	
+	      (0, _jquery2.default)(".submit").addClass("disabled").prop("disabled", true);
+	
+	      var UserUtil = new _api_user_util2.default();
+	      var formData = new FormData();
+	
+	      formData.append("user[username]", this.state.username);
+	      formData.append("user[password]", this.state.password);
+	      formData.append("user[avatar]", this.state.imageFile);
+	
+	      var success = (function () {
+	        this.history.goBack();
+	      }).bind(this);
+	
+	      var failure = (function (errors) {
+	        (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
+	
+	        this.setState({
+	          isValid: false,
+	          errors: errors
+	        });
+	      }).bind(this);
+	
+	      UserUtil.create(formData, success, failure);
+	    }
 	  }, {
 	    key: 'handleKeyPress',
-	    value: function handleKeyPress(e) {}
+	    value: function handleKeyPress(e) {
+	      if (e.charCode === 13) {
+	        this.handleSignUpSubmission();
+	      }
+	    }
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
-	      // this.setState({
-	      //   username: e.currentTarget.value
-	      // });
+	      this.setState({ username: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
-	      // this.setState({
-	      //   password: e.currentTarget.value
-	      // });
+	      this.setState({ password: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'changeFile',
@@ -34295,7 +34325,7 @@
 	
 	      return _react2.default.createElement(
 	        'form',
-	        { className: 'sign-up-form', onKeyPress: this.handleKeyPress, onSubmit: this.handleSignUpSubmission },
+	        { className: 'sign-up-form', onKeyPress: this.handleKeyPress.bind(this), onSubmit: this.handleSignUpSubmission.bind(this) },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'sign-up-error-wrapper' },
@@ -34311,7 +34341,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'sign-up-form-username',
 	              type: 'text',
-	              onChange: this.changeUsername })
+	              onChange: this.changeUsername.bind(this) })
 	          ),
 	          _react2.default.createElement(
 	            'label',
@@ -34320,7 +34350,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'sign-up-form-password',
 	              type: 'password',
-	              onChange: this.changePassword })
+	              onChange: this.changePassword.bind(this) })
 	          ),
 	          _react2.default.createElement(
 	            'label',
@@ -34329,7 +34359,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'sign-up-form-avatar',
 	              type: 'file',
-	              onChange: this.changeFile })
+	              onChange: this.changeFile.bind(this) })
 	          ),
 	          _react2.default.createElement('img', { className: 'sign-up-form-avatar-preview', src: this.state.imageUrl }),
 	          _react2.default.createElement(
@@ -34338,13 +34368,9 @@
 	            'Sign Up!'
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Already have an account?'
-	            )
+	            _reactRouter.Link,
+	            { to: '/' },
+	            'Already have an account?'
 	          )
 	        )
 	      );
@@ -34391,7 +34417,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\na {\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n", ""]);
 	
 	// exports
 
@@ -34436,14 +34462,14 @@
 	  }
 	});
 	
-	// AppDispatcher.register(function (payload) {
-	//   switch (payload.actionType) {
-	//     case CurrentUserConstants.RECEIVE_CURRENT_USER:
-	//       _currentUser = payload.currentUser;
-	//       CurrentUserStore.emit(CHANGE_EVENT);
-	//       break;
-	//   }
-	// });
+	_dispatcher2.default.register(function (payload) {
+	  switch (payload.actionType) {
+	    case CurrentUserConstants.RECEIVE_CURRENT_USER:
+	      _currentUser = payload.currentUser;
+	      CurrentUserStore.emit(CHANGE_EVENT);
+	      break;
+	  }
+	});
 	
 	exports.default = CurrentUserStore;
 
@@ -35113,10 +35139,116 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\na {\n  cursor: pointer; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n", ""]);
 	
 	// exports
 
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _user_actions = __webpack_require__(236);
+	
+	var _user_actions2 = _interopRequireDefault(_user_actions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ApiUserUtil = (function () {
+	  function ApiUserUtil() {
+	    _classCallCheck(this, ApiUserUtil);
+	  }
+	
+	  _createClass(ApiUserUtil, [{
+	    key: "create",
+	    value: function create(formData, _success, failure) {
+	      _jquery2.default.ajax({
+	        url: "/api/users",
+	        method: "POST",
+	        processData: false,
+	        contentType: false,
+	        dataType: "json",
+	        data: formData,
+	        success: function success(data) {
+	          debugger;
+	          _user_actions2.default.receiveCurrentUser(data);
+	          _success();
+	        },
+	        error: function error(data) {
+	          failure(JSON.parse(data.responseText));
+	        }
+	      });
+	    }
+	  }]);
+	
+	  return ApiUserUtil;
+	})();
+	
+	exports.default = ApiUserUtil;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _user_constants = __webpack_require__(237);
+	
+	var _user_constants2 = _interopRequireDefault(_user_constants);
+	
+	var _dispatcher = __webpack_require__(226);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	  receiveUsers: function receiveUsers(users) {
+	    _dispatcher2.default.dispatch({
+	      actionType: _user_constants2.default.RECEIVE_USERS,
+	      users: users
+	    });
+	  },
+	
+	  receiveSingleUser: function receiveSingleUser(user) {
+	    _dispatcher2.default.dispatch({
+	      actionType: _user_constants2.default.RECEIVE_SINGLE_USER,
+	      user: user
+	    });
+	  }
+	};
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  RECEIVE_USERS: "RECEIVE_USERS",
+	  RECEIVE_SINGLE_USER: "RECEIVE_SINGLE_USER"
+	};
 
 /***/ }
 /******/ ]);

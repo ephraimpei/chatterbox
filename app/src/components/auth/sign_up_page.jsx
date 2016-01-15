@@ -5,6 +5,10 @@ import SignUpForm from './sign_up_form.jsx';
 require("../../../static/stylesheets/sass/components/_sign_up_page.scss");
 
 class SignUpPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+  
   render () {
     return (
       <div className="sign-up-page">

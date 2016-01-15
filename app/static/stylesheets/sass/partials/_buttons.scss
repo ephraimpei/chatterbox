@@ -1,0 +1,24 @@
+@import "../modules/variables";
+
+button {
+  padding: $button-padding;
+  background: $button-background;
+  font-size: $button-font-size;
+  border: $button-border;
+  border-radius: $button-border-radius;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:active, button.disabled {
+  text-shadow: 1px 1px 2px black;
+  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047;
+}
+
+button:hover {
+  background: darken($button-background, 10%);
+}

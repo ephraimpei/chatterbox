@@ -1,16 +1,17 @@
 from app import app
-from flask import session, render_template, url_for, jsonify
+from flask import request, session, render_template, url_for, jsonify
 from app.models import User
 from app import db
+import pdb
 
-@app.route("/user/new", methods=["GET"])
+@app.route("/users/new", methods=["GET"])
 def new():
     return render_template("/user/new.html")
 
-@app.route("/user/new", methods=["POST"])
+@app.route("/api/users", methods=["POST"])
 def create():
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form['user[username]']
+    password = request.form['user[password]']
 
     new_user = User(username = username)
     new_user.generate_password_digest(password)
@@ -18,15 +19,15 @@ def create():
     new_user.reset_session_token()
 
     if new_user.save():
-        return redirect(url_for('show', username = new_user.username))
+        return jsonify(username=username)
     else:
-        return flask.jsonify(error="Could not create user.")
+        return jsonify(error="Could not create user.")
 
-@app.route("/user/edit", methods=["GET"])
+@app.route("/users/edit", methods=["GET"])
 def edit():
     return render_template("/user/edit.html")
 
-@app.route("/user/edit", methods=["PUT"])
+@app.route("/users/edit", methods=["PUT"])
 def update():
     username = request.form['username']
     password = request.form['password']

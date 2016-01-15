@@ -5,6 +5,10 @@ import LoginForm from './login_form.jsx';
 require("../../../static/stylesheets/sass/components/_login_page.scss");
 
 class LoginPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
   render () {
     return (
       <div className="login-page">
