@@ -1,16 +1,16 @@
 import React from 'react';
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import $ from 'jquery';
 import ApiUserUtil from '../../apiutil/api_user_util.js';
 
 class SignUpForm extends React.Component {
   constructor(props, context) {
-    super(props, context);
+    super(props);
     this.state = {
-        isValid: true,
-        errors: [],
         username: "",
-        password: ""
+        password: "",
+        imageUrl: "/images/avatar_placeholder.png",
+        imageFile: null
     };
   }
 
@@ -25,20 +25,7 @@ class SignUpForm extends React.Component {
     formData.append("user[password]", this.state.password);
     formData.append("user[avatar]", this.state.imageFile);
 
-    let success = function () {
-      this.history.goBack();
-    }.bind(this);
-
-    let failure = function (errors) {
-      $(".submit").removeClass("disabled").prop("disabled", false);
-
-      this.setState({
-        isValid: false,
-        errors: errors
-      });
-    }.bind(this);
-
-    ApiUserUtil.create(formData, success, failure);
+    ApiUserUtil.create(formData, this.props.success, this.props.failure);
   }
 
   handleKeyPress (e) {

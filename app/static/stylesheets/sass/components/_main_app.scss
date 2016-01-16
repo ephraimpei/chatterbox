@@ -1,7 +1,8 @@
 #wrapper {
+	min-height:100%;
 	position:relative;
 }
 
-.main-app {
-	padding-bottom:73px; /* Height of the footer element */
+#content {
+	padding-bottom: 73px;
 }

@@ -74,7 +74,7 @@
 	
 	var _sign_up_page2 = _interopRequireDefault(_sign_up_page);
 	
-	var _current_user_store = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./stores/current_user_store.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _current_user_store = __webpack_require__(225);
 	
 	var _current_user_store2 = _interopRequireDefault(_current_user_store);
 	
@@ -99,11 +99,15 @@
 	  var routes = _react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(_reactRouter.Route, { path: "/", components: _chatterbox_app2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: "/users/new", components: _sign_up_page2.default })
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: "/", components: _chatterbox_app2.default },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _login_page2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: "/users/new", components: _sign_up_page2.default })
+	    )
 	  );
 	
-	  (0, _reactDom.render)(routes, document.getElementById('wrapper'));
+	  (0, _reactDom.render)(routes, document.getElementById('content'));
 	  (0, _reactDom.render)(_react2.default.createElement(_footer2.default, null), document.getElementById('footer-wrapper'));
 	});
 
@@ -33403,10 +33407,10 @@
 	var ChatterboxApp = (function (_React$Component) {
 	  _inherits(ChatterboxApp, _React$Component);
 	
-	  function ChatterboxApp() {
+	  function ChatterboxApp(props, context) {
 	    _classCallCheck(this, ChatterboxApp);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ChatterboxApp).call(this));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ChatterboxApp).call(this, props, context));
 	  }
 	
 	  _createClass(ChatterboxApp, [{
@@ -33415,7 +33419,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'main-app' },
-	        _react2.default.createElement(_login_page2.default, null)
+	        this.props.children
 	      );
 	    }
 	  }]);
@@ -34007,7 +34011,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#wrapper {\n  position: relative; }\n\n.main-app {\n  padding-bottom: 73px;\n  /* Height of the footer element */ }\n", ""]);
+	exports.push([module.id, "#wrapper {\n  min-height: 100%;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n", ""]);
 	
 	// exports
 
@@ -34127,7 +34131,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 20px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 20px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n", ""]);
 	
 	// exports
 
@@ -34148,8 +34152,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(160);
-	
 	var _sign_up_form = __webpack_require__(222);
 	
 	var _sign_up_form2 = _interopRequireDefault(_sign_up_form);
@@ -34167,15 +34169,30 @@
 	var SignUpPage = (function (_React$Component) {
 	  _inherits(SignUpPage, _React$Component);
 	
-	  function SignUpPage(props, context) {
+	  function SignUpPage(props) {
 	    _classCallCheck(this, SignUpPage);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).call(this, props));
+	
+	    _this.state = { isValid: true };
+	    return _this;
 	  }
 	
 	  _createClass(SignUpPage, [{
 	    key: 'render',
 	    value: function render() {
+	      var errors = undefined;
+	
+	      var success = (function () {
+	        this.props.history.pushState(null, '/');
+	      }).bind(this);
+	
+	      var failure = (function (errors) {
+	        $(".submit").removeClass("disabled").prop("disabled", false);
+	        this.setState({ isValid: false });
+	        errors = errors;
+	      }).bind(this);
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sign-up-page' },
@@ -34189,7 +34206,7 @@
 	          null,
 	          'Create a new user to get going!'
 	        ),
-	        _react2.default.createElement(_sign_up_form2.default, null)
+	        _react2.default.createElement(_sign_up_form2.default, { success: success, failure: failure, errors: errors })
 	      );
 	    }
 	  }]);
@@ -34239,13 +34256,13 @@
 	  function SignUpForm(props, context) {
 	    _classCallCheck(this, SignUpForm);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props));
 	
 	    _this.state = {
-	      isValid: true,
-	      errors: [],
 	      username: "",
-	      password: ""
+	      password: "",
+	      imageUrl: "/images/avatar_placeholder.png",
+	      imageFile: null
 	    };
 	    return _this;
 	  }
@@ -34265,20 +34282,7 @@
 	      formData.append("user[password]", this.state.password);
 	      formData.append("user[avatar]", this.state.imageFile);
 	
-	      var success = (function () {
-	        this.history.goBack();
-	      }).bind(this);
-	
-	      var failure = (function (errors) {
-	        (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
-	
-	        this.setState({
-	          isValid: false,
-	          errors: errors
-	        });
-	      }).bind(this);
-	
-	      _api_user_util2.default.create(formData, success, failure);
+	      _api_user_util2.default.create(formData, this.props.success, this.props.failure);
 	    }
 	  }, {
 	    key: 'handleKeyPress',
@@ -34416,13 +34420,101 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.sign-up-page {\n  padding-bottom: 73px; }\n  .sign-up-page h1, .sign-up-page h2 {\n    text-align: center; }\n  .sign-up-page .sign-up-form {\n    width: 200px;\n    margin: auto; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper {\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      margin-top: 50px; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n        margin: 5px 0; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n        text-align: center; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n        width: 100%; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 225 */,
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(226);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _current_user_constants = __webpack_require__(239);
+	
+	var _current_user_constants2 = _interopRequireDefault(_current_user_constants);
+	
+	var _eventemitter = __webpack_require__(230);
+	
+	var _eventemitter2 = _interopRequireDefault(_eventemitter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CHANGE_EVENT = "change";
+	
+	var CurrentUserStore = (function (_EventEmitter) {
+	  _inherits(CurrentUserStore, _EventEmitter);
+	
+	  function CurrentUserStore() {
+	    _classCallCheck(this, CurrentUserStore);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CurrentUserStore).call(this));
+	
+	    _this.currentUser = {};
+	    return _this;
+	  }
+	
+	  _createClass(CurrentUserStore, [{
+	    key: 'addChangeListener',
+	    value: function addChangeListener(callback) {
+	      this.on(CHANGE_EVENT, callback);
+	    }
+	  }, {
+	    key: 'removeChangeListener',
+	    value: function removeChangeListener(callback) {
+	      this.removeListener(CHANGE_EVENT, callback);
+	    }
+	  }, {
+	    key: 'currentUser',
+	    value: function currentUser() {
+	      return $.extend({}, _currentUser);
+	    }
+	  }, {
+	    key: 'isLoggedIn',
+	    value: function isLoggedIn() {
+	      return typeof _currentUser.username !== "undefined";
+	    }
+	  }, {
+	    key: 'setCurrentUser',
+	    value: function setCurrentUser(user) {
+	      this.currentUser = user;
+	    }
+	  }]);
+	
+	  return CurrentUserStore;
+	})(_eventemitter2.default);
+	
+	var currentUserStore = new CurrentUserStore();
+	
+	_dispatcher2.default.register(function (payload) {
+	  switch (payload.actionType) {
+	    case _current_user_constants2.default.RECEIVE_CURRENT_USER:
+	      currentUserStore.setCurrentUser(payload.currentUser);
+	      currentUserStore.emit(CHANGE_EVENT);
+	      break;
+	  }
+	});
+	
+	exports.default = currentUserStore;
+
+/***/ },
 /* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34746,7 +34838,274 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 230 */,
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	//
+	// We store our EE objects in a plain object whose properties are event names.
+	// If `Object.create(null)` is not supported we prefix the event names with a
+	// `~` to make sure that the built-in object properties are not overridden or
+	// used as an attack vector.
+	// We also assume that `Object.create(null)` is available when the event name
+	// is an ES6 Symbol.
+	//
+	var prefix = typeof Object.create !== 'function' ? '~' : false;
+	
+	/**
+	 * Representation of a single EventEmitter function.
+	 *
+	 * @param {Function} fn Event handler to be called.
+	 * @param {Mixed} context Context for function execution.
+	 * @param {Boolean} once Only emit once
+	 * @api private
+	 */
+	function EE(fn, context, once) {
+	  this.fn = fn;
+	  this.context = context;
+	  this.once = once || false;
+	}
+	
+	/**
+	 * Minimal EventEmitter interface that is molded against the Node.js
+	 * EventEmitter interface.
+	 *
+	 * @constructor
+	 * @api public
+	 */
+	function EventEmitter() { /* Nothing to set */ }
+	
+	/**
+	 * Holds the assigned EventEmitters by name.
+	 *
+	 * @type {Object}
+	 * @private
+	 */
+	EventEmitter.prototype._events = undefined;
+	
+	/**
+	 * Return a list of assigned event listeners.
+	 *
+	 * @param {String} event The events that should be listed.
+	 * @param {Boolean} exists We only need to know if there are listeners.
+	 * @returns {Array|Boolean}
+	 * @api public
+	 */
+	EventEmitter.prototype.listeners = function listeners(event, exists) {
+	  var evt = prefix ? prefix + event : event
+	    , available = this._events && this._events[evt];
+	
+	  if (exists) return !!available;
+	  if (!available) return [];
+	  if (available.fn) return [available.fn];
+	
+	  for (var i = 0, l = available.length, ee = new Array(l); i < l; i++) {
+	    ee[i] = available[i].fn;
+	  }
+	
+	  return ee;
+	};
+	
+	/**
+	 * Emit an event to all registered event listeners.
+	 *
+	 * @param {String} event The name of the event.
+	 * @returns {Boolean} Indication if we've emitted an event.
+	 * @api public
+	 */
+	EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
+	  var evt = prefix ? prefix + event : event;
+	
+	  if (!this._events || !this._events[evt]) return false;
+	
+	  var listeners = this._events[evt]
+	    , len = arguments.length
+	    , args
+	    , i;
+	
+	  if ('function' === typeof listeners.fn) {
+	    if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
+	
+	    switch (len) {
+	      case 1: return listeners.fn.call(listeners.context), true;
+	      case 2: return listeners.fn.call(listeners.context, a1), true;
+	      case 3: return listeners.fn.call(listeners.context, a1, a2), true;
+	      case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
+	      case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
+	      case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
+	    }
+	
+	    for (i = 1, args = new Array(len -1); i < len; i++) {
+	      args[i - 1] = arguments[i];
+	    }
+	
+	    listeners.fn.apply(listeners.context, args);
+	  } else {
+	    var length = listeners.length
+	      , j;
+	
+	    for (i = 0; i < length; i++) {
+	      if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
+	
+	      switch (len) {
+	        case 1: listeners[i].fn.call(listeners[i].context); break;
+	        case 2: listeners[i].fn.call(listeners[i].context, a1); break;
+	        case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
+	        default:
+	          if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
+	            args[j - 1] = arguments[j];
+	          }
+	
+	          listeners[i].fn.apply(listeners[i].context, args);
+	      }
+	    }
+	  }
+	
+	  return true;
+	};
+	
+	/**
+	 * Register a new EventListener for the given event.
+	 *
+	 * @param {String} event Name of the event.
+	 * @param {Functon} fn Callback function.
+	 * @param {Mixed} context The context of the function.
+	 * @api public
+	 */
+	EventEmitter.prototype.on = function on(event, fn, context) {
+	  var listener = new EE(fn, context || this)
+	    , evt = prefix ? prefix + event : event;
+	
+	  if (!this._events) this._events = prefix ? {} : Object.create(null);
+	  if (!this._events[evt]) this._events[evt] = listener;
+	  else {
+	    if (!this._events[evt].fn) this._events[evt].push(listener);
+	    else this._events[evt] = [
+	      this._events[evt], listener
+	    ];
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Add an EventListener that's only called once.
+	 *
+	 * @param {String} event Name of the event.
+	 * @param {Function} fn Callback function.
+	 * @param {Mixed} context The context of the function.
+	 * @api public
+	 */
+	EventEmitter.prototype.once = function once(event, fn, context) {
+	  var listener = new EE(fn, context || this, true)
+	    , evt = prefix ? prefix + event : event;
+	
+	  if (!this._events) this._events = prefix ? {} : Object.create(null);
+	  if (!this._events[evt]) this._events[evt] = listener;
+	  else {
+	    if (!this._events[evt].fn) this._events[evt].push(listener);
+	    else this._events[evt] = [
+	      this._events[evt], listener
+	    ];
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Remove event listeners.
+	 *
+	 * @param {String} event The event we want to remove.
+	 * @param {Function} fn The listener that we need to find.
+	 * @param {Mixed} context Only remove listeners matching this context.
+	 * @param {Boolean} once Only remove once listeners.
+	 * @api public
+	 */
+	EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
+	  var evt = prefix ? prefix + event : event;
+	
+	  if (!this._events || !this._events[evt]) return this;
+	
+	  var listeners = this._events[evt]
+	    , events = [];
+	
+	  if (fn) {
+	    if (listeners.fn) {
+	      if (
+	           listeners.fn !== fn
+	        || (once && !listeners.once)
+	        || (context && listeners.context !== context)
+	      ) {
+	        events.push(listeners);
+	      }
+	    } else {
+	      for (var i = 0, length = listeners.length; i < length; i++) {
+	        if (
+	             listeners[i].fn !== fn
+	          || (once && !listeners[i].once)
+	          || (context && listeners[i].context !== context)
+	        ) {
+	          events.push(listeners[i]);
+	        }
+	      }
+	    }
+	  }
+	
+	  //
+	  // Reset the array, or remove it completely if we have no more listeners.
+	  //
+	  if (events.length) {
+	    this._events[evt] = events.length === 1 ? events[0] : events;
+	  } else {
+	    delete this._events[evt];
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Remove all listeners or only the listeners for the specified event.
+	 *
+	 * @param {String} event The event want to remove all listeners for.
+	 * @api public
+	 */
+	EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
+	  if (!this._events) return this;
+	
+	  if (event) delete this._events[prefix ? prefix + event : event];
+	  else this._events = prefix ? {} : Object.create(null);
+	
+	  return this;
+	};
+	
+	//
+	// Alias methods names because people roll like that.
+	//
+	EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+	EventEmitter.prototype.addListener = EventEmitter.prototype.on;
+	
+	//
+	// This function doesn't apply anymore.
+	//
+	EventEmitter.prototype.setMaxListeners = function setMaxListeners() {
+	  return this;
+	};
+	
+	//
+	// Expose the prefix.
+	//
+	EventEmitter.prefixed = prefix;
+	
+	//
+	// Expose the module.
+	//
+	if (true) {
+	  module.exports = EventEmitter;
+	}
+
+
+/***/ },
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34781,7 +35140,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n", ""]);
 	
 	// exports
 
@@ -34914,10 +35273,10 @@
 	
 	  _createClass(_class, [{
 	    key: "receiveCurrentUser",
-	    value: function receiveCurrentUser(user) {
+	    value: function receiveCurrentUser(currentUser) {
 	      _dispatcher2.default.dispatch({
 	        actionType: _current_user_constants2.default.RECEIVE_CURRENT_USER,
-	        user: user
+	        currentUser: currentUser
 	      });
 	    }
 	  }]);

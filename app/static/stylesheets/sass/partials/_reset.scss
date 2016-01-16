@@ -1,6 +1,6 @@
 @import "../modules/variables";
 
-html, body, h1, h2, h3, div, ul, li, a, figure, button, textarea, form, label {
+html, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {
   padding: 0;
   border: 0;
   margin: 0;
@@ -24,6 +24,7 @@ body {
   font-size: $base-font-size;
   line-height: $base-line-height;
   background: $body-bg;
+  height: 100%;
 }
 
 input, textarea {

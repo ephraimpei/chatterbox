@@ -6,6 +6,7 @@ const CHANGE_EVENT = "change";
 
 class CurrentUserStore extends EventEmitter {
   constructor() {
+    super();
     this.currentUser = {};
   }
 
@@ -24,15 +25,21 @@ class CurrentUserStore extends EventEmitter {
   isLoggedIn() {
     return (typeof _currentUser.username !== "undefined");
   }
+
+  setCurrentUser(user) {
+    this.currentUser = user;
+  }
 }
+
+const currentUserStore = new CurrentUserStore();
 
 AppDispatcher.register(function (payload) {
   switch (payload.actionType) {
     case CurrentUserConstants.RECEIVE_CURRENT_USER:
-      _currentUser = payload.currentUser;
-      CurrentUserStore.emit(CHANGE_EVENT);
+      currentUserStore.setCurrentUser(payload.currentUser);
+      currentUserStore.emit(CHANGE_EVENT);
       break;
   }
 });
 
-export default new CurrentUserStore();
+export default currentUserStore;
