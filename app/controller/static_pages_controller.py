@@ -1,6 +1,10 @@
 from app import app
 from flask import send_from_directory
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return send_from_directory(app.static_folder, 'page_not_found.html'), 404
+
 @app.after_request
 def add_header(response):
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
