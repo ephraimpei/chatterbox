@@ -11,7 +11,6 @@ class UserSearch extends React.Component {
         <div className="user-search">
           <label>Find User</label>
           <input type="text"
-            value={ this.state.username }
             placeholder="Search for username"
             onChange={ this.autoCompleteUsername}/>
         </div>

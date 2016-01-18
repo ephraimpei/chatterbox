@@ -1,7 +1,7 @@
 from app import app
 from flask import request, session, jsonify
 from app.controller import application_controller
-from app import db
+from app.models import User
 import pdb
 
 @app.route("/api/session/post", methods=["POST"])
@@ -9,16 +9,17 @@ def create_session():
     username = request.form['user[username]']
     password = request.form['user[password]']
 
-    user = db.user.find_one({ "username": username })
+    user = User.find_by_username(username)
 
-    if user and User.validate_user_credentials(user):
+    if user and User.validate_user_credentials(user, password):
         application_controller.login(user)
 
-        return jsonify(message="Login successful! Welcome {0}".format(user.username))
+        return jsonify(username = user.username,
+            message = "User creation successful! Welcome {0}".format(user.username))
     else:
         return jsonify(error="Could not validate user credentials.")
 
-@app.route("/api/users/delete", methods=["DELETE"])
+@app.route("/api/session/delete", methods=["DELETE"])
 def destroy_session():
     application_controller.logout
 

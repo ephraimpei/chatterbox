@@ -1,19 +1,21 @@
 import React from 'react';
 import SignUpForm from './sign_up_form.jsx';
 
-import "../../../static/stylesheets/sass/components/_sign_up_page.scss";
-
 class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
     this.state={ isValid: true };
   }
 
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   render () {
     let errors;
 
     let success = function (username) {
-      this.props.history.pushState(null,'/users/' + username);
+      this.context.router.push('/users/' + username);
     }.bind(this);
 
     let failure = function (errors) {

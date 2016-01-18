@@ -14,20 +14,20 @@ class User(db.Document):
         return str(uuid.uuid1())
 
     @classmethod
-    def validate_user_credentials(cls, user):
-        return user.password_digest == bcrypt.hashpw(password, x.password_digest)
+    def validate_user_credentials(cls, user, password):
+        return user.password_digest == bcrypt.hashpw(password, user.password_digest)
 
     @classmethod
     def find_by_username(cls, username):
-        return db.user.find_one({ "username": username })
+        return User.objects.get(username = username)
 
     @classmethod
     def find_by_session_token(cls, session_token):
-        return db.user.find_one({ "session_token": session_token })
+        return User.objects.get(session_token = session_token)
 
     @classmethod
     def destroy(cls, user):
-        if db.user.remove({ username: user.username }, 1):
+        if user.delete():
             return True
         else:
             return False

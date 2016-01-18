@@ -1,4 +1,5 @@
 from flask import session
+from app.models import User
 
 def current_user():
     if session['uid']:
@@ -7,11 +8,11 @@ def current_user():
         return None
 
 def login(user):
-    session['uid'] = user.reset_session_token
+    session['uid'] = user.reset_session_token()
     user.save()
 
 def logout():
-    current_user().reset_session_token
+    current_user().reset_session_token()
     session['uid'] = None
 
 def logged_in():

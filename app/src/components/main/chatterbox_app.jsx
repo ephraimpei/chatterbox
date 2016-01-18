@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginPage from '../auth/login_page.jsx';
-import "../../../static/stylesheets/sass/components/_main_app.scss";
 
 class ChatterboxApp extends React.Component {
   constructor (props, context) {

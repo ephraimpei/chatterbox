@@ -22,7 +22,7 @@ Chatterbox is a social-themed chat app which uses the latest technologies such a
   + jQuery
   + ReactRouter
 * Python technologies
-  + PyMongo (MongoDB wrapper)
+  + MongoEngine (MongoDB wrapper)
   + BCrypt
   + Flask-Script (Shell for dev servers)
 * DB technologies

@@ -14,7 +14,8 @@ def create_user():
     new_user.reset_session_token()
 
     if new_user.save():
-        return jsonify(username=username)
+        return jsonify(username = new_user.username, 
+            message = "User creation successful! Welcome {0}".format(new_user.username))
     else:
         return jsonify(error="Could not create user.")
 
@@ -25,7 +26,7 @@ def update_user(username):
 
     user = User.find_by_username(username)
 
-    if user and User.validate_user_credentials(user):
+    if user and User.validate_user_credentials(user, password):
         updated_user = __update_user(user, option)
 
         user.username = new_username
@@ -45,7 +46,7 @@ def destroy_user(username):
 
     user = User.find_by_username(username)
 
-    if user and User.validate_user_credentials(user):
+    if user and User.validate_user_credentials(user, password):
         if User.destroy(user):
             return jsonify(message="User {0} successfully deleted!".format(user.username))
         else:
