@@ -1,9 +1,8 @@
-@import "../modules/variables";
 @import "../partials/base";
 
 .sign-up-page {
   padding-bottom: 73px;
-  
+
   h1, h2 { text-align: center; }
 
   .sign-up-form {
@@ -11,16 +10,15 @@
     margin: auto;
 
     .sign-up-form-wrapper {
-      * {
-        margin: $sign-up-form-item-margin;
-      }
+      * { margin: $sign-up-form-item-margin; }
 
-      label, a {
-        text-align: center;
-      }
+      label, a { text-align: center; }
 
-      input {
-        width: 100%;
+      input { width: 100%; }
+
+      .sign-up-form-avatar-preview {
+        width: $avatar-preview-width;
+        height: $avatar-preview-height;
       }
 
       display: flex;

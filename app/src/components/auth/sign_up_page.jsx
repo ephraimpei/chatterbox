@@ -1,7 +1,7 @@
 import React from 'react';
 import SignUpForm from './sign_up_form.jsx';
 
-require("../../../static/stylesheets/sass/components/_sign_up_page.scss");
+import "../../../static/stylesheets/sass/components/_sign_up_page.scss";
 
 class SignUpPage extends React.Component {
   constructor(props) {
@@ -12,8 +12,8 @@ class SignUpPage extends React.Component {
   render () {
     let errors;
 
-    let success = function () {
-      this.props.history.pushState(null,'/');
+    let success = function (username) {
+      this.props.history.pushState(null,'/users/' + username);
     }.bind(this);
 
     let failure = function (errors) {

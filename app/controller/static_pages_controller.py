@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import send_from_directory
 
 @app.after_request
 def add_header(response):
@@ -7,6 +7,9 @@ def add_header(response):
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
 
-@app.route('/')
+@app.route("/")
+@app.route("/users/new")
+@app.route("/users/edit")
+@app.route("/user/<username>")
 def index():
-    return render_template("index.html")
+    return send_from_directory(app.static_folder, "index.html")

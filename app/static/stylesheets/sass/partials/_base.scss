@@ -1,20 +1,7 @@
 @import "../modules/variables";
 
-h1 {
-  font-size: $h1-font-size;
-  font-weight: $bold;
-}
-
-h2 {
-  font-size: $h2-font-size;
-  font-weight: $bold;
-}
-
-input {
-  padding: $input-box-padding;
-  border-radius: $input-box-border-radius;
-}
-
 @import "./buttons";
+@import "./headers";
 @import "./icons";
+@import "./input_box";
 @import "./links";

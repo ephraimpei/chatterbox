@@ -1,8 +1,6 @@
 import React from 'react';
-import { Router, Route, Link, browserHistory } from 'react-router';
 import LoginForm from './login_form.jsx';
-
-require("../../../static/stylesheets/sass/components/_login_page.scss");
+import "../../../static/stylesheets/sass/components/_login_page.scss";
 
 class LoginPage extends React.Component {
   constructor(props, context) {

@@ -17,6 +17,10 @@ class User(db.Document):
     def validate_user_credentials(cls, user):
         return user.password_digest == bcrypt.hashpw(password, x.password_digest)
 
+    @classmethod
+    def find_by_session_token(cls, session_token):
+        return db.user.find_one({ session_token: session_token })
+
     def generate_password_digest(self, password):
         salt = bcrypt.gensalt()
         hash = bcrypt.hashpw(password, salt)

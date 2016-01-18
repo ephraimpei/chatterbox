@@ -1,18 +1,18 @@
 import $ from "jquery";
-import UserActions from "../actions/current_user_actions.js";
+import CurrentUserActions from "../actions/current_user_actions.js";
 
 class ApiUserUtil {
   create (formData, success, failure) {
     $.ajax({
-      url: "/api/users",
+      url: "/api/users/post",
       method: "POST",
       processData: false,
       contentType: false,
       dataType: "json",
       data: formData,
       success: function (data) {
-        UserActions.receiveCurrentUser(data);
-        success();
+        CurrentUserActions.receiveCurrentUser(data);
+        success(data.username);
       },
       error: function (data) {
         failure(JSON.parse(data.responseText));
