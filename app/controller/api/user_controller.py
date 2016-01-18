@@ -1,11 +1,10 @@
 from app import app
-from flask import request, session, render_template, url_for, jsonify
+from flask import request, session, jsonify
 from app.models import User
-from app import db
 import pdb
 
 @app.route("/api/users/post", methods=["POST"])
-def create():
+def create_user():
     username = request.form['user[username]']
     password = request.form['user[password]']
 
@@ -20,11 +19,11 @@ def create():
         return jsonify(error="Could not create user.")
 
 @app.route("/api/users/<username>/put", methods=["PUT"])
-def update(username):
+def update_user(username):
     password = request.form['user[password]']
     option = request.form['user[option]']
 
-    user = db.user.find_one({"username": username})
+    user = User.find_by_username(username)
 
     if user and User.validate_user_credentials(user):
         updated_user = __update_user(user, option)
@@ -41,14 +40,14 @@ def update(username):
         return jsonify(error="Could not validate user credentials.")
 
 @app.route("/api/users/<username>/delete", methods=["DELETE"])
-def destroy(username):
+def destroy_user(username):
     password = request.form['user[password]']
 
-    user = db.user.find_one({"username": username})
+    user = User.find_by_username(username)
 
     if user and User.validate_user_credentials(user):
-        if db.user.remove({ username: username }, 1):
-            return jsonify(username=username, message="User successfully deleted!")
+        if User.destroy(user):
+            return jsonify(message="User {0} successfully deleted!".format(user.username))
         else:
             return jsonify(error="Credentials are valid but could not delete user.")
     else:

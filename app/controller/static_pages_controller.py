@@ -10,6 +10,9 @@ def add_header(response):
 @app.route("/")
 @app.route("/users/new")
 @app.route("/users/edit")
-@app.route("/user/<username>")
 def index():
+    return send_from_directory(app.static_folder, "index.html")
+
+@app.route("/users/<username>")
+def show_user_profile(username):
     return send_from_directory(app.static_folder, "index.html")

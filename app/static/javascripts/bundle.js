@@ -33230,9 +33230,9 @@
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _api_current_user_util = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../apiutil/api_current_user_util.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _api_session_util = __webpack_require__(257);
 	
-	var _api_current_user_util2 = _interopRequireDefault(_api_current_user_util);
+	var _api_session_util2 = _interopRequireDefault(_api_session_util);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -33273,7 +33273,7 @@
 	      formData.append("user[username]", this.state.username);
 	      formData.append("user[password]", this.state.password);
 	
-	      _api_current_user_util2.default.login(formData, this.props.success, this.props.failure);
+	      _api_session_util2.default.login(formData, this.props.success, this.props.failure);
 	    }
 	  }, {
 	    key: 'handleKeyPress',
@@ -33394,7 +33394,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin-top: 100px; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n", ""]);
 	
 	// exports
 
@@ -33744,7 +33744,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#wrapper {\n  min-height: 100%;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n", ""]);
+	exports.push([module.id, "#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n", ""]);
 	
 	// exports
 
@@ -34153,7 +34153,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.sign-up-page {\n  padding-bottom: 73px; }\n  .sign-up-page h1, .sign-up-page h2 {\n    text-align: center; }\n  .sign-up-page .sign-up-form {\n    width: 200px;\n    margin: auto; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper {\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      margin-top: 50px; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n        margin: 5px 0; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n        text-align: center; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n        width: 100%; }\n      .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n        width: 200px;\n        height: 200px; }\n", ""]);
+	exports.push([module.id, "/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 
@@ -36206,6 +36206,73 @@
 	})(_react2.default.Component);
 	
 	exports.default = FriendsIndex;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _current_user_actions = __webpack_require__(238);
+	
+	var _current_user_actions2 = _interopRequireDefault(_current_user_actions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ApiSessionUtil = (function () {
+	  function ApiSessionUtil() {
+	    _classCallCheck(this, ApiSessionUtil);
+	  }
+	
+	  _createClass(ApiSessionUtil, [{
+	    key: "login",
+	    value: function login(credentials, _success, failure) {
+	      _jquery2.default.ajax({
+	        url: '/api/session',
+	        type: 'POST',
+	        dataType: 'json',
+	        contentType: "application/json",
+	        data: JSON.stringify({ user: credentials }),
+	        success: function success(currentUser) {
+	          _current_user_actions2.default.receiveCurrentUser(currentUser);
+	          _success();
+	        },
+	        error: function error(data) {
+	          failure(JSON.parse(data.responseText));
+	        }
+	      });
+	    }
+	  }, {
+	    key: "logout",
+	    value: function logout(_success2) {
+	      _jquery2.default.ajax({
+	        url: '/api/session',
+	        type: 'DELETE',
+	        dataType: 'json',
+	        success: function success() {
+	          _current_user_actions2.default.receiveCurrentUser({});
+	          _success2 && _success2();
+	        }
+	      });
+	    }
+	  }]);
+	
+	  return ApiSessionUtil;
+	})();
+	
+	exports.default = new ApiSessionUtil();
 
 /***/ }
 /******/ ]);

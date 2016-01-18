@@ -18,8 +18,19 @@ class User(db.Document):
         return user.password_digest == bcrypt.hashpw(password, x.password_digest)
 
     @classmethod
+    def find_by_username(cls, username):
+        return db.user.find_one({ "username": username })
+
+    @classmethod
     def find_by_session_token(cls, session_token):
-        return db.user.find_one({ session_token: session_token })
+        return db.user.find_one({ "session_token": session_token })
+
+    @classmethod
+    def destroy(cls, user):
+        if db.user.remove({ username: user.username }, 1):
+            return True
+        else:
+            return False
 
     def generate_password_digest(self, password):
         salt = bcrypt.gensalt()

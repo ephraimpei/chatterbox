@@ -1,8 +1,6 @@
 @import "../partials/base";
 
 .sign-up-page {
-  padding-bottom: 73px;
-
   h1, h2 { text-align: center; }
 
   .sign-up-form {
@@ -24,7 +22,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin-top: $sign-up-form-margin-top;
+      margin: $sign-up-form-margins;
     }
   }
 }

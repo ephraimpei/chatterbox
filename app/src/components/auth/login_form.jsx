@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
-import ApiSessionUtil from '../../apiutil/api_current_user_util.js';
+import ApiSessionUtil from '../../apiutil/api_session_util.js';
 
 class LoginForm extends React.Component {
   constructor(props, context) {
