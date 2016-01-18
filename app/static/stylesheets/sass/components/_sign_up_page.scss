@@ -12,6 +12,11 @@
 
       input { width: 100%; }
 
+      input.invalid {
+        border: $failed-validation-input-border;
+        box-shadow: $failed-validation-box-shadow;
+      }
+
       .sign-up-form-avatar-preview {
         width: $avatar-preview-width;
         height: $avatar-preview-height;

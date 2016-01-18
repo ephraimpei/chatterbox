@@ -6,6 +6,11 @@ import ApiSessionUtil from '../../apiutil/api_session_util.js';
 class LoginForm extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.handleLoginSubmission = this.handleLoginSubmission.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.logIntoDemoAccount = this.logIntoDemoAccount.bind(this);
+    this.changeUsername = this.changeUsername.bind(this);
+    this.changePassword = this.changePassword.bind(this);
     this.state = {
         isValid: true,
         errors: [],
@@ -21,8 +26,8 @@ class LoginForm extends React.Component {
 
     let formData = new FormData();
 
-    formData.append("user[username]", this.state.username);
-    formData.append("user[password]", this.state.password);
+    formData.append("username", this.state.username);
+    formData.append("password", this.state.password);
 
     ApiSessionUtil.login(formData, this.props.success, this.props.failure);
   }
@@ -32,7 +37,7 @@ class LoginForm extends React.Component {
   }
 
   logIntoDemoAccount (e) {
-
+    e.preventDefault();
   }
 
   changeUsername (e) {
@@ -49,27 +54,29 @@ class LoginForm extends React.Component {
     if (this.isValid) { errors = this.state.errors; }
 
     return (
-      <form className="login-form" onKeyPress={ this.handleKeyPress.bind(this) } onSubmit={ this.handleLoginSubmission.bind(this) }>
+      <form className="login-form"
+        onKeyPress={ this.handleKeyPress }
+        onSubmit={ this.handleLoginSubmission }>
         <div className="login-error-wrapper">
           { errors }
         </div>
 
         <div className="login-form-wrapper">
           <button className="login-form-demo-account"
-            onClick={ this.logIntoDemoAccount.bind(this) }>Demo Account</button>
+            onClick={ this.logIntoDemoAccount }>Demo Account</button>
 
           <label>Username
           <input
             className="login-form-username"
             type="text"
-            onChange={ this.changeUsername.bind(this) }/>
+            onChange={ this.changeUsername }/>
           </label>
 
           <label>Password
           <input
             className="login-form-password"
             type="password"
-            onChange={ this.changePassword.bind(this) }/>
+            onChange={ this.changePassword }/>
           </label>
 
           <button className="submit" type="submit">Log In!</button>

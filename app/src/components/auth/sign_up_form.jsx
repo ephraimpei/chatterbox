@@ -6,9 +6,16 @@ import ApiUserUtil from '../../apiutil/api_user_util.js';
 class SignUpForm extends React.Component {
   constructor(props, context) {
     super(props);
+    this.handleSignUpSubmission = this.handleSignUpSubmission.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.changeUsername = this.changeUsername.bind(this);
+    this.changePassword = this.changePassword.bind(this);
+    this.changePasswordConf = this.changePasswordConf.bind(this);
+    this.changeFile = this.changeFile.bind(this);
     this.state = {
         username: "",
         password: "",
+        passwordConf: "",
         imageUrl: "/images/avatar_placeholder.png",
         imageFile: null
     };
@@ -21,9 +28,10 @@ class SignUpForm extends React.Component {
 
     let formData = new FormData();
 
-    formData.append("user[username]", this.state.username);
-    formData.append("user[password]", this.state.password);
-    formData.append("user[avatar]", this.state.imageFile);
+    formData.append("username", this.state.username);
+    formData.append("password", this.state.password);
+    formData.append("confirm", this.state.passwordConf);
+    formData.append("avatar", this.state.imageFile);
 
     ApiUserUtil.create(formData, this.props.success, this.props.failure);
   }
@@ -40,13 +48,16 @@ class SignUpForm extends React.Component {
     this.setState({ password: e.currentTarget.value });
   }
 
+  changePasswordConf (e) {
+    this.setState({ passwordConf: e.currentTarget.value });
+  }
+
   changeFile (e) {
     let reader = new FileReader();
     let file = e.currentTarget.files[0];
 
-    reader.onloadend = function() {
+    reader.onloadend = () =>
       this.setState({ imageUrl: reader.result, imageFile: file });
-    }.bind(this);
 
     if (file) {
       reader.readAsDataURL(file);
@@ -56,36 +67,51 @@ class SignUpForm extends React.Component {
   }
 
   render() {
-    let errors;
+    let usernameErrors = this.props.usernameErrors.map( function(err, idx) {
+      return <li key={ idx }>{ err }</li>;
+    });
 
-    if (this.isValid) { errors = this.state.errors; }
-
+    let passwordErrors = this.props.passwordErrors.map( function (err, idx) {
+      return <li key={ idx }>{ err }</li>;
+    });
     return (
-      <form className="sign-up-form" onKeyPress={this.handleKeyPress.bind(this)} onSubmit={ this.handleSignUpSubmission.bind(this) }>
-        <div className="sign-up-error-wrapper">
-          { errors }
-        </div>
+      <form className="sign-up-form"
+        onKeyPress={ this.handleKeyPress }
+        onSubmit={ this.handleSignUpSubmission }>
 
         <div className="sign-up-form-wrapper">
           <label>Username
+          <ul className="sign-up-error-wrapper">
+            { usernameErrors }
+          </ul>
           <input
-            className="sign-up-form-username"
+            className="sign-up-form-username-input"
             type="text"
-            onChange={ this.changeUsername.bind(this) }/>
+            onChange={ this.changeUsername }/>
           </label>
 
           <label>Password
+          <ul className="sign-up-error-wrapper">
+            { passwordErrors }
+          </ul>
           <input
-            className="sign-up-form-password"
+            className="sign-up-form-password-input"
             type="password"
-            onChange={ this.changePassword.bind(this) }/>
+            onChange={ this.changePassword }/>
+          </label>
+
+          <label>Confirm Password
+          <input
+            className="sign-up-form-password-input"
+            type="password"
+            onChange={ this.changePasswordConf }/>
           </label>
 
           <label>Avatar Upload
           <input
             className="sign-up-form-avatar"
             type="file"
-            onChange={ this.changeFile.bind(this) }/>
+            onChange={ this.changeFile }/>
           </label>
 
           <img className="sign-up-form-avatar-preview" src={ this.state.imageUrl } />

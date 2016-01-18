@@ -33258,6 +33258,11 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginForm).call(this, props, context));
 	
+	    _this.handleLoginSubmission = _this.handleLoginSubmission.bind(_this);
+	    _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+	    _this.logIntoDemoAccount = _this.logIntoDemoAccount.bind(_this);
+	    _this.changeUsername = _this.changeUsername.bind(_this);
+	    _this.changePassword = _this.changePassword.bind(_this);
 	    _this.state = {
 	      isValid: true,
 	      errors: [],
@@ -33278,8 +33283,8 @@
 	
 	      var formData = new FormData();
 	
-	      formData.append("user[username]", this.state.username);
-	      formData.append("user[password]", this.state.password);
+	      formData.append("username", this.state.username);
+	      formData.append("password", this.state.password);
 	
 	      _api_session_util2.default.login(formData, this.props.success, this.props.failure);
 	    }
@@ -33292,7 +33297,9 @@
 	    }
 	  }, {
 	    key: 'logIntoDemoAccount',
-	    value: function logIntoDemoAccount(e) {}
+	    value: function logIntoDemoAccount(e) {
+	      e.preventDefault();
+	    }
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
@@ -33314,7 +33321,9 @@
 	
 	      return _react2.default.createElement(
 	        'form',
-	        { className: 'login-form', onKeyPress: this.handleKeyPress.bind(this), onSubmit: this.handleLoginSubmission.bind(this) },
+	        { className: 'login-form',
+	          onKeyPress: this.handleKeyPress,
+	          onSubmit: this.handleLoginSubmission },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'login-error-wrapper' },
@@ -33326,7 +33335,7 @@
 	          _react2.default.createElement(
 	            'button',
 	            { className: 'login-form-demo-account',
-	              onClick: this.logIntoDemoAccount.bind(this) },
+	              onClick: this.logIntoDemoAccount },
 	            'Demo Account'
 	          ),
 	          _react2.default.createElement(
@@ -33336,7 +33345,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'login-form-username',
 	              type: 'text',
-	              onChange: this.changeUsername.bind(this) })
+	              onChange: this.changeUsername })
 	          ),
 	          _react2.default.createElement(
 	            'label',
@@ -33345,7 +33354,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'login-form-password',
 	              type: 'password',
-	              onChange: this.changePassword.bind(this) })
+	              onChange: this.changePassword })
 	          ),
 	          _react2.default.createElement(
 	            'button',
@@ -33744,7 +33753,7 @@
 	          ),
 	          _react2.default.createElement(
 	            "a",
-	            { href: "https://github.com/ephraimpei" },
+	            { href: "https://github.com/ephraimpei/chatterbox" },
 	            _react2.default.createElement("img", {
 	              className: "social-media-icon",
 	              src: "/images/icons/github.png" })
@@ -33777,6 +33786,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	var _sign_up_form = __webpack_require__(222);
 	
 	var _sign_up_form2 = _interopRequireDefault(_sign_up_form);
@@ -33797,25 +33810,48 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpPage).call(this, props));
 	
-	    _this.state = { isValid: true };
+	    _this.successfulSignUp = _this.successfulSignUp.bind(_this);
+	    _this.failedSignUp = _this.failedSignUp.bind(_this);
+	    _this.state = { usernameErrors: [], passwordErrors: [] };
 	    return _this;
 	  }
 	
 	  _createClass(SignUpPage, [{
+	    key: 'successfulSignUp',
+	    value: function successfulSignUp(username) {
+	      this.context.router.push('/users/' + username);
+	    }
+	  }, {
+	    key: 'failedSignUp',
+	    value: function failedSignUp(errors) {
+	      (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
+	
+	      var usernameErrors = [];
+	      var passwordErrors = [];
+	
+	      errors.forEach(function (err) {
+	        switch (err[0]) {
+	          case "username":
+	            usernameErrors.push(err[1][0]);
+	            (0, _jquery2.default)(".sign-up-form-username-input").addClass("invalid");
+	            break;
+	          case "password":
+	            passwordErrors.push(err[1][0]);
+	            if (!(0, _jquery2.default)(".sign-up-form-password-input").hasClass("invalid")) {
+	              (0, _jquery2.default)(".sign-up-form-password-input").addClass("invalid");
+	            }
+	            break;
+	        }
+	      });
+	
+	      this.setState({
+	        usernameErrors: usernameErrors,
+	        passwordErrors: passwordErrors
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var errors = undefined;
-	
-	      var success = (function (username) {
-	        this.context.router.push('/users/' + username);
-	      }).bind(this);
-	
-	      var failure = (function (errors) {
-	        $(".submit").removeClass("disabled").prop("disabled", false);
-	        this.setState({ isValid: false });
-	        errors = errors;
-	      }).bind(this);
-	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'sign-up-page' },
@@ -33829,7 +33865,10 @@
 	          null,
 	          'Create a new user to get going!'
 	        ),
-	        _react2.default.createElement(_sign_up_form2.default, { success: success, failure: failure, errors: errors })
+	        _react2.default.createElement(_sign_up_form2.default, { success: this.successfulSignUp,
+	          failure: this.failedSignUp,
+	          usernameErrors: this.state.usernameErrors,
+	          passwordErrors: this.state.passwordErrors })
 	      );
 	    }
 	  }]);
@@ -33884,9 +33923,16 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignUpForm).call(this, props));
 	
+	    _this.handleSignUpSubmission = _this.handleSignUpSubmission.bind(_this);
+	    _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+	    _this.changeUsername = _this.changeUsername.bind(_this);
+	    _this.changePassword = _this.changePassword.bind(_this);
+	    _this.changePasswordConf = _this.changePasswordConf.bind(_this);
+	    _this.changeFile = _this.changeFile.bind(_this);
 	    _this.state = {
 	      username: "",
 	      password: "",
+	      passwordConf: "",
 	      imageUrl: "/images/avatar_placeholder.png",
 	      imageFile: null
 	    };
@@ -33904,9 +33950,10 @@
 	
 	      var formData = new FormData();
 	
-	      formData.append("user[username]", this.state.username);
-	      formData.append("user[password]", this.state.password);
-	      formData.append("user[avatar]", this.state.imageFile);
+	      formData.append("username", this.state.username);
+	      formData.append("password", this.state.password);
+	      formData.append("confirm", this.state.passwordConf);
+	      formData.append("avatar", this.state.imageFile);
 	
 	      _api_user_util2.default.create(formData, this.props.success, this.props.failure);
 	    }
@@ -33928,14 +33975,21 @@
 	      this.setState({ password: e.currentTarget.value });
 	    }
 	  }, {
+	    key: 'changePasswordConf',
+	    value: function changePasswordConf(e) {
+	      this.setState({ passwordConf: e.currentTarget.value });
+	    }
+	  }, {
 	    key: 'changeFile',
 	    value: function changeFile(e) {
+	      var _this2 = this;
+	
 	      var reader = new FileReader();
 	      var file = e.currentTarget.files[0];
 	
-	      reader.onloadend = (function () {
-	        this.setState({ imageUrl: reader.result, imageFile: file });
-	      }).bind(this);
+	      reader.onloadend = function () {
+	        return _this2.setState({ imageUrl: reader.result, imageFile: file });
+	      };
 	
 	      if (file) {
 	        reader.readAsDataURL(file);
@@ -33946,20 +34000,26 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var errors = undefined;
+	      var usernameErrors = this.props.usernameErrors.map(function (err, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx },
+	          err
+	        );
+	      });
 	
-	      if (this.isValid) {
-	        errors = this.state.errors;
-	      }
-	
+	      var passwordErrors = this.props.passwordErrors.map(function (err, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx },
+	          err
+	        );
+	      });
 	      return _react2.default.createElement(
 	        'form',
-	        { className: 'sign-up-form', onKeyPress: this.handleKeyPress.bind(this), onSubmit: this.handleSignUpSubmission.bind(this) },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'sign-up-error-wrapper' },
-	          errors
-	        ),
+	        { className: 'sign-up-form',
+	          onKeyPress: this.handleKeyPress,
+	          onSubmit: this.handleSignUpSubmission },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'sign-up-form-wrapper' },
@@ -33967,19 +34027,38 @@
 	            'label',
 	            null,
 	            'Username',
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'sign-up-error-wrapper' },
+	              usernameErrors
+	            ),
 	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-username',
+	              className: 'sign-up-form-username-input',
 	              type: 'text',
-	              onChange: this.changeUsername.bind(this) })
+	              onChange: this.changeUsername })
 	          ),
 	          _react2.default.createElement(
 	            'label',
 	            null,
 	            'Password',
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'sign-up-error-wrapper' },
+	              passwordErrors
+	            ),
 	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-password',
+	              className: 'sign-up-form-password-input',
 	              type: 'password',
-	              onChange: this.changePassword.bind(this) })
+	              onChange: this.changePassword })
+	          ),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Confirm Password',
+	            _react2.default.createElement('input', {
+	              className: 'sign-up-form-password-input',
+	              type: 'password',
+	              onChange: this.changePasswordConf })
 	          ),
 	          _react2.default.createElement(
 	            'label',
@@ -33988,7 +34067,7 @@
 	            _react2.default.createElement('input', {
 	              className: 'sign-up-form-avatar',
 	              type: 'file',
-	              onChange: this.changeFile.bind(this) })
+	              onChange: this.changeFile })
 	          ),
 	          _react2.default.createElement('img', { className: 'sign-up-form-avatar-preview', src: this.state.imageUrl }),
 	          _react2.default.createElement(
@@ -34741,7 +34820,7 @@
 	          _success(data.username);
 	        },
 	        error: function error(data) {
-	          failure(JSON.parse(data.responseText));
+	          failure(data.responseJSON.errors);
 	        }
 	      });
 	    }
@@ -36088,7 +36167,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 20px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* failed validation inputs */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input.invalid {\n      border: 2px solid red;\n      box-shadow: 0 0 10px red; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 

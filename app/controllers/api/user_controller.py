@@ -1,30 +1,31 @@
 from app import app
 from flask import request, session, jsonify
-from app.models import User
+from app.models import User, RegistrationForm
 import pdb
 
 @app.route("/api/users/post", methods=["POST"])
 def create_user():
-    username = request.form['user[username]']
-    password = request.form['user[password]']
+    form = RegistrationForm(request.form)
 
-    new_user = User(username = username)
-    new_user.generate_password_digest(password)
+    if form.validate():
+        new_user = User(username = form.username.data)
+        new_user.generate_password_digest(form.password.data)
+        new_user.reset_session_token()
 
-    new_user.reset_session_token()
-
-    if new_user.save():
-        return jsonify(username = new_user.username, 
-            message = "User creation successful! Welcome {0}".format(new_user.username))
+        if new_user.save():
+            return jsonify(username = new_user.username,
+                message = "User creation successful! Welcome {0}".format(new_user.username))
+        else:
+            return jsonify(error="Could not create user."), 401
     else:
-        return jsonify(error="Could not create user.")
+        return jsonify(errors=form.errors.items()), 401
 
 @app.route("/api/users/<username>/put", methods=["PUT"])
 def update_user(username):
-    password = request.form['user[password]']
-    option = request.form['user[option]']
+    password = request.form['password']
+    option = request.form['option']
 
-    user = User.find_by_username(username)
+    user = User.find_by_username(username)[0]
 
     if user and User.validate_user_credentials(user, password):
         updated_user = __update_user(user, option)
@@ -42,9 +43,9 @@ def update_user(username):
 
 @app.route("/api/users/<username>/delete", methods=["DELETE"])
 def destroy_user(username):
-    password = request.form['user[password]']
+    password = request.form['password']
 
-    user = User.find_by_username(username)
+    user = User.find_by_username(username)[0]
 
     if user and User.validate_user_credentials(user, password):
         if User.destroy(user):

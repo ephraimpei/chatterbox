@@ -3,7 +3,7 @@ from app.models import User
 
 def current_user():
     if session['uid']:
-        return User.find_by_session_token(session['uid'])
+        return User.find_by_session_token(session['uid'])[0]
     else:
         return None
 

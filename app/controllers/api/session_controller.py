@@ -1,15 +1,15 @@
 from app import app
 from flask import request, session, jsonify
-from app.controller import application_controller
+from app.controllers import application_controller
 from app.models import User
 import pdb
 
 @app.route("/api/session/post", methods=["POST"])
 def create_session():
-    username = request.form['user[username]']
-    password = request.form['user[password]']
+    username = request.form['username']
+    password = request.form['password']
 
-    user = User.find_by_username(username)
+    user = User.find_by_username(username)[0]
 
     if user and User.validate_user_credentials(user, password):
         application_controller.login(user)

@@ -19,11 +19,11 @@ class User(db.Document):
 
     @classmethod
     def find_by_username(cls, username):
-        return User.objects.get(username = username)
+        return User.objects(username = username)
 
     @classmethod
     def find_by_session_token(cls, session_token):
-        return User.objects.get(session_token = session_token)
+        return User.objects(session_token = session_token)
 
     @classmethod
     def destroy(cls, user):
