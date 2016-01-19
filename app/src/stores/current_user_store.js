@@ -18,12 +18,16 @@ class CurrentUserStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  currentUser() {
-    return $.extend({}, _currentUser);
+  getCurrentUser() {
+    return Object.assign({}, this.currentUser);
   }
 
   isLoggedIn() {
-    return (typeof _currentUser.username !== "undefined");
+    if (Object.keys(this.currentUser).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   setCurrentUser(user) {

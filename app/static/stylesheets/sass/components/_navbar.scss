@@ -1,0 +1,19 @@
+.header {
+  background: $header-background;
+  border-bottom: $header-bottom-border;
+
+  .nav-bar {
+    width: $nav-bar-width;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    img {
+      width: 75px;
+      height: 75px;
+    }
+  }
+}
+
+@import "user_search";

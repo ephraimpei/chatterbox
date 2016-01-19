@@ -11,8 +11,8 @@ class ApiSessionUtil {
       dataType: "json",
       data: formData,
       success: function (data) {
-        CurrentUserActions.receiveCurrentUser(data);
-        success(data.message, data.username);
+        CurrentUserActions.receiveCurrentUser(data.user);
+        success(data.message, data.user.username);
       },
       error: function (data) {
         failure(data.responseJSON.errors);
@@ -28,6 +28,18 @@ class ApiSessionUtil {
       success: function () {
         CurrentUserActions.receiveCurrentUser({});
         success && success();
+      }
+    });
+  }
+
+  fetchCurrentUser() {
+    $.ajax({
+      url: '/api/session/get',
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        debugger;
+        CurrentUserActions.receiveCurrentUser(data.user);
       }
     });
   }

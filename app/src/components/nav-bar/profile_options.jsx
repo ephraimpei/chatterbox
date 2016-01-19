@@ -1,16 +1,16 @@
 import React from 'react';
 
-class Notifications extends React.Component {
+class ProfileOptions extends React.Component {
   constructor (props, context) {
     super(props, context);
   }
 
   render () {
     return (
-      <div className="notifications">Notifications
+      <div className="profile-options">Profile Options
       </div>
      );
   }
 }
 
-export default Notifications;
+export default ProfileOptions;

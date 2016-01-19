@@ -39,6 +39,7 @@ class User(db.Document):
 
     def reset_session_token(self):
         self.session_token = User.generate_session_token()
+        return self.session_token
 
     def get_absolute_url(self):
         return url_for('user', kwargs={"username": self.username})

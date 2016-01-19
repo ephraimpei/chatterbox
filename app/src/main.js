@@ -12,7 +12,7 @@ import ChatterboxApp from './components/main/chatterbox_app.jsx';
 import Footer from './components/main/footer.jsx';
 import LoginPage from './components/auth/login_page.jsx';
 import SignUpPage from './components/auth/sign_up_page.jsx';
-import UserProfile from './components/profile/user_profile.jsx';
+import UserHomePage from './components/user/user_home_page.jsx';
 
 // stores
 import CurrentUserStore from './stores/current_user_store.js';
@@ -22,7 +22,7 @@ $(document).ready(function () {
     <Route path="/" components={ ChatterboxApp } >
       <IndexRoute component={ LoginPage } />
       <Route path="/users/new" components={ SignUpPage } />
-      <Route path="/users/:username" components={ UserProfile } />
+      <Route path="/users/:username" components={ UserHomePage } />
     </Route>
   );
 

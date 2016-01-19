@@ -7,3 +7,4 @@ app/__init__.py
 node_modules
 .sass-cache
 *.log
+*.yaml

@@ -1,14 +1,16 @@
 import React from 'react';
 import $ from 'jquery';
 import LoginForm from './login_form.jsx';
+import currentUserStore from '../../stores/current_user_store.js';
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.successfulSignUp = this.successfulSignUp.bind(this);
-    this.failedSignUp = this.failedSignUp.bind(this);
+    this.successfulLogin = this.successfulLogin.bind(this);
+    this.failedLogin = this.failedLogin.bind(this);
     this.deleteUsernameErrors = this.deleteUsernameErrors.bind(this);
     this.deletePasswordErrors = this.deletePasswordErrors.bind(this);
+    this.__checkIfLoggedIn = this.__checkIfLoggedIn.bind(this);
     this.state={ usernameErrors:[], passwordErrors:[] };
   }
 
@@ -16,7 +18,19 @@ class LoginPage extends React.Component {
     router: React.PropTypes.object.isRequired
   }
 
-  successfulSignUp (message, username) {
+  componentWillMount () {
+    this.__checkIfLoggedIn();
+  }
+
+  componentDidMount () {
+    currentUserStore.addChangeListener(this.__checkIfLoggedIn);
+  }
+
+  componentWillUnmount () {
+    currentUserStore.removeChangeListener(this.__checkIfLoggedIn);
+  }
+
+  successfulLogin (message, username) {
     this.context.router.push('/users/' + username);
 
     $('#flash').text(message);
@@ -26,7 +40,7 @@ class LoginPage extends React.Component {
     });
   }
 
-  failedSignUp (errors) {
+  failedLogin (errors) {
     $(".submit").removeClass("disabled").prop("disabled", false);
 
     let [usernameErrors, passwordErrors] = [[], []];
@@ -60,13 +74,19 @@ class LoginPage extends React.Component {
     this.setState({ passwordErrors: [] })
   }
 
+  __checkIfLoggedIn() {
+    if (currentUserStore.isLoggedIn()) {
+      this.context.router.push('/users/' + currentUserStore.getCurrentUser().username);
+    }
+  }
+
   render () {
     return (
       <div className="login-page">
         <h1>Welcome to Chatterbox!</h1>
         <h2>Please login to continue.</h2>
-        <LoginForm success={ this.successfulSignUp }
-          failure={ this.failedSignUp }
+        <LoginForm success={ this.successfulLogin }
+          failure={ this.failedLogin }
           usernameErrors={ this.state.usernameErrors }
           passwordErrors={ this.state.passwordErrors }
           deleteUsernameErrors={ this.deleteUsernameErrors }

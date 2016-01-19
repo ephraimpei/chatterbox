@@ -3,6 +3,7 @@ from flask import request, session, jsonify
 from app.models import User
 from app.models.forms import RegistrationForm
 from app.controllers import application_controller
+from app.mixins import *
 import pdb
 
 @app.route("/api/users/post", methods=["POST"])
@@ -15,9 +16,14 @@ def create_user():
         new_user.reset_session_token()
 
         if new_user.save():
+            if application_controller.logged_in():
+                application_controller.logout()
+
             application_controller.login(new_user)
 
-            return jsonify(username = new_user.username,
+            user_response = build_user_response_object(new_user)
+
+            return jsonify(user = user_response,
                 message = "User creation successful! Welcome {0}!".format(new_user.username))
         else:
             return jsonify(error="Could not create user."), 401

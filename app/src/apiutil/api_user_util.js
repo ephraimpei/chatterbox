@@ -11,8 +11,8 @@ class ApiUserUtil {
       dataType: "json",
       data: formData,
       success: function (data) {
-        CurrentUserActions.receiveCurrentUser(data);
-        success(data.message, data.username);
+        CurrentUserActions.receiveCurrentUser(data.user);
+        success(data.message, data.user.username);
       },
       error: function (data) {
         failure(data.responseJSON.errors);

@@ -1,5 +1,6 @@
 from flask import session
 from app.models import User
+import pdb
 
 def current_user():
     if session['uid']:
