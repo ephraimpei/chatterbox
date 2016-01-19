@@ -12,8 +12,6 @@ class LoginForm extends React.Component {
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.state = {
-        isValid: true,
-        errors: [],
         username: "",
         password: "",
     };
@@ -41,40 +39,58 @@ class LoginForm extends React.Component {
   }
 
   changeUsername (e) {
+    if ($(".login-form-username-input").hasClass("invalid")) {
+      $(".login-form-username-input").removeClass("invalid");
+    }
+
+    this.props.deleteUsernameErrors();
+
     this.setState({ username: e.currentTarget.value });
   }
 
   changePassword (e) {
+    if ($(".login-form-password-input").hasClass("invalid")) {
+      $(".login-form-password-input").removeClass("invalid");
+    }
+
+    this.props.deletePasswordErrors();
+
     this.setState({ password: e.currentTarget.value });
   }
 
   render() {
-    let errors;
+    let usernameErrors = this.props.usernameErrors.map( function(err, idx) {
+      return <li key={ idx }>{ err }</li>;
+    });
 
-    if (this.isValid) { errors = this.state.errors; }
+    let passwordErrors = this.props.passwordErrors.map( function (err, idx) {
+      return <li key={ idx }>{ err }</li>;
+    });
 
     return (
       <form className="login-form"
         onKeyPress={ this.handleKeyPress }
         onSubmit={ this.handleLoginSubmission }>
-        <div className="login-error-wrapper">
-          { errors }
-        </div>
-
         <div className="login-form-wrapper">
           <button className="login-form-demo-account"
             onClick={ this.logIntoDemoAccount }>Demo Account</button>
 
           <label>Username
+          <ul className="login-form-error-wrapper">
+            { usernameErrors }
+          </ul>
           <input
-            className="login-form-username"
+            className="login-form-username-input"
             type="text"
             onChange={ this.changeUsername }/>
           </label>
 
           <label>Password
+          <ul className="login-form-error-wrapper">
+            { passwordErrors }
+          </ul>
           <input
-            className="login-form-password"
+            className="login-form-password-input"
             type="password"
             onChange={ this.changePassword }/>
           </label>

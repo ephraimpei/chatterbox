@@ -7,6 +7,8 @@ class SignUpPage extends React.Component {
     super(props);
     this.successfulSignUp = this.successfulSignUp.bind(this);
     this.failedSignUp = this.failedSignUp.bind(this);
+    this.deleteUsernameErrors = this.deleteUsernameErrors.bind(this);
+    this.deletePasswordErrors = this.deletePasswordErrors.bind(this);
     this.state={ usernameErrors:[], passwordErrors:[] };
   }
 
@@ -43,6 +45,15 @@ class SignUpPage extends React.Component {
       passwordErrors: passwordErrors
     });
   }
+
+  deleteUsernameErrors () {
+    this.setState({ usernameErrors: [] })
+  }
+
+  deletePasswordErrors () {
+    this.setState({ passwordErrors: [] })
+  }
+
   render () {
     return (
       <div className="sign-up-page">
@@ -51,7 +62,9 @@ class SignUpPage extends React.Component {
         <SignUpForm success={ this.successfulSignUp }
           failure={ this.failedSignUp }
           usernameErrors={ this.state.usernameErrors }
-          passwordErrors={ this.state.passwordErrors }/>
+          passwordErrors={ this.state.passwordErrors }
+          deleteUsernameErrors={ this.deleteUsernameErrors }
+          deletePasswordErrors={ this.deletePasswordErrors }/>
       </div>
     );
   }

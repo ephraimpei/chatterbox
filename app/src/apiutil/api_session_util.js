@@ -15,7 +15,7 @@ class ApiSessionUtil {
         success(data.username);
       },
       error: function (data) {
-        failure(JSON.parse(data.responseText));
+        failure(data.responseJSON.errors);
       }
     });
   }

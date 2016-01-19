@@ -1,11 +1,11 @@
 from wtforms import Form, StringField, PasswordField, validators
-from app.models.validations import duplicate_check
+from app.models.validations import check_if_username_taken
 
 class RegistrationForm(Form):
     username = StringField('username', [
         validators.Required(),
         validators.Length(min=4, max=25),
-        duplicate_check
+        check_if_username_taken
     ])
     password = PasswordField('password', [
         validators.Required(),

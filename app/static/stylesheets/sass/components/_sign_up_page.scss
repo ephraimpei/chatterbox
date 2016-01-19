@@ -6,16 +6,17 @@
     margin: auto;
 
     .sign-up-form-wrapper {
-      * { margin: $sign-up-form-item-margin; }
-
-      label, a { text-align: center; }
-
-      input { width: 100%; }
-
-      input.invalid {
-        border: $failed-validation-input-border;
-        box-shadow: $failed-validation-box-shadow;
+      * {
+        margin: $sign-up-form-item-margin;
       }
+
+      label, a {
+        text-align: center;
+      }
+
+      input {
+        width: 100%;
+       }
 
       .sign-up-form-avatar-preview {
         width: $avatar-preview-width;

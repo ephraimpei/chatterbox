@@ -35,6 +35,8 @@ $h2-font-size: 24px;
 /* input boxes */
 $input-box-padding: 5px 2.5px;
 $input-box-border-radius: 10px;
+$failed-validation-input-border: 2px solid red;
+$failed-validation-box-shadow: 0 0 10px red;
 
 /* footer */
 $footer-height: 72px;
@@ -61,7 +63,3 @@ $sign-up-form-margins: 50px 0;
 $sign-up-input-box-width: 100%;
 $avatar-preview-width: 200px;
 $avatar-preview-height: 200px;
-
-/* failed validation inputs */
-$failed-validation-input-border: 2px solid red;
-$failed-validation-box-shadow: 0 0 10px red;

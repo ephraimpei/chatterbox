@@ -33151,6 +33151,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	var _login_form = __webpack_require__(211);
 	
 	var _login_form2 = _interopRequireDefault(_login_form);
@@ -33171,25 +33175,60 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginPage).call(this, props));
 	
-	    _this.state = { isValid: true };
+	    _this.successfulSignUp = _this.successfulSignUp.bind(_this);
+	    _this.failedSignUp = _this.failedSignUp.bind(_this);
+	    _this.deleteUsernameErrors = _this.deleteUsernameErrors.bind(_this);
+	    _this.deletePasswordErrors = _this.deletePasswordErrors.bind(_this);
+	    _this.state = { usernameErrors: [], passwordErrors: [] };
 	    return _this;
 	  }
 	
 	  _createClass(LoginPage, [{
+	    key: 'successfulSignUp',
+	    value: function successfulSignUp(username) {
+	      this.context.router.push('/users/' + username);
+	    }
+	  }, {
+	    key: 'failedSignUp',
+	    value: function failedSignUp(errors) {
+	      (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
+	
+	      var usernameErrors = [];
+	      var passwordErrors = [];
+	
+	      errors.forEach(function (err) {
+	        switch (err[0]) {
+	          case "username":
+	            usernameErrors.push(err[1][0]);
+	            (0, _jquery2.default)(".login-form-username-input").addClass("invalid");
+	            break;
+	          case "password":
+	            passwordErrors.push(err[1][0]);
+	            if (!(0, _jquery2.default)(".login-form-password-input").hasClass("invalid")) {
+	              (0, _jquery2.default)(".login-form-password-input").addClass("invalid");
+	            }
+	            break;
+	        }
+	      });
+	
+	      this.setState({
+	        usernameErrors: usernameErrors,
+	        passwordErrors: passwordErrors
+	      });
+	    }
+	  }, {
+	    key: 'deleteUsernameErrors',
+	    value: function deleteUsernameErrors() {
+	      this.setState({ usernameErrors: [] });
+	    }
+	  }, {
+	    key: 'deletePasswordErrors',
+	    value: function deletePasswordErrors() {
+	      this.setState({ passwordErrors: [] });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var errors = undefined;
-	
-	      var success = (function (username) {
-	        this.context.router.push('/users/' + username);
-	      }).bind(this);
-	
-	      var failure = (function (errors) {
-	        $(".submit").removeClass("disabled").prop("disabled", false);
-	        this.setState({ isValid: false });
-	        errors = errors;
-	      }).bind(this);
-	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'login-page' },
@@ -33203,7 +33242,12 @@
 	          null,
 	          'Please login to continue.'
 	        ),
-	        _react2.default.createElement(_login_form2.default, { success: success, failure: failure, errors: errors })
+	        _react2.default.createElement(_login_form2.default, { success: this.successfulSignUp,
+	          failure: this.failedSignUp,
+	          usernameErrors: this.state.usernameErrors,
+	          passwordErrors: this.state.passwordErrors,
+	          deleteUsernameErrors: this.deleteUsernameErrors,
+	          deletePasswordErrors: this.deletePasswordErrors })
 	      );
 	    }
 	  }]);
@@ -33264,8 +33308,6 @@
 	    _this.changeUsername = _this.changeUsername.bind(_this);
 	    _this.changePassword = _this.changePassword.bind(_this);
 	    _this.state = {
-	      isValid: true,
-	      errors: [],
 	      username: "",
 	      password: ""
 	    };
@@ -33303,32 +33345,49 @@
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
+	      if ((0, _jquery2.default)(".login-form-username-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".login-form-username-input").removeClass("invalid");
+	      }
+	
+	      this.props.deleteUsernameErrors();
+	
 	      this.setState({ username: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
+	      if ((0, _jquery2.default)(".login-form-password-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".login-form-password-input").removeClass("invalid");
+	      }
+	
+	      this.props.deletePasswordErrors();
+	
 	      this.setState({ password: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var errors = undefined;
+	      var usernameErrors = this.props.usernameErrors.map(function (err, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx },
+	          err
+	        );
+	      });
 	
-	      if (this.isValid) {
-	        errors = this.state.errors;
-	      }
+	      var passwordErrors = this.props.passwordErrors.map(function (err, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx },
+	          err
+	        );
+	      });
 	
 	      return _react2.default.createElement(
 	        'form',
 	        { className: 'login-form',
 	          onKeyPress: this.handleKeyPress,
 	          onSubmit: this.handleLoginSubmission },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'login-error-wrapper' },
-	          errors
-	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'login-form-wrapper' },
@@ -33342,8 +33401,13 @@
 	            'label',
 	            null,
 	            'Username',
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'login-form-error-wrapper' },
+	              usernameErrors
+	            ),
 	            _react2.default.createElement('input', {
-	              className: 'login-form-username',
+	              className: 'login-form-username-input',
 	              type: 'text',
 	              onChange: this.changeUsername })
 	          ),
@@ -33351,8 +33415,13 @@
 	            'label',
 	            null,
 	            'Password',
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'login-form-error-wrapper' },
+	              passwordErrors
+	            ),
 	            _react2.default.createElement('input', {
-	              className: 'login-form-password',
+	              className: 'login-form-password-input',
 	              type: 'password',
 	              onChange: this.changePassword })
 	          ),
@@ -33812,6 +33881,8 @@
 	
 	    _this.successfulSignUp = _this.successfulSignUp.bind(_this);
 	    _this.failedSignUp = _this.failedSignUp.bind(_this);
+	    _this.deleteUsernameErrors = _this.deleteUsernameErrors.bind(_this);
+	    _this.deletePasswordErrors = _this.deletePasswordErrors.bind(_this);
 	    _this.state = { usernameErrors: [], passwordErrors: [] };
 	    return _this;
 	  }
@@ -33850,6 +33921,16 @@
 	      });
 	    }
 	  }, {
+	    key: 'deleteUsernameErrors',
+	    value: function deleteUsernameErrors() {
+	      this.setState({ usernameErrors: [] });
+	    }
+	  }, {
+	    key: 'deletePasswordErrors',
+	    value: function deletePasswordErrors() {
+	      this.setState({ passwordErrors: [] });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -33868,7 +33949,9 @@
 	        _react2.default.createElement(_sign_up_form2.default, { success: this.successfulSignUp,
 	          failure: this.failedSignUp,
 	          usernameErrors: this.state.usernameErrors,
-	          passwordErrors: this.state.passwordErrors })
+	          passwordErrors: this.state.passwordErrors,
+	          deleteUsernameErrors: this.deleteUsernameErrors,
+	          deletePasswordErrors: this.deletePasswordErrors })
 	      );
 	    }
 	  }]);
@@ -33967,17 +34050,38 @@
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
+	      if ((0, _jquery2.default)(".sign-up-form-username-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".sign-up-form-username-input").removeClass("invalid");
+	      }
+	
+	      this.props.deleteUsernameErrors();
+	
 	      this.setState({ username: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
+	      this.removeInvalidClass();
+	
+	      this.props.deletePasswordErrors();
+	
 	      this.setState({ password: e.currentTarget.value });
 	    }
 	  }, {
 	    key: 'changePasswordConf',
 	    value: function changePasswordConf(e) {
+	      this.removeInvalidClass();
+	
+	      this.props.deletePasswordErrors();
+	
 	      this.setState({ passwordConf: e.currentTarget.value });
+	    }
+	  }, {
+	    key: 'removeInvalidClass',
+	    value: function removeInvalidClass() {
+	      if ((0, _jquery2.default)(".sign-up-form-password-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".sign-up-form-password-input").removeClass("invalid");
+	      }
 	    }
 	  }, {
 	    key: 'changeFile',
@@ -36108,7 +36212,7 @@
 	          _success(data.username);
 	        },
 	        error: function error(data) {
-	          failure(JSON.parse(data.responseText));
+	          failure(data.responseJSON.errors);
 	        }
 	      });
 	    }
@@ -36167,7 +36271,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\n/* failed validation inputs */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input.invalid {\n      border: 2px solid red;\n      box-shadow: 0 0 10px red; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* footer */\n/* login page */\n/* sign up page */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 1000px;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 

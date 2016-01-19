@@ -41,15 +41,35 @@ class SignUpForm extends React.Component {
   }
 
   changeUsername (e) {
+    if ($(".sign-up-form-username-input").hasClass("invalid")) {
+      $(".sign-up-form-username-input").removeClass("invalid");
+    }
+
+    this.props.deleteUsernameErrors();
+
     this.setState({ username: e.currentTarget.value });
   }
 
   changePassword (e) {
+    this.removeInvalidClass();
+
+    this.props.deletePasswordErrors();
+
     this.setState({ password: e.currentTarget.value });
   }
 
   changePasswordConf (e) {
+    this.removeInvalidClass();
+
+    this.props.deletePasswordErrors();
+
     this.setState({ passwordConf: e.currentTarget.value });
+  }
+
+  removeInvalidClass () {
+    if ($(".sign-up-form-password-input").hasClass("invalid")) {
+      $(".sign-up-form-password-input").removeClass("invalid");
+    }
   }
 
   changeFile (e) {
