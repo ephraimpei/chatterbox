@@ -38,6 +38,15 @@ $input-box-border-radius: 10px;
 $failed-validation-input-border: 2px solid red;
 $failed-validation-box-shadow: 0 0 10px red;
 
+/* flash messages */
+$flash-top: 15vh;
+$flash-left: 35vw;
+$flash-font-size: 18px;
+$flash-border: $standard-border;
+$flash-border-radius: $border-radius;
+$flash-background-color: lightblue;
+$flash-padding: 5px;
+
 /* footer */
 $footer-height: 72px;
 $footer-font-size: 16px;

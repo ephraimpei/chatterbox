@@ -16,9 +16,9 @@ def create_user():
 
         if new_user.save():
             application_controller.login(new_user)
-            
+
             return jsonify(username = new_user.username,
-                message = "User creation successful! Welcome {0}".format(new_user.username))
+                message = "User creation successful! Welcome {0}!".format(new_user.username))
         else:
             return jsonify(error="Could not create user."), 401
     else:

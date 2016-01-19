@@ -1,0 +1,11 @@
+#flash {
+  display: none;
+  position: absolute;
+  top: $flash-top;
+  left: $flash-left;
+  font-size: $flash-font-size;
+  border: $flash-border;
+  border-radius: $flash-border-radius;
+  background: $flash-background-color;
+  padding: $flash-padding;
+}

@@ -11,11 +11,11 @@ def create_session():
 
     if form.validate():
         user = User.find_by_username(form.username.data)[0]
-        
+
         application_controller.login(user)
 
         return jsonify(username = user.username,
-            message = "User creation successful! Welcome {0}".format(user.username))
+            message = "Login successful! Welcome {0}!".format(user.username))
     else:
         return jsonify(errors=form.errors.items()), 401
 

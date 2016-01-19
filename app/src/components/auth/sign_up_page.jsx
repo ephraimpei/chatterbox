@@ -16,8 +16,14 @@ class SignUpPage extends React.Component {
     router: React.PropTypes.object.isRequired
   }
 
-  successfulSignUp (username) {
+  successfulSignUp (message, username) {
     this.context.router.push('/users/' + username);
+
+    $('#flash').text(message);
+
+    $('#flash').delay(500).fadeIn('normal', function() {
+      $(this).delay(2500).fadeOut();
+    });
   }
 
   failedSignUp (errors) {

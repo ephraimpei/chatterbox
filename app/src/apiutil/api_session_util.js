@@ -12,7 +12,7 @@ class ApiSessionUtil {
       data: formData,
       success: function (data) {
         CurrentUserActions.receiveCurrentUser(data);
-        success(data.username);
+        success(data.message, data.username);
       },
       error: function (data) {
         failure(data.responseJSON.errors);
