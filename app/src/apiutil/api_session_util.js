@@ -23,7 +23,7 @@ class ApiSessionUtil {
   logout(success) {
     $.ajax({
       url: '/api/session/delete',
-      type: 'DELETE',
+      method: 'DELETE',
       dataType: 'json',
       success: function (data) {
         CurrentUserActions.receiveCurrentUser({});
@@ -35,7 +35,7 @@ class ApiSessionUtil {
   fetchCurrentUser() {
     $.ajax({
       url: '/api/session/get',
-      type: 'GET',
+      method: 'GET',
       dataType: 'json',
       success: function (data) {
         CurrentUserActions.receiveCurrentUser(data.user);

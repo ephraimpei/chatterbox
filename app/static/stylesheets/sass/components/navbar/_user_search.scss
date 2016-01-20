@@ -1,6 +1,24 @@
 .user-search {
+  position: relative;
+
   input {
     margin: $user-search-input-margin;
     width: $user-search-input-width;
+  }
+
+  .user-autocomplete-list {
+    position: absolute;
+    width: $user-autocomplete-list-width;
+    left: $user-autocomplete-list-left;
+    background: $user-autocomplete-list-background;
+    border-radius: $user-autocomplete-list-border-radius;
+    border-left: $user-autocomplete-list-border-left;
+    border-right: $user-autocomplete-list-border-right;
+    border-bottom: $user-autocomplete-list-border-bottom;
+
+    li {
+      border-top: $user-autocomplete-list-item-border-top;
+      padding: $user-autocomplete-list-item-padding;
+    }
   }
 }

@@ -8,8 +8,12 @@ import pdb
 
 @app.route("/api/users/get", methods=["GET"])
 def fetch_users():
-    username = request.form["username"]
-    
+    username = request.args.get('username')
+
+    users = User.objects.filter(username__icontains=username).only('username')[:5]
+
+    return jsonify(users = users)
+
 @app.route("/api/users/post", methods=["POST"])
 def create_user():
     form = RegistrationForm(request.form)

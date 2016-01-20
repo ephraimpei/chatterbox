@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-let failedAuth = function (errors) {
+let failedAuthErrors = function (errors) {
   $(".submit").removeClass("disabled").prop("disabled", false);
 
   let [usernameErrors, passwordErrors] = [[], []];
@@ -23,4 +23,10 @@ let failedAuth = function (errors) {
   return [usernameErrors, passwordErrors];
 };
 
-export { failedAuth };
+let removeInvalidClass = function (className) {
+  if ($(`.${ className }`).hasClass("invalid")) {
+    $(`.${ className }`).removeClass("invalid");
+  }
+};
+
+export { failedAuthErrors, removeInvalidClass };

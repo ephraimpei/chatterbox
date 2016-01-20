@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
 import ApiSessionUtil from '../../apiutil/api_session_util.js';
+import { removeInvalidClass } from '../../utilities/auth.js';
 
 class LoginForm extends React.Component {
   constructor(props, context) {
@@ -39,9 +40,7 @@ class LoginForm extends React.Component {
   }
 
   changeUsername (e) {
-    if ($(".form-username-input").hasClass("invalid")) {
-      $(".form-username-input").removeClass("invalid");
-    }
+    removeInvalidClass("form-username-input");
 
     this.props.deleteUsernameErrors();
 
@@ -49,9 +48,7 @@ class LoginForm extends React.Component {
   }
 
   changePassword (e) {
-    if ($(".form-password-input").hasClass("invalid")) {
-      $(".form-password-input").removeClass("invalid");
-    }
+    removeInvalidClass("form-password-input");
 
     this.props.deletePasswordErrors();
 

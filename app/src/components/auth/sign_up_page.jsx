@@ -1,7 +1,7 @@
 import React from 'react';
 import SignUpForm from './sign_up_form.jsx';
 import { displayFlashMessage } from '../../utilities/flash.js';
-import { failedAuth } from '../../utilities/auth.js';
+import { failedAuthErrors } from '../../utilities/auth.js';
 
 class SignUpPage extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class SignUpPage extends React.Component {
   }
 
   failedSignUp (errors) {
-    let [usernameErrors, passwordErrors] = failedAuth(errors);
+    let [usernameErrors, passwordErrors] = failedAuthErrors(errors);
 
     this.setState({
       usernameErrors: usernameErrors,

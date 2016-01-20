@@ -1,5 +1,6 @@
 import $ from "jquery";
 import CurrentUserActions from "../actions/current_user_actions.js";
+import SearchActions from "../actions/search_actions.js";
 
 class ApiUserUtil {
   create (formData, success, failure) {
@@ -20,15 +21,15 @@ class ApiUserUtil {
     });
   }
 
-  fetchUsers (username, success) {
+  fetchUsersForAutocomplete (username) {
     $.ajax({
-      url: '/api/users/get',
-      type: 'GET',
-      dataType: 'json',
-      contentType: 'application/json',
+      url: "/api/users/get",
+      method: "GET",
+      contentType: "application/json",
+      dataType: "json",
       data: { username: username },
       success: function (data) {
-        UserActions.receiveUsers(data.users);
+        SearchActions.receiveUsers(data.users);
       }
     });
   }

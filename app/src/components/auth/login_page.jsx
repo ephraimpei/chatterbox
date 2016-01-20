@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from './login_form.jsx';
 import currentUserStore from '../../stores/current_user_store.js';
 import { displayFlashMessage } from '../../utilities/flash.js';
-import { failedAuth } from '../../utilities/auth.js';
+import { failedAuthErrors } from '../../utilities/auth.js';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
   }
 
   failedLogin (errors) {
-    let [usernameErrors, passwordErrors] = failedAuth(errors);
+    let [usernameErrors, passwordErrors] = failedAuthErrors(errors);
 
     this.setState({
       usernameErrors: usernameErrors,

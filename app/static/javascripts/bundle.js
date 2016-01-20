@@ -33224,12 +33224,12 @@
 	  }, {
 	    key: 'failedLogin',
 	    value: function failedLogin(errors) {
-	      var _failedAuth = (0, _auth.failedAuth)(errors);
+	      var _failedAuthErrors = (0, _auth.failedAuthErrors)(errors);
 	
-	      var _failedAuth2 = _slicedToArray(_failedAuth, 2);
+	      var _failedAuthErrors2 = _slicedToArray(_failedAuthErrors, 2);
 	
-	      var usernameErrors = _failedAuth2[0];
-	      var passwordErrors = _failedAuth2[1];
+	      var usernameErrors = _failedAuthErrors2[0];
+	      var passwordErrors = _failedAuthErrors2[1];
 	
 	      this.setState({
 	        usernameErrors: usernameErrors,
@@ -33313,6 +33313,8 @@
 	
 	var _api_session_util2 = _interopRequireDefault(_api_session_util);
 	
+	var _auth = __webpack_require__(265);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33372,9 +33374,7 @@
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
-	      if ((0, _jquery2.default)(".form-username-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".form-username-input").removeClass("invalid");
-	      }
+	      (0, _auth.removeInvalidClass)("form-username-input");
 	
 	      this.props.deleteUsernameErrors();
 	
@@ -33383,9 +33383,7 @@
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
-	      if ((0, _jquery2.default)(".form-password-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".form-password-input").removeClass("invalid");
-	      }
+	      (0, _auth.removeInvalidClass)("form-password-input");
 	
 	      this.props.deletePasswordErrors();
 	
@@ -33926,12 +33924,12 @@
 	  }, {
 	    key: 'failedSignUp',
 	    value: function failedSignUp(errors) {
-	      var _failedAuth = (0, _auth.failedAuth)(errors);
+	      var _failedAuthErrors = (0, _auth.failedAuthErrors)(errors);
 	
-	      var _failedAuth2 = _slicedToArray(_failedAuth, 2);
+	      var _failedAuthErrors2 = _slicedToArray(_failedAuthErrors, 2);
 	
-	      var usernameErrors = _failedAuth2[0];
-	      var passwordErrors = _failedAuth2[1];
+	      var usernameErrors = _failedAuthErrors2[0];
+	      var passwordErrors = _failedAuthErrors2[1];
 	
 	      this.setState({
 	        usernameErrors: usernameErrors,
@@ -34008,6 +34006,8 @@
 	
 	var _api_user_util2 = _interopRequireDefault(_api_user_util);
 	
+	var _auth = __webpack_require__(265);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34068,9 +34068,7 @@
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
-	      if ((0, _jquery2.default)(".form-username-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".form-username-input").removeClass("invalid");
-	      }
+	      (0, _auth.removeInvalidClass)("form-username-input");
 	
 	      this.props.deleteUsernameErrors();
 	
@@ -34079,7 +34077,7 @@
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
-	      this.removeInvalidClass();
+	      (0, _auth.removeInvalidClass)("form-password-input");
 	
 	      this.props.deletePasswordErrors();
 	
@@ -34088,18 +34086,11 @@
 	  }, {
 	    key: 'changePasswordConf',
 	    value: function changePasswordConf(e) {
-	      this.removeInvalidClass();
+	      (0, _auth.removeInvalidClass)("form-password-input");
 	
 	      this.props.deletePasswordErrors();
 	
 	      this.setState({ passwordConf: e.currentTarget.value });
-	    }
-	  }, {
-	    key: 'removeInvalidClass',
-	    value: function removeInvalidClass() {
-	      if ((0, _jquery2.default)(".form-password-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".form-password-input").removeClass("invalid");
-	      }
 	    }
 	  }, {
 	    key: 'changeFile',
@@ -34922,6 +34913,10 @@
 	
 	var _current_user_actions2 = _interopRequireDefault(_current_user_actions);
 	
+	var _search_actions = __webpack_require__(268);
+	
+	var _search_actions2 = _interopRequireDefault(_search_actions);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34951,16 +34946,16 @@
 	      });
 	    }
 	  }, {
-	    key: "fetchUsers",
-	    value: function fetchUsers(username, success) {
+	    key: "fetchUsersForAutocomplete",
+	    value: function fetchUsersForAutocomplete(username) {
 	      _jquery2.default.ajax({
-	        url: '/api/users/get',
-	        type: 'GET',
-	        dataType: 'json',
-	        contentType: 'application/json',
+	        url: "/api/users/get",
+	        method: "GET",
+	        contentType: "application/json",
+	        dataType: "json",
 	        data: { username: username },
 	        success: function success(data) {
-	          UserActions.receiveUsers(data.users);
+	          _search_actions2.default.receiveUsers(data.users);
 	        }
 	      });
 	    }
@@ -36035,6 +36030,10 @@
 	
 	var _api_user_util2 = _interopRequireDefault(_api_user_util);
 	
+	var _user_autocomplete_store = __webpack_require__(266);
+	
+	var _user_autocomplete_store2 = _interopRequireDefault(_user_autocomplete_store);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36051,21 +36050,64 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserSearch).call(this, props, context));
 	
-	    _this.autoCompleteUsername = _this.autoCompleteUsername.bind(_this);
-	    _this.state = { username: "" };
+	    _this.handleUserSearchInput = _this.handleUserSearchInput.bind(_this);
+	    _this.handleUserSearchAutoComplete = _this.handleUserSearchAutoComplete.bind(_this);
+	    _this.__onChange = _this.__onChange.bind(_this);
+	    _this.state = { username: "", showUserAutoCompleteList: false };
 	    return _this;
 	  }
 	
 	  _createClass(UserSearch, [{
-	    key: 'autoCompleteUsername',
-	    value: function autoCompleteUsername(e) {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      _user_autocomplete_store2.default.addChangeListener(this.__onChange);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      _user_autocomplete_store2.default.removeChangeListener(this.__onChange);
+	    }
+	  }, {
+	    key: 'handleUserSearchInput',
+	    value: function handleUserSearchInput(e) {
 	      var username = e.currentTarget.value;
 	
 	      this.setState({ username: username });
+	
+	      this.handleUserSearchAutoComplete(username);
+	    }
+	  }, {
+	    key: 'handleUserSearchAutoComplete',
+	    value: function handleUserSearchAutoComplete(username) {
+	      if (username.length >= 4 && username.length <= 25) {
+	        _api_user_util2.default.fetchUsersForAutocomplete(username);
+	      } else {
+	        this.setState({ showUserAutoCompleteList: false });
+	      }
+	    }
+	  }, {
+	    key: '__onChange',
+	    value: function __onChange() {
+	      this.setState({ showUserAutoCompleteList: true });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var users = undefined,
+	          userSearchAutoCompleteItems = undefined;
+	
+	      if (this.state.showUserAutoCompleteList) {
+	        users = _user_autocomplete_store2.default.getUsers();
+	
+	        userSearchAutoCompleteItems = users.map(function (user, idx) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: idx },
+	            user.username
+	          );
+	        });
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'user-search' },
@@ -36076,7 +36118,12 @@
 	        ),
 	        _react2.default.createElement('input', { type: 'text',
 	          placeholder: 'Search for username',
-	          onChange: this.autoCompleteUsername })
+	          onChange: this.handleUserSearchInput }),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'user-autocomplete-list' },
+	          userSearchAutoCompleteItems
+	        )
 	      );
 	    }
 	  }]);
@@ -36237,7 +36284,7 @@
 	    value: function logout(_success2) {
 	      _jquery2.default.ajax({
 	        url: '/api/session/delete',
-	        type: 'DELETE',
+	        method: 'DELETE',
 	        dataType: 'json',
 	        success: function success(data) {
 	          _current_user_actions2.default.receiveCurrentUser({});
@@ -36250,7 +36297,7 @@
 	    value: function fetchCurrentUser() {
 	      _jquery2.default.ajax({
 	        url: '/api/session/get',
-	        type: 'GET',
+	        method: 'GET',
 	        dataType: 'json',
 	        success: function success(data) {
 	          _current_user_actions2.default.receiveCurrentUser(data.user);
@@ -36299,7 +36346,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search input {\n  margin: 0 1vw;\n  width: 20vw; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px;\n  font-size: 14px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search {\n  position: relative; }\n  .user-search input {\n    margin: 0 1vw;\n    width: 20vw; }\n  .user-search .user-autocomplete-list {\n    position: absolute;\n    width: 20vw;\n    left: calc(61px + 1vw);\n    background: white;\n    border-radius: 10px;\n    border-left: 1px solid #ccc;\n    border-right: 1px solid #ccc;\n    border-bottom: 1px solid #ccc; }\n    .user-search .user-autocomplete-list li {\n      border-top: 1px solid #ccc;\n      padding: 5px; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 
@@ -36567,7 +36614,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.failedAuth = undefined;
+	exports.removeInvalidClass = exports.failedAuthErrors = undefined;
 	
 	var _jquery = __webpack_require__(1);
 	
@@ -36575,7 +36622,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var failedAuth = function failedAuth(errors) {
+	var failedAuthErrors = function failedAuthErrors(errors) {
 	  (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
 	
 	  var usernameErrors = [];
@@ -36599,7 +36646,153 @@
 	  return [usernameErrors, passwordErrors];
 	};
 	
-	exports.failedAuth = failedAuth;
+	var removeInvalidClass = function removeInvalidClass(className) {
+	  if ((0, _jquery2.default)("." + className).hasClass("invalid")) {
+	    (0, _jquery2.default)("." + className).removeClass("invalid");
+	  }
+	};
+	
+	exports.failedAuthErrors = failedAuthErrors;
+	exports.removeInvalidClass = removeInvalidClass;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(226);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _search_constants = __webpack_require__(267);
+	
+	var _search_constants2 = _interopRequireDefault(_search_constants);
+	
+	var _eventemitter = __webpack_require__(230);
+	
+	var _eventemitter2 = _interopRequireDefault(_eventemitter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CHANGE_EVENT = "change";
+	
+	var UserSearchAutoCompleteStore = (function (_EventEmitter) {
+	  _inherits(UserSearchAutoCompleteStore, _EventEmitter);
+	
+	  function UserSearchAutoCompleteStore() {
+	    _classCallCheck(this, UserSearchAutoCompleteStore);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserSearchAutoCompleteStore).call(this));
+	
+	    _this.users = [];
+	    return _this;
+	  }
+	
+	  _createClass(UserSearchAutoCompleteStore, [{
+	    key: 'addChangeListener',
+	    value: function addChangeListener(callback) {
+	      this.on(CHANGE_EVENT, callback);
+	    }
+	  }, {
+	    key: 'removeChangeListener',
+	    value: function removeChangeListener(callback) {
+	      this.removeListener(CHANGE_EVENT, callback);
+	    }
+	  }, {
+	    key: 'getUsers',
+	    value: function getUsers() {
+	      return this.users.slice();
+	    }
+	  }, {
+	    key: 'setUsers',
+	    value: function setUsers(users) {
+	      this.users = users;
+	    }
+	  }]);
+	
+	  return UserSearchAutoCompleteStore;
+	})(_eventemitter2.default);
+	
+	var userSearchAutoCompleteStore = new UserSearchAutoCompleteStore();
+	
+	_dispatcher2.default.register(function (payload) {
+	  switch (payload.actionType) {
+	    case _search_constants2.default.RECEIVE_USERS:
+	      userSearchAutoCompleteStore.setUsers(payload.users);
+	      userSearchAutoCompleteStore.emit(CHANGE_EVENT);
+	      break;
+	  }
+	});
+	
+	exports.default = userSearchAutoCompleteStore;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  RECEIVE_USERS: "RECEIVE_USERS"
+	};
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(226);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _search_constants = __webpack_require__(267);
+	
+	var _search_constants2 = _interopRequireDefault(_search_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	exports.default = new ((function () {
+	  function _class() {
+	    _classCallCheck(this, _class);
+	  }
+	
+	  _createClass(_class, [{
+	    key: "receiveUsers",
+	    value: function receiveUsers(users) {
+	      _dispatcher2.default.dispatch({
+	        actionType: _search_constants2.default.RECEIVE_USERS,
+	        users: users
+	      });
+	    }
+	  }]);
+	
+	  return _class;
+	})())();
 
 /***/ }
 /******/ ]);

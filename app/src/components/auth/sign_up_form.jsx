@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import $ from 'jquery';
 import ApiUserUtil from '../../apiutil/api_user_util.js';
+import { removeInvalidClass } from '../../utilities/auth.js';
 
 class SignUpForm extends React.Component {
   constructor(props, context) {
@@ -41,9 +42,7 @@ class SignUpForm extends React.Component {
   }
 
   changeUsername (e) {
-    if ($(".form-username-input").hasClass("invalid")) {
-      $(".form-username-input").removeClass("invalid");
-    }
+    removeInvalidClass("form-username-input");
 
     this.props.deleteUsernameErrors();
 
@@ -51,7 +50,7 @@ class SignUpForm extends React.Component {
   }
 
   changePassword (e) {
-    this.removeInvalidClass();
+    removeInvalidClass("form-password-input");
 
     this.props.deletePasswordErrors();
 
@@ -59,17 +58,11 @@ class SignUpForm extends React.Component {
   }
 
   changePasswordConf (e) {
-    this.removeInvalidClass();
+    removeInvalidClass("form-password-input");
 
     this.props.deletePasswordErrors();
 
     this.setState({ passwordConf: e.currentTarget.value });
-  }
-
-  removeInvalidClass () {
-    if ($(".form-password-input").hasClass("invalid")) {
-      $(".form-password-input").removeClass("invalid");
-    }
   }
 
   changeFile (e) {
