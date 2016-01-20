@@ -21,7 +21,7 @@ class ApiUserUtil {
     });
   }
 
-  fetchUsersForAutocomplete (username) {
+  fetchUsersForAutocomplete (username, isAutoCompleteSelection) {
     $.ajax({
       url: "/api/users/get",
       method: "GET",
@@ -29,7 +29,7 @@ class ApiUserUtil {
       dataType: "json",
       data: { username: username },
       success: function (data) {
-        SearchActions.receiveUsers(data.users);
+        SearchActions.receiveUsers(data.users, isAutoCompleteSelection);
       }
     });
   }

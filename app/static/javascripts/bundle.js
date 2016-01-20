@@ -34947,7 +34947,7 @@
 	    }
 	  }, {
 	    key: "fetchUsersForAutocomplete",
-	    value: function fetchUsersForAutocomplete(username) {
+	    value: function fetchUsersForAutocomplete(username, isAutoCompleteSelection) {
 	      _jquery2.default.ajax({
 	        url: "/api/users/get",
 	        method: "GET",
@@ -34955,7 +34955,7 @@
 	        dataType: "json",
 	        data: { username: username },
 	        success: function success(data) {
-	          _search_actions2.default.receiveUsers(data.users);
+	          _search_actions2.default.receiveUsers(data.users, isAutoCompleteSelection);
 	        }
 	      });
 	    }
@@ -36026,6 +36026,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	var _api_user_util = __webpack_require__(235);
 	
 	var _api_user_util2 = _interopRequireDefault(_api_user_util);
@@ -36052,76 +36056,203 @@
 	
 	    _this.handleUserSearchInput = _this.handleUserSearchInput.bind(_this);
 	    _this.handleUserSearchAutoComplete = _this.handleUserSearchAutoComplete.bind(_this);
+	    _this.handleUserSearchSubmission = _this.handleUserSearchSubmission.bind(_this);
+	    _this.handleKeyDown = _this.handleKeyDown.bind(_this);
+	    _this.usernameInBounds = _this.usernameInBounds.bind(_this);
+	    _this.selectUser = _this.selectUser.bind(_this);
+	    _this.handleUserSearchInputFocus = _this.handleUserSearchInputFocus.bind(_this);
+	    _this.addDOMListeners = _this.addDOMListeners.bind(_this);
+	    _this.removeDOMListeners = _this.removeDOMListeners.bind(_this);
+	    _this.moveUp = _this.moveUp.bind(_this);
+	    _this.moveDown = _this.moveDown.bind(_this);
 	    _this.__onChange = _this.__onChange.bind(_this);
-	    _this.state = { username: "", showUserAutoCompleteList: false };
+	    _this.state = { username: "",
+	      showUserSearchAutoCompleteList: false,
+	      autoCompleteSelection: false
+	    };
 	    return _this;
 	  }
 	
 	  _createClass(UserSearch, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      this.addDOMListeners();
 	      _user_autocomplete_store2.default.addChangeListener(this.__onChange);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
+	      this.removeDOMListeners();
 	      _user_autocomplete_store2.default.removeChangeListener(this.__onChange);
 	    }
 	  }, {
+	    key: 'addDOMListeners',
+	    value: function addDOMListeners() {
+	      var _this2 = this;
+	
+	      (0, _jquery2.default)("#content").on("click", function (e) {
+	        (0, _jquery2.default)(".selected").removeClass("selected");
+	        _this2.setState({ showUserSearchAutoCompleteList: false });
+	      });
+	
+	      (0, _jquery2.default)(".user-search-bar").on("click", function (e) {
+	        return e.stopPropagation();
+	      });
+	    }
+	  }, {
+	    key: 'removeDOMListeners',
+	    value: function removeDOMListeners() {
+	      (0, _jquery2.default)("#content").off();
+	      (0, _jquery2.default)(".user-search-bar").off();
+	    }
+	  }, {
 	    key: 'handleUserSearchInput',
-	    value: function handleUserSearchInput(e) {
-	      var username = e.currentTarget.value;
+	    value: function handleUserSearchInput(e, isAutoCompleteSelection) {
+	      var username = e.currentTarget.value || e.currentTarget.textContent;
+	
+	      isAutoCompleteSelection = typeof isAutoCompleteSelection === "undefined" ? false : true;
 	
 	      this.setState({ username: username });
 	
-	      this.handleUserSearchAutoComplete(username);
+	      this.handleUserSearchAutoComplete(username, isAutoCompleteSelection);
 	    }
 	  }, {
 	    key: 'handleUserSearchAutoComplete',
-	    value: function handleUserSearchAutoComplete(username) {
-	      if (username.length >= 4 && username.length <= 25) {
-	        _api_user_util2.default.fetchUsersForAutocomplete(username);
+	    value: function handleUserSearchAutoComplete(username, isAutoCompleteSelection) {
+	      if (this.usernameInBounds(username)) {
+	        _api_user_util2.default.fetchUsersForAutocomplete(username, isAutoCompleteSelection);
 	      } else {
-	        this.setState({ showUserAutoCompleteList: false });
+	        this.setState({ showUserSearchAutoCompleteList: false });
+	      }
+	    }
+	  }, {
+	    key: 'handleUserSearchSubmission',
+	    value: function handleUserSearchSubmission() {
+	      debugger;
+	    }
+	  }, {
+	    key: 'selectUser',
+	    value: function selectUser(e) {
+	      // let username = e.currentTarget.textContent;
+	      // $(".user-search-bar").focus();
+	      // this.setState({ username: username, autoCompleteSelection: true });
+	
+	      // $(".user-search-bar").focus();
+	
+	      this.handleUserSearchInput(e, true);
+	    }
+	  }, {
+	    key: 'usernameInBounds',
+	    value: function usernameInBounds(username) {
+	      if (username.length >= 4 && username.length <= 25) {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    }
+	  }, {
+	    key: 'handleKeyDown',
+	    value: function handleKeyDown(e) {
+	      switch (e.keyCode) {
+	        // Enter
+	        case 13:
+	          if ((0, _jquery2.default)(".user-search-autocomplete-list-item.selected").length > 0) {
+	            (0, _jquery2.default)(".user-search-autocomplete-list-item.selected")[0].click();
+	          } else if ((0, _jquery2.default)(".user-search-bar").is(":focus")) {
+	            this.handleUserSearchSubmission();
+	          }
+	          break;
+	        // Arrow Up Key
+	        case 38:
+	          e.preventDefault();
+	          this.moveUp();
+	          break;
+	        // Arrow Down Key
+	        case 40:
+	          e.preventDefault();
+	          this.moveDown();
+	          break;
+	      }
+	    }
+	  }, {
+	    key: 'moveUp',
+	    value: function moveUp() {
+	      if ((0, _jquery2.default)(".selected").prev(".user-search-autocomplete-list-item").length > 0) {
+	        (0, _jquery2.default)(".selected").removeClass("selected").prev(".user-search-autocomplete-list-item").addClass("selected").focus();
+	      } else {
+	        (0, _jquery2.default)(".selected").removeClass("selected");
+	        (0, _jquery2.default)(".user-search-autocomplete-list-item").last().addClass("selected").focus();
+	      }
+	    }
+	  }, {
+	    key: 'moveDown',
+	    value: function moveDown() {
+	      if ((0, _jquery2.default)(".selected").next(".user-search-autocomplete-list-item").length > 0) {
+	        (0, _jquery2.default)(".selected").removeClass("selected").next(".user-search-autocomplete-list-item").addClass("selected").focus();
+	      } else {
+	        (0, _jquery2.default)(".selected").removeClass("selected");
+	        (0, _jquery2.default)(".user-search-autocomplete-list-item").first().addClass("selected").focus();
+	      }
+	    }
+	  }, {
+	    key: 'handleUserSearchInputFocus',
+	    value: function handleUserSearchInputFocus(e) {
+	      if (typeof e === "undefined") {
+	        this.setState({ showUserSearchAutoCompleteList: false });
+	      } else {
+	        if (this.usernameInBounds(this.state.username)) {
+	          this.setState({ showUserSearchAutoCompleteList: true });
+	        }
 	      }
 	    }
 	  }, {
 	    key: '__onChange',
 	    value: function __onChange() {
-	      this.setState({ showUserAutoCompleteList: true });
+	      this.setState({ showUserSearchAutoCompleteList: true });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      var users = undefined,
 	          userSearchAutoCompleteItems = undefined;
+	      var userSearchAutoCompleteListClass = "user-search-autocomplete-list ";
 	
-	      if (this.state.showUserAutoCompleteList) {
-	        users = _user_autocomplete_store2.default.getUsers();
+	      users = _user_autocomplete_store2.default.getUsers();
 	
-	        userSearchAutoCompleteItems = users.map(function (user, idx) {
-	          return _react2.default.createElement(
-	            'li',
-	            { key: idx },
-	            user.username
-	          );
-	        });
+	      userSearchAutoCompleteItems = users.map(function (user, idx) {
+	        return _react2.default.createElement(
+	          'a',
+	          { key: idx,
+	            className: 'user-search-autocomplete-list-item',
+	            onClick: _this3.selectUser },
+	          user.username
+	        );
+	      });
+	
+	      if (this.state.showUserSearchAutoCompleteList) {
+	        userSearchAutoCompleteListClass += "show";
 	      }
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'user-search' },
+	        { className: 'user-search', onKeyDown: this.handleKeyDown },
 	        _react2.default.createElement(
 	          'label',
 	          null,
 	          'Find User'
 	        ),
-	        _react2.default.createElement('input', { type: 'text',
+	        _react2.default.createElement('input', { className: 'user-search-bar',
+	          type: 'text',
+	          value: this.state.username,
 	          placeholder: 'Search for username',
-	          onChange: this.handleUserSearchInput }),
+	          onChange: this.handleUserSearchInput,
+	          onFocus: this.handleUserSearchInputFocus
+	        }),
 	        _react2.default.createElement(
-	          'ul',
-	          { className: 'user-autocomplete-list' },
+	          'div',
+	          { className: userSearchAutoCompleteListClass },
 	          userSearchAutoCompleteItems
 	        )
 	      );
@@ -36346,7 +36477,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px;\n  font-size: 14px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search {\n  position: relative; }\n  .user-search input {\n    margin: 0 1vw;\n    width: 20vw; }\n  .user-search .user-autocomplete-list {\n    position: absolute;\n    width: 20vw;\n    left: calc(61px + 1vw);\n    background: white;\n    border-radius: 10px;\n    border-left: 1px solid #ccc;\n    border-right: 1px solid #ccc;\n    border-bottom: 1px solid #ccc; }\n    .user-search .user-autocomplete-list li {\n      border-top: 1px solid #ccc;\n      padding: 5px; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px;\n  font-size: 14px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper a:hover {\n      color: blue;\n      text-decoration: underline; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search {\n  position: relative; }\n  .user-search input {\n    margin: 0 1vw;\n    width: 20vw; }\n  .user-search .user-search-autocomplete-list {\n    display: none;\n    position: absolute;\n    width: 20vw;\n    left: calc(61px + 1vw);\n    background: white;\n    border-radius: 10px;\n    border-left: 1px solid #ccc;\n    border-right: 1px solid #ccc;\n    border-bottom: 1px solid #ccc; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item {\n      border-top: 1px solid #ccc;\n      padding: 5px;\n      display: block; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected {\n      border: 1px solid blue; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected:first-child {\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected:last-child {\n      border-bottom-left-radius: 10px;\n      border-bottom-right-radius: 10px; }\n  .user-search .user-search-autocomplete-list.show {\n    display: block; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper a:hover {\n      color: blue;\n      text-decoration: underline; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 
@@ -36732,7 +36863,10 @@
 	  switch (payload.actionType) {
 	    case _search_constants2.default.RECEIVE_USERS:
 	      userSearchAutoCompleteStore.setUsers(payload.users);
-	      userSearchAutoCompleteStore.emit(CHANGE_EVENT);
+	
+	      if (!payload.isAutoCompleteSelection) {
+	        userSearchAutoCompleteStore.emit(CHANGE_EVENT);
+	      }
 	      break;
 	  }
 	});
@@ -36783,10 +36917,11 @@
 	
 	  _createClass(_class, [{
 	    key: "receiveUsers",
-	    value: function receiveUsers(users) {
+	    value: function receiveUsers(users, isAutoCompleteSelection) {
 	      _dispatcher2.default.dispatch({
 	        actionType: _search_constants2.default.RECEIVE_USERS,
-	        users: users
+	        users: users,
+	        isAutoCompleteSelection: isAutoCompleteSelection
 	      });
 	    }
 	  }]);

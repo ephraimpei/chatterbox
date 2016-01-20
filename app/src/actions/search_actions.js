@@ -2,10 +2,11 @@ import AppDispatcher from '../dispatcher/dispatcher.js';
 import SearchConstants from "../constants/search_constants.js";
 
 export default new class {
-  receiveUsers (users) {
+  receiveUsers (users, isAutoCompleteSelection) {
     AppDispatcher.dispatch({
       actionType: SearchConstants.RECEIVE_USERS,
-      users: users
+      users: users,
+      isAutoCompleteSelection: isAutoCompleteSelection
     });
   }
 }();

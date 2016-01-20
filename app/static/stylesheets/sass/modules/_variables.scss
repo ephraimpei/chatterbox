@@ -19,7 +19,8 @@ $icon-border-radius: 10px;
 
 /* borders */
 $standard-border: 1px solid #ccc;
-$border-radius: 10px;
+$selected-border: 1px solid blue;
+$base-border-radius: 10px;
 
 /* buttons */
 $button-padding: 3px;
@@ -43,7 +44,7 @@ $flash-top: 15vh;
 $flash-left: 40vw;
 $flash-font-size: 18px;
 $flash-border: $standard-border;
-$flash-border-radius: $border-radius;
+$flash-border-radius: $base-border-radius;
 $flash-background-color: yellow;
 $flash-padding: 5px;
 
@@ -84,7 +85,7 @@ $user-search-input-width: 20vw;
 $user-autocomplete-list-left: calc(61px + 1vw);
 $user-autocomplete-list-background: white;
 $user-autocomplete-list-width: $user-search-input-width;
-$user-autocomplete-list-border-radius: $border-radius;
+$user-autocomplete-list-border-radius: $base-border-radius;
 $user-autocomplete-list-border-left: $standard-border;
 $user-autocomplete-list-border-right: $standard-border;
 $user-autocomplete-list-border-bottom: $standard-border;

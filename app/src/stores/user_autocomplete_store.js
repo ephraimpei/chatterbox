@@ -33,7 +33,10 @@ AppDispatcher.register(function (payload) {
   switch (payload.actionType) {
     case SearchConstants.RECEIVE_USERS:
       userSearchAutoCompleteStore.setUsers(payload.users);
-      userSearchAutoCompleteStore.emit(CHANGE_EVENT);
+
+      if (!payload.isAutoCompleteSelection) {
+        userSearchAutoCompleteStore.emit(CHANGE_EVENT);
+      }
       break;
   }
 });
