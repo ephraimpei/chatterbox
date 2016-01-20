@@ -41,8 +41,8 @@ class SignUpForm extends React.Component {
   }
 
   changeUsername (e) {
-    if ($(".sign-up-form-username-input").hasClass("invalid")) {
-      $(".sign-up-form-username-input").removeClass("invalid");
+    if ($(".form-username-input").hasClass("invalid")) {
+      $(".form-username-input").removeClass("invalid");
     }
 
     this.props.deleteUsernameErrors();
@@ -67,8 +67,8 @@ class SignUpForm extends React.Component {
   }
 
   removeInvalidClass () {
-    if ($(".sign-up-form-password-input").hasClass("invalid")) {
-      $(".sign-up-form-password-input").removeClass("invalid");
+    if ($(".form-password-input").hasClass("invalid")) {
+      $(".form-password-input").removeClass("invalid");
     }
   }
 
@@ -101,40 +101,40 @@ class SignUpForm extends React.Component {
 
         <div className="sign-up-form-wrapper">
           <label>Username
-          <ul className="sign-up-error-wrapper">
+          <ul className="error-wrapper">
             { usernameErrors }
           </ul>
           <input
-            className="sign-up-form-username-input"
+            className="form-username-input"
             type="text"
             onChange={ this.changeUsername }/>
           </label>
 
           <label>Password
-          <ul className="sign-up-error-wrapper">
+          <ul className="error-wrapper">
             { passwordErrors }
           </ul>
           <input
-            className="sign-up-form-password-input"
+            className="form-password-input"
             type="password"
             onChange={ this.changePassword }/>
           </label>
 
           <label>Confirm Password
           <input
-            className="sign-up-form-password-input"
+            className="form-password-input"
             type="password"
             onChange={ this.changePasswordConf }/>
           </label>
 
           <label>Avatar Upload
           <input
-            className="sign-up-form-avatar"
+            className="form-avatar"
             type="file"
             onChange={ this.changeFile }/>
           </label>
 
-          <img className="sign-up-form-avatar-preview" src={ this.state.imageUrl } />
+          <img className="form-avatar-preview" src={ this.state.imageUrl } />
 
           <button className="submit" type="submit">Sign Up!</button>
           <Link to={ `/` }>Already have an account?</Link>

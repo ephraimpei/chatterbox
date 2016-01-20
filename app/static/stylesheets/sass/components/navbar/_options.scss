@@ -1,0 +1,13 @@
+.options {
+  .options-list {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+  }
+}
+
+.options:hover {
+  .options-list {
+    display: block;
+  }
+}

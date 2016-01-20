@@ -19,6 +19,19 @@ class ApiUserUtil {
       }
     });
   }
+
+  fetchUsers (username, success) {
+    $.ajax({
+      url: '/api/users/get',
+      type: 'GET',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: { username: username },
+      success: function (data) {
+        UserActions.receiveUsers(data.users);
+      }
+    });
+  }
 }
 
 export default new ApiUserUtil();

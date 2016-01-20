@@ -25,9 +25,9 @@ class ApiSessionUtil {
       url: '/api/session/delete',
       type: 'DELETE',
       dataType: 'json',
-      success: function () {
+      success: function (data) {
         CurrentUserActions.receiveCurrentUser({});
-        success && success();
+        success(data.message);
       }
     });
   }
@@ -38,7 +38,6 @@ class ApiSessionUtil {
       type: 'GET',
       dataType: 'json',
       success: function (data) {
-        debugger;
         CurrentUserActions.receiveCurrentUser(data.user);
       }
     });

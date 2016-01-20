@@ -39,8 +39,8 @@ class LoginForm extends React.Component {
   }
 
   changeUsername (e) {
-    if ($(".login-form-username-input").hasClass("invalid")) {
-      $(".login-form-username-input").removeClass("invalid");
+    if ($(".form-username-input").hasClass("invalid")) {
+      $(".form-username-input").removeClass("invalid");
     }
 
     this.props.deleteUsernameErrors();
@@ -49,8 +49,8 @@ class LoginForm extends React.Component {
   }
 
   changePassword (e) {
-    if ($(".login-form-password-input").hasClass("invalid")) {
-      $(".login-form-password-input").removeClass("invalid");
+    if ($(".form-password-input").hasClass("invalid")) {
+      $(".form-password-input").removeClass("invalid");
     }
 
     this.props.deletePasswordErrors();
@@ -76,21 +76,21 @@ class LoginForm extends React.Component {
             onClick={ this.logIntoDemoAccount }>Demo Account</button>
 
           <label>Username
-          <ul className="login-form-error-wrapper">
+          <ul className="form-error-wrapper">
             { usernameErrors }
           </ul>
           <input
-            className="login-form-username-input"
+            className="form-username-input"
             type="text"
             onChange={ this.changeUsername }/>
           </label>
 
           <label>Password
-          <ul className="login-form-error-wrapper">
+          <ul className="form-error-wrapper">
             { passwordErrors }
           </ul>
           <input
-            className="login-form-password-input"
+            className="form-password-input"
             type="password"
             onChange={ this.changePassword }/>
           </label>

@@ -3,9 +3,13 @@ from flask import request, session, jsonify
 from app.models import User
 from app.models.forms import RegistrationForm
 from app.controllers import application_controller
-from app.mixins import *
+from app.utilities import *
 import pdb
 
+@app.route("/api/users/get", methods=["GET"])
+def fetch_users():
+    username = request.form["username"]
+    
 @app.route("/api/users/post", methods=["POST"])
 def create_user():
     form = RegistrationForm(request.form)

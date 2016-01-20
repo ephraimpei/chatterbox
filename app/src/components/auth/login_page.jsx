@@ -1,7 +1,8 @@
 import React from 'react';
-import $ from 'jquery';
 import LoginForm from './login_form.jsx';
 import currentUserStore from '../../stores/current_user_store.js';
+import { displayFlashMessage } from '../../utilities/flash.js';
+import { failedAuth } from '../../utilities/auth.js';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -33,32 +34,11 @@ class LoginPage extends React.Component {
   successfulLogin (message, username) {
     this.context.router.push('/users/' + username);
 
-    $('#flash').text(message);
-
-    $('#flash').delay(500).fadeIn('normal', function() {
-      $(this).delay(2500).fadeOut();
-    });
+    displayFlashMessage(message);
   }
 
   failedLogin (errors) {
-    $(".submit").removeClass("disabled").prop("disabled", false);
-
-    let [usernameErrors, passwordErrors] = [[], []];
-
-    errors.forEach (function (err) {
-      switch (err[0]) {
-        case "username":
-          usernameErrors.push(err[1][0]);
-          $(".login-form-username-input").addClass("invalid");
-          break;
-        case "password":
-          passwordErrors.push(err[1][0]);
-          if (!$(".login-form-password-input").hasClass("invalid")) {
-            $(".login-form-password-input").addClass("invalid");
-          }
-          break;
-      }
-    });
+    let [usernameErrors, passwordErrors] = failedAuth(errors);
 
     this.setState({
       usernameErrors: usernameErrors,

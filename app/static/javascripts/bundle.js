@@ -33150,6 +33150,8 @@
 
 	'use strict';
 	
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -33160,10 +33162,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jquery = __webpack_require__(1);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
 	var _login_form = __webpack_require__(211);
 	
 	var _login_form2 = _interopRequireDefault(_login_form);
@@ -33171,6 +33169,10 @@
 	var _current_user_store = __webpack_require__(225);
 	
 	var _current_user_store2 = _interopRequireDefault(_current_user_store);
+	
+	var _flash = __webpack_require__(264);
+	
+	var _auth = __webpack_require__(265);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -33217,34 +33219,17 @@
 	    value: function successfulLogin(message, username) {
 	      this.context.router.push('/users/' + username);
 	
-	      (0, _jquery2.default)('#flash').text(message);
-	
-	      (0, _jquery2.default)('#flash').delay(500).fadeIn('normal', function () {
-	        (0, _jquery2.default)(this).delay(2500).fadeOut();
-	      });
+	      (0, _flash.displayFlashMessage)(message);
 	    }
 	  }, {
 	    key: 'failedLogin',
 	    value: function failedLogin(errors) {
-	      (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
+	      var _failedAuth = (0, _auth.failedAuth)(errors);
 	
-	      var usernameErrors = [];
-	      var passwordErrors = [];
+	      var _failedAuth2 = _slicedToArray(_failedAuth, 2);
 	
-	      errors.forEach(function (err) {
-	        switch (err[0]) {
-	          case "username":
-	            usernameErrors.push(err[1][0]);
-	            (0, _jquery2.default)(".login-form-username-input").addClass("invalid");
-	            break;
-	          case "password":
-	            passwordErrors.push(err[1][0]);
-	            if (!(0, _jquery2.default)(".login-form-password-input").hasClass("invalid")) {
-	              (0, _jquery2.default)(".login-form-password-input").addClass("invalid");
-	            }
-	            break;
-	        }
-	      });
+	      var usernameErrors = _failedAuth2[0];
+	      var passwordErrors = _failedAuth2[1];
 	
 	      this.setState({
 	        usernameErrors: usernameErrors,
@@ -33387,8 +33372,8 @@
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
-	      if ((0, _jquery2.default)(".login-form-username-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".login-form-username-input").removeClass("invalid");
+	      if ((0, _jquery2.default)(".form-username-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".form-username-input").removeClass("invalid");
 	      }
 	
 	      this.props.deleteUsernameErrors();
@@ -33398,8 +33383,8 @@
 	  }, {
 	    key: 'changePassword',
 	    value: function changePassword(e) {
-	      if ((0, _jquery2.default)(".login-form-password-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".login-form-password-input").removeClass("invalid");
+	      if ((0, _jquery2.default)(".form-password-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".form-password-input").removeClass("invalid");
 	      }
 	
 	      this.props.deletePasswordErrors();
@@ -33445,11 +33430,11 @@
 	            'Username',
 	            _react2.default.createElement(
 	              'ul',
-	              { className: 'login-form-error-wrapper' },
+	              { className: 'form-error-wrapper' },
 	              usernameErrors
 	            ),
 	            _react2.default.createElement('input', {
-	              className: 'login-form-username-input',
+	              className: 'form-username-input',
 	              type: 'text',
 	              onChange: this.changeUsername })
 	          ),
@@ -33459,11 +33444,11 @@
 	            'Password',
 	            _react2.default.createElement(
 	              'ul',
-	              { className: 'login-form-error-wrapper' },
+	              { className: 'form-error-wrapper' },
 	              passwordErrors
 	            ),
 	            _react2.default.createElement('input', {
-	              className: 'login-form-password-input',
+	              className: 'form-password-input',
 	              type: 'password',
 	              onChange: this.changePassword })
 	          ),
@@ -33887,6 +33872,8 @@
 
 	'use strict';
 	
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -33897,13 +33884,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jquery = __webpack_require__(1);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
 	var _sign_up_form = __webpack_require__(222);
 	
 	var _sign_up_form2 = _interopRequireDefault(_sign_up_form);
+	
+	var _flash = __webpack_require__(264);
+	
+	var _auth = __webpack_require__(265);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -33934,34 +33921,17 @@
 	    value: function successfulSignUp(message, username) {
 	      this.context.router.push('/users/' + username);
 	
-	      (0, _jquery2.default)('#flash').text(message);
-	
-	      (0, _jquery2.default)('#flash').delay(500).fadeIn('normal', function () {
-	        (0, _jquery2.default)(this).delay(2500).fadeOut();
-	      });
+	      (0, _flash.displayFlashMessage)(message);
 	    }
 	  }, {
 	    key: 'failedSignUp',
 	    value: function failedSignUp(errors) {
-	      (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
+	      var _failedAuth = (0, _auth.failedAuth)(errors);
 	
-	      var usernameErrors = [];
-	      var passwordErrors = [];
+	      var _failedAuth2 = _slicedToArray(_failedAuth, 2);
 	
-	      errors.forEach(function (err) {
-	        switch (err[0]) {
-	          case "username":
-	            usernameErrors.push(err[1][0]);
-	            (0, _jquery2.default)(".sign-up-form-username-input").addClass("invalid");
-	            break;
-	          case "password":
-	            passwordErrors.push(err[1][0]);
-	            if (!(0, _jquery2.default)(".sign-up-form-password-input").hasClass("invalid")) {
-	              (0, _jquery2.default)(".sign-up-form-password-input").addClass("invalid");
-	            }
-	            break;
-	        }
-	      });
+	      var usernameErrors = _failedAuth2[0];
+	      var passwordErrors = _failedAuth2[1];
 	
 	      this.setState({
 	        usernameErrors: usernameErrors,
@@ -34098,8 +34068,8 @@
 	  }, {
 	    key: 'changeUsername',
 	    value: function changeUsername(e) {
-	      if ((0, _jquery2.default)(".sign-up-form-username-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".sign-up-form-username-input").removeClass("invalid");
+	      if ((0, _jquery2.default)(".form-username-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".form-username-input").removeClass("invalid");
 	      }
 	
 	      this.props.deleteUsernameErrors();
@@ -34127,8 +34097,8 @@
 	  }, {
 	    key: 'removeInvalidClass',
 	    value: function removeInvalidClass() {
-	      if ((0, _jquery2.default)(".sign-up-form-password-input").hasClass("invalid")) {
-	        (0, _jquery2.default)(".sign-up-form-password-input").removeClass("invalid");
+	      if ((0, _jquery2.default)(".form-password-input").hasClass("invalid")) {
+	        (0, _jquery2.default)(".form-password-input").removeClass("invalid");
 	      }
 	    }
 	  }, {
@@ -34181,11 +34151,11 @@
 	            'Username',
 	            _react2.default.createElement(
 	              'ul',
-	              { className: 'sign-up-error-wrapper' },
+	              { className: 'error-wrapper' },
 	              usernameErrors
 	            ),
 	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-username-input',
+	              className: 'form-username-input',
 	              type: 'text',
 	              onChange: this.changeUsername })
 	          ),
@@ -34195,11 +34165,11 @@
 	            'Password',
 	            _react2.default.createElement(
 	              'ul',
-	              { className: 'sign-up-error-wrapper' },
+	              { className: 'error-wrapper' },
 	              passwordErrors
 	            ),
 	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-password-input',
+	              className: 'form-password-input',
 	              type: 'password',
 	              onChange: this.changePassword })
 	          ),
@@ -34208,7 +34178,7 @@
 	            null,
 	            'Confirm Password',
 	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-password-input',
+	              className: 'form-password-input',
 	              type: 'password',
 	              onChange: this.changePasswordConf })
 	          ),
@@ -34217,11 +34187,11 @@
 	            null,
 	            'Avatar Upload',
 	            _react2.default.createElement('input', {
-	              className: 'sign-up-form-avatar',
+	              className: 'form-avatar',
 	              type: 'file',
 	              onChange: this.changeFile })
 	          ),
-	          _react2.default.createElement('img', { className: 'sign-up-form-avatar-preview', src: this.state.imageUrl }),
+	          _react2.default.createElement('img', { className: 'form-avatar-preview', src: this.state.imageUrl }),
 	          _react2.default.createElement(
 	            'button',
 	            { className: 'submit', type: 'submit' },
@@ -34977,6 +34947,20 @@
 	        },
 	        error: function error(data) {
 	          failure(data.responseJSON.errors);
+	        }
+	      });
+	    }
+	  }, {
+	    key: "fetchUsers",
+	    value: function fetchUsers(username, success) {
+	      _jquery2.default.ajax({
+	        url: '/api/users/get',
+	        type: 'GET',
+	        dataType: 'json',
+	        contentType: 'application/json',
+	        data: { username: username },
+	        success: function success(data) {
+	          UserActions.receiveUsers(data.users);
 	        }
 	      });
 	    }
@@ -35973,13 +35957,15 @@
 	
 	var _user_search2 = _interopRequireDefault(_user_search);
 	
-	var _profile_options = __webpack_require__(261);
-	
-	var _profile_options2 = _interopRequireDefault(_profile_options);
-	
 	var _notifications = __webpack_require__(262);
 	
 	var _notifications2 = _interopRequireDefault(_notifications);
+	
+	var _options = __webpack_require__(263);
+	
+	var _options2 = _interopRequireDefault(_options);
+	
+	var _flash = __webpack_require__(264);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -35995,10 +35981,18 @@
 	  function NavBar(props, context) {
 	    _classCallCheck(this, NavBar);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(NavBar).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(NavBar).call(this, props, context));
+	
+	    _this.logoutSuccess = _this.logoutSuccess.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(NavBar, [{
+	    key: 'logoutSuccess',
+	    value: function logoutSuccess(message) {
+	      (0, _flash.displayFlashMessage)(message);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -36010,7 +36004,7 @@
 	          _react2.default.createElement('img', { src: '/images/chatterbox_logo_angelic_version_by_spartasaurus.png' }),
 	          _react2.default.createElement(_user_search2.default, null),
 	          _react2.default.createElement(_notifications2.default, null),
-	          _react2.default.createElement(_profile_options2.default, null)
+	          _react2.default.createElement(_options2.default, { logoutSuccess: this.logoutSuccess })
 	        )
 	      );
 	    }
@@ -36025,7 +36019,7 @@
 /* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -36036,6 +36030,10 @@
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _api_user_util = __webpack_require__(235);
+	
+	var _api_user_util2 = _interopRequireDefault(_api_user_util);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -36053,23 +36051,31 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserSearch).call(this, props, context));
 	
+	    _this.autoCompleteUsername = _this.autoCompleteUsername.bind(_this);
 	    _this.state = { username: "" };
 	    return _this;
 	  }
 	
 	  _createClass(UserSearch, [{
-	    key: "render",
+	    key: 'autoCompleteUsername',
+	    value: function autoCompleteUsername(e) {
+	      var username = e.currentTarget.value;
+	
+	      this.setState({ username: username });
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "user-search" },
+	        'div',
+	        { className: 'user-search' },
 	        _react2.default.createElement(
-	          "label",
+	          'label',
 	          null,
-	          "Find User"
+	          'Find User'
 	        ),
-	        _react2.default.createElement("input", { type: "text",
-	          placeholder: "Search for username",
+	        _react2.default.createElement('input', { type: 'text',
+	          placeholder: 'Search for username',
 	          onChange: this.autoCompleteUsername })
 	      );
 	    }
@@ -36233,9 +36239,9 @@
 	        url: '/api/session/delete',
 	        type: 'DELETE',
 	        dataType: 'json',
-	        success: function success() {
+	        success: function success(data) {
 	          _current_user_actions2.default.receiveCurrentUser({});
-	          _success2 && _success2();
+	          _success2(data.message);
 	        }
 	      });
 	    }
@@ -36247,7 +36253,6 @@
 	        type: 'GET',
 	        dataType: 'json',
 	        success: function success(data) {
-	          debugger;
 	          _current_user_actions2.default.receiveCurrentUser(data.user);
 	        }
 	      });
@@ -36294,7 +36299,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 35vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search input {\n  margin: 0 1vw;\n  width: 15vw; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\na:hover {\n  color: blue;\n  text-decoration: underline; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search input {\n  margin: 0 1vw;\n  width: 20vw; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 
@@ -36390,55 +36395,7 @@
 	exports.default = UserHomePage;
 
 /***/ },
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ProfileOptions = (function (_React$Component) {
-	  _inherits(ProfileOptions, _React$Component);
-	
-	  function ProfileOptions(props, context) {
-	    _classCallCheck(this, ProfileOptions);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ProfileOptions).call(this, props, context));
-	  }
-	
-	  _createClass(ProfileOptions, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "profile-options" },
-	        "Profile Options"
-	      );
-	    }
-	  }]);
-	
-	  return ProfileOptions;
-	})(_react2.default.Component);
-	
-	exports.default = ProfileOptions;
-
-/***/ },
+/* 261 */,
 /* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -36486,6 +36443,163 @@
 	})(_react2.default.Component);
 	
 	exports.default = Notifications;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _api_session_util = __webpack_require__(257);
+	
+	var _api_session_util2 = _interopRequireDefault(_api_session_util);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Options = (function (_React$Component) {
+	  _inherits(Options, _React$Component);
+	
+	  function Options(props, context) {
+	    _classCallCheck(this, Options);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Options).call(this, props, context));
+	
+	    _this.logoutCurrentUser = _this.logoutCurrentUser.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Options, [{
+	    key: 'logoutCurrentUser',
+	    value: function logoutCurrentUser(e) {
+	      e.preventDefault();
+	
+	      _api_session_util2.default.logout(this.props.logoutSuccess);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var options = ["Update profile", "Logout"];
+	
+	      var optionListItems = options.map(function (option, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx },
+	          option
+	        );
+	      });
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'options' },
+	        'Options',
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'options-list' },
+	          _react2.default.createElement(
+	            'li',
+	            { key: '1' },
+	            'Update Profile'
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { key: '2', onClick: this.logoutCurrentUser },
+	            'Logout'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Options;
+	})(_react2.default.Component);
+	
+	exports.default = Options;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.displayFlashMessage = undefined;
+	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var displayFlashMessage = function displayFlashMessage(message) {
+	  (0, _jquery2.default)('#flash').text(message);
+	
+	  (0, _jquery2.default)('#flash').delay(500).fadeIn('normal', function () {
+	    (0, _jquery2.default)(this).delay(2500).fadeOut();
+	  });
+	};
+	
+	exports.displayFlashMessage = displayFlashMessage;
+
+/***/ },
+/* 265 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.failedAuth = undefined;
+	
+	var _jquery = __webpack_require__(1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var failedAuth = function failedAuth(errors) {
+	  (0, _jquery2.default)(".submit").removeClass("disabled").prop("disabled", false);
+	
+	  var usernameErrors = [];
+	  var passwordErrors = [];
+	
+	  errors.forEach(function (err) {
+	    switch (err[0]) {
+	      case "username":
+	        usernameErrors.push(err[1][0]);
+	        (0, _jquery2.default)(".form-username-input").addClass("invalid");
+	        break;
+	      case "password":
+	        passwordErrors.push(err[1][0]);
+	        if (!(0, _jquery2.default)(".login-form-password-input").hasClass("invalid")) {
+	          (0, _jquery2.default)(".form-password-input").addClass("invalid");
+	        }
+	        break;
+	    }
+	  });
+	
+	  return [usernameErrors, passwordErrors];
+	};
+	
+	exports.failedAuth = failedAuth;
 
 /***/ }
 /******/ ]);

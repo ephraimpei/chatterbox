@@ -1,6 +1,7 @@
 import React from 'react';
-import $ from 'jquery';
 import SignUpForm from './sign_up_form.jsx';
+import { displayFlashMessage } from '../../utilities/flash.js';
+import { failedAuth } from '../../utilities/auth.js';
 
 class SignUpPage extends React.Component {
   constructor(props) {
@@ -19,32 +20,11 @@ class SignUpPage extends React.Component {
   successfulSignUp (message, username) {
     this.context.router.push('/users/' + username);
 
-    $('#flash').text(message);
-
-    $('#flash').delay(500).fadeIn('normal', function() {
-      $(this).delay(2500).fadeOut();
-    });
+    displayFlashMessage(message);
   }
 
   failedSignUp (errors) {
-    $(".submit").removeClass("disabled").prop("disabled", false);
-
-    let [usernameErrors, passwordErrors] = [[], []];
-
-    errors.forEach (function (err) {
-      switch (err[0]) {
-        case "username":
-          usernameErrors.push(err[1][0]);
-          $(".sign-up-form-username-input").addClass("invalid");
-          break;
-        case "password":
-          passwordErrors.push(err[1][0]);
-          if (!$(".sign-up-form-password-input").hasClass("invalid")) {
-            $(".sign-up-form-password-input").addClass("invalid");
-          }
-          break;
-      }
-    });
+    let [usernameErrors, passwordErrors] = failedAuth(errors);
 
     this.setState({
       usernameErrors: usernameErrors,

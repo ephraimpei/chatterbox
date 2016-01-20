@@ -1,11 +1,17 @@
 import React from 'react';
 import UserSearch from './user_search.jsx';
-import ProfileOptions from './profile_options.jsx';
 import Notifications from './notifications.jsx';
+import Options from './options.jsx';
+import { displayFlashMessage } from '../../utilities/flash.js';
 
 class NavBar extends React.Component {
   constructor (props, context) {
     super(props, context);
+    this.logoutSuccess = this.logoutSuccess.bind(this);
+  }
+
+  logoutSuccess (message) {
+    displayFlashMessage(message);
   }
 
   render () {
@@ -15,7 +21,7 @@ class NavBar extends React.Component {
           <img src="/images/chatterbox_logo_angelic_version_by_spartasaurus.png"/>
           <UserSearch/>
           <Notifications/>
-          <ProfileOptions/>
+          <Options logoutSuccess={ this.logoutSuccess }/>
         </div>
       </div>
      );
