@@ -6,6 +6,15 @@
     width: $user-search-input-width;
   }
 
+  .user-search-submit {
+    border: 0;
+    transition: all .2s ease-in-out;
+  }
+
+  .user-search-submit:hover {
+    transform: scale(1.2);
+  }
+
   .user-search-autocomplete-list {
     display: none;
     position: absolute;

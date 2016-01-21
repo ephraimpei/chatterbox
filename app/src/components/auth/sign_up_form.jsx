@@ -80,13 +80,13 @@ class SignUpForm extends React.Component {
   }
 
   render() {
-    let usernameErrors = this.props.usernameErrors.map( function(err, idx) {
-      return <li key={ idx }>{ err }</li>;
-    });
+    let usernameErrors = this.props.usernameErrors.map( (err, idx) =>
+      <li key={ idx }>{ err }</li>
+    );
 
-    let passwordErrors = this.props.passwordErrors.map( function (err, idx) {
-      return <li key={ idx }>{ err }</li>;
-    });
+    let passwordErrors = this.props.passwordErrors.map( (err, idx) =>
+      <li key={ idx }>{ err }</li>
+    );
     return (
       <form className="sign-up-form"
         onKeyPress={ this.handleKeyPress }

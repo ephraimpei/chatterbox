@@ -1,18 +1,18 @@
 import UserConstants from "../constants/user_constants.js";
 import AppDispatcher from '../dispatcher/dispatcher.js';
 
-export default {
-  receiveUsers: function (users) {
+export default new class {
+  receiveUsers (users) {
     AppDispatcher.dispatch({
       actionType: UserConstants.RECEIVE_USERS,
       users: users
     });
-  },
+  }
 
-  receiveSingleUser: function (user) {
+  receiveSingleUser (user) {
     AppDispatcher.dispatch({
       actionType: UserConstants.RECEIVE_SINGLE_USER,
       user: user
     });
   }
-};
+}();

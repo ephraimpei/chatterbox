@@ -18,10 +18,7 @@ class UserSearch extends React.Component {
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
     this.__onChange = this.__onChange.bind(this);
-    this.state = { username: "",
-      showUserSearchAutoCompleteList: false,
-      autoCompleteSelection: false
-    };
+    this.state = { username: "", showUserSearchAutoCompleteList: false };
   }
 
   componentDidMount () {
@@ -32,6 +29,10 @@ class UserSearch extends React.Component {
   componentWillUnmount () {
     this.removeDOMListeners();
     userSearchAutoCompleteStore.removeChangeListener(this.__onChange);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({ username: "", showUserSearchAutoCompleteList: false });
   }
 
   addDOMListeners () {
@@ -68,16 +69,11 @@ class UserSearch extends React.Component {
   }
 
   handleUserSearchSubmission () {
-    debugger;
+    $(".user-search-submit").removeClass("pressed");
+    this.props.successfulUserSearch(this.state.username);
   }
 
   selectUser (e) {
-    // let username = e.currentTarget.textContent;
-    // $(".user-search-bar").focus();
-    // this.setState({ username: username, autoCompleteSelection: true });
-
-    // $(".user-search-bar").focus();
-
     this.handleUserSearchInput(e, true);
   }
 
@@ -96,6 +92,7 @@ class UserSearch extends React.Component {
         if ($(".user-search-autocomplete-list-item.selected").length > 0) {
           $(".user-search-autocomplete-list-item.selected")[0].click();
         } else if ($(".user-search-bar").is(":focus")) {
+          $(".user-search-submit").addClass("pressed");
           this.handleUserSearchSubmission();
         }
         break;
@@ -187,6 +184,9 @@ class UserSearch extends React.Component {
           onChange={ this.handleUserSearchInput }
           onFocus={ this.handleUserSearchInputFocus }
           />
+
+        <button className="user-search-submit"
+          onClick={ this.handleUserSearchSubmission }>🔍</button>
 
         <div className={ userSearchAutoCompleteListClass }>
           { userSearchAutoCompleteItems }

@@ -1,9 +1,9 @@
 import React from 'react';
-import NavBar from '../nav-bar/nav_bar.jsx';
-import FriendsList from '../friends/friends_list.jsx';
 import currentUserStore from '../../stores/current_user_store.js';
+import NavBar from '../nav-bar/nav_bar.jsx';
+import UsersIndex from './users_index.jsx';
 
-class UserHomePage extends React.Component {
+class UsersSearchResultsPage extends React.Component {
   constructor (props, context) {
     super(props, context);
     this.navigateToSearchResultsPage = this.navigateToSearchResultsPage.bind(this);
@@ -13,17 +13,9 @@ class UserHomePage extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   }
-
+  
   componentWillMount () {
     this.__ensureLoggedIn();
-  }
-
-  componentDidMount () {
-    currentUserStore.addChangeListener(this.__ensureLoggedIn);
-  }
-
-  componentWillUnmount () {
-    currentUserStore.removeChangeListener(this.__ensureLoggedIn);
   }
 
   navigateToSearchResultsPage (username) {
@@ -41,12 +33,15 @@ class UserHomePage extends React.Component {
 
   render () {
     return (
-        <div className="user-home-page">
-          <NavBar successfulUserSearch={ this.navigateToSearchResultsPage }/>
-          <FriendsList />
+      <div className="users-search-results-page">
+        <NavBar successfulUserSearch={ this.navigateToSearchResultsPage }/>
+
+        <div className="users-search-results">
+          <UsersIndex />
         </div>
-     );
+      </div>
+    );
   }
 }
 
-export default UserHomePage;
+export default UsersSearchResultsPage;

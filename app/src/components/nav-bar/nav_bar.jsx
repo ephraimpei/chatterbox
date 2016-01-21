@@ -19,7 +19,7 @@ class NavBar extends React.Component {
       <div className="header">
         <div className="nav-bar">
           <img src="/images/chatterbox_logo_angelic_version_by_spartasaurus.png"/>
-          <UserSearch/>
+          <UserSearch successfulUserSearch={ this.props.successfulUserSearch }/>
           <Notifications/>
           <Options logoutSuccess={ this.logoutSuccess }/>
         </div>

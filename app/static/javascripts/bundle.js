@@ -78,9 +78,9 @@
 	
 	var _user_home_page2 = _interopRequireDefault(_user_home_page);
 	
-	var _current_user_store = __webpack_require__(225);
+	var _users_search_results_page = __webpack_require__(269);
 	
-	var _current_user_store2 = _interopRequireDefault(_current_user_store);
+	var _users_search_results_page2 = _interopRequireDefault(_users_search_results_page);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -91,15 +91,14 @@
 	
 	// components
 	
-	// stores
-	
 	(0, _jquery2.default)(document).ready(function () {
 	  var routes = _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', components: _chatterbox_app2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _login_page2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/users/new', components: _sign_up_page2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/users/:username', components: _user_home_page2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/users/new', component: _sign_up_page2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/users/search', component: _users_search_results_page2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/user/:username', component: _user_home_page2.default })
 	  );
 	
 	  (0, _reactDom.render)(_react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory, routes: routes }), document.getElementById('content'));
@@ -33217,7 +33216,7 @@
 	  }, {
 	    key: 'successfulLogin',
 	    value: function successfulLogin(message, username) {
-	      this.context.router.push('/users/' + username);
+	      this.context.router.push('/user/' + username);
 	
 	      (0, _flash.displayFlashMessage)(message);
 	    }
@@ -33250,7 +33249,7 @@
 	    key: '__checkIfLoggedIn',
 	    value: function __checkIfLoggedIn() {
 	      if (_current_user_store2.default.isLoggedIn()) {
-	        this.context.router.push('/users/' + _current_user_store2.default.getCurrentUser().username);
+	        this.context.router.push('/user/' + _current_user_store2.default.getCurrentUser().username);
 	      }
 	    }
 	  }, {
@@ -33917,7 +33916,7 @@
 	  _createClass(SignUpPage, [{
 	    key: 'successfulSignUp',
 	    value: function successfulSignUp(message, username) {
-	      this.context.router.push('/users/' + username);
+	      this.context.router.push('/user/' + username);
 	
 	      (0, _flash.displayFlashMessage)(message);
 	    }
@@ -35997,7 +35996,7 @@
 	          'div',
 	          { className: 'nav-bar' },
 	          _react2.default.createElement('img', { src: '/images/chatterbox_logo_angelic_version_by_spartasaurus.png' }),
-	          _react2.default.createElement(_user_search2.default, null),
+	          _react2.default.createElement(_user_search2.default, { successfulUserSearch: this.props.successfulUserSearch }),
 	          _react2.default.createElement(_notifications2.default, null),
 	          _react2.default.createElement(_options2.default, { logoutSuccess: this.logoutSuccess })
 	        )
@@ -36066,10 +36065,7 @@
 	    _this.moveUp = _this.moveUp.bind(_this);
 	    _this.moveDown = _this.moveDown.bind(_this);
 	    _this.__onChange = _this.__onChange.bind(_this);
-	    _this.state = { username: "",
-	      showUserSearchAutoCompleteList: false,
-	      autoCompleteSelection: false
-	    };
+	    _this.state = { username: "", showUserSearchAutoCompleteList: false };
 	    return _this;
 	  }
 	
@@ -36084,6 +36080,11 @@
 	    value: function componentWillUnmount() {
 	      this.removeDOMListeners();
 	      _user_autocomplete_store2.default.removeChangeListener(this.__onChange);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({ username: "", showUserSearchAutoCompleteList: false });
 	    }
 	  }, {
 	    key: 'addDOMListeners',
@@ -36128,17 +36129,12 @@
 	  }, {
 	    key: 'handleUserSearchSubmission',
 	    value: function handleUserSearchSubmission() {
-	      debugger;
+	      (0, _jquery2.default)(".user-search-submit").removeClass("pressed");
+	      this.props.successfulUserSearch(this.state.username);
 	    }
 	  }, {
 	    key: 'selectUser',
 	    value: function selectUser(e) {
-	      // let username = e.currentTarget.textContent;
-	      // $(".user-search-bar").focus();
-	      // this.setState({ username: username, autoCompleteSelection: true });
-	
-	      // $(".user-search-bar").focus();
-	
 	      this.handleUserSearchInput(e, true);
 	    }
 	  }, {
@@ -36159,6 +36155,7 @@
 	          if ((0, _jquery2.default)(".user-search-autocomplete-list-item.selected").length > 0) {
 	            (0, _jquery2.default)(".user-search-autocomplete-list-item.selected")[0].click();
 	          } else if ((0, _jquery2.default)(".user-search-bar").is(":focus")) {
+	            (0, _jquery2.default)(".user-search-submit").addClass("pressed");
 	            this.handleUserSearchSubmission();
 	          }
 	          break;
@@ -36250,6 +36247,12 @@
 	          onChange: this.handleUserSearchInput,
 	          onFocus: this.handleUserSearchInputFocus
 	        }),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'user-search-submit',
+	            onClick: this.handleUserSearchSubmission },
+	          '🔍'
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: userSearchAutoCompleteListClass },
@@ -36477,7 +36480,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px;\n  font-size: 14px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper a:hover {\n      color: blue;\n      text-decoration: underline; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search {\n  position: relative; }\n  .user-search input {\n    margin: 0 1vw;\n    width: 20vw; }\n  .user-search .user-search-autocomplete-list {\n    display: none;\n    position: absolute;\n    width: 20vw;\n    left: calc(61px + 1vw);\n    background: white;\n    border-radius: 10px;\n    border-left: 1px solid #ccc;\n    border-right: 1px solid #ccc;\n    border-bottom: 1px solid #ccc; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item {\n      border-top: 1px solid #ccc;\n      padding: 5px;\n      display: block; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected {\n      border: 1px solid blue; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected:first-child {\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected:last-child {\n      border-bottom-left-radius: 10px;\n      border-bottom-right-radius: 10px; }\n  .user-search .user-search-autocomplete-list.show {\n    display: block; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper a:hover {\n      color: blue;\n      text-decoration: underline; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
+	exports.push([module.id, ".group:after {\n  content: \"\";\n  display: block;\n  clear: both; }\n\n/* font weights */\n/* base background */\n/* base font */\n/* icons */\n/* borders */\n/* buttons */\n/* headers */\n/* input boxes */\n/* flash messages */\n/* footer */\n/* login page */\n/* sign up page */\n/* navigation bar */\n/* user search */\nhtml, body, h1, h2, h3, div, footer, ul, li, a, figure, button, textarea, form, label {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  font: inherit;\n  vertical-align: inherit;\n  text-align: inherit;\n  text-decoration: inherit;\n  color: inherit;\n  background: transparent; }\n\nul {\n  list-style: none; }\n\ninput, textarea {\n  outline: 0; }\n\nimg {\n  display: block;\n  width: 100%;\n  height: auto; }\n\nbody {\n  font-family: sans-serif;\n  font-weight: 400;\n  font-size: 14px;\n  line-height: 1.4;\n  background: #eee;\n  height: 100%; }\n\nbutton {\n  padding: 3px;\n  background: lightblue;\n  font-size: 16px;\n  border: 1px solid darkgrey;\n  border-radius: 10px;\n  text-align: center;\n  cursor: pointer; }\n\nbutton:focus {\n  outline: 0; }\n\nbutton:active, button.disabled, button.pressed {\n  text-shadow: 1px 1px 2px black;\n  box-shadow: inset 0 0 0 1px #27496d, inset 0 5px 30px #193047; }\n\nbutton:hover {\n  background: #86c5da; }\n\nh1 {\n  font-size: 36px;\n  font-weight: 700; }\n\nh2 {\n  font-size: 24px;\n  font-weight: 700; }\n\n#flash {\n  display: none;\n  position: absolute;\n  top: 15vh;\n  left: 40vw;\n  font-size: 18px;\n  border: 1px solid #ccc;\n  border-radius: 10px;\n  background: yellow;\n  padding: 5px;\n  z-index: 1; }\n\n.social-media-icon {\n  width: 32px;\n  height: 32px;\n  border-radius: 10px; }\n\ninput {\n  padding: 5px 2.5px;\n  border-radius: 10px;\n  font-size: 14px; }\n\ninput.invalid {\n  border: 2px solid red;\n  box-shadow: 0 0 10px red; }\n\na {\n  cursor: pointer; }\n\n#footer-wrapper {\n  background: #ffab62;\n  border-top: 1px solid #ccc;\n  height: 72px;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  left: 0; }\n  #footer-wrapper .footer {\n    width: 70vw;\n    margin: auto;\n    padding: 17px 0;\n    font-size: 16px;\n    color: #fff; }\n    #footer-wrapper .footer .about {\n      margin-top: 5px;\n      opacity: 0.7;\n      float: left; }\n    #footer-wrapper .footer .links {\n      float: right; }\n      #footer-wrapper .footer .links a {\n        margin-left: 10px;\n        display: inline-block; }\n\n.friends-list {\n  background: black;\n  height: calc(100vh - 76px - 73px);\n  width: 15vw;\n  opacity: .6; }\n\n.login-page h1, .login-page h2 {\n  text-align: center; }\n\n.login-page .login-form {\n  width: 200px;\n  margin: auto; }\n  .login-page .login-form .login-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 100px 0; }\n    .login-page .login-form .login-form-wrapper button, .login-page .login-form .login-form-wrapper label, .login-page .login-form .login-form-wrapper input {\n      margin: 5px 0; }\n    .login-page .login-form .login-form-wrapper a {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper a:hover {\n      color: blue;\n      text-decoration: underline; }\n    .login-page .login-form .login-form-wrapper label {\n      text-align: center; }\n    .login-page .login-form .login-form-wrapper input {\n      width: 100%; }\n\n#wrapper {\n  min-height: 100vh;\n  position: relative; }\n\n#content {\n  padding-bottom: 73px; }\n\n.header {\n  background: lightblue;\n  border-bottom: 1px solid #ccc; }\n  .header .nav-bar {\n    width: 70vw;\n    margin: auto;\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n    .header .nav-bar img {\n      width: 75px;\n      height: 75px; }\n\n.user-search {\n  position: relative; }\n  .user-search input {\n    margin: 0 1vw;\n    width: 20vw; }\n  .user-search .user-search-submit {\n    border: 0;\n    transition: all .2s ease-in-out; }\n  .user-search .user-search-submit:hover {\n    transform: scale(1.2); }\n  .user-search .user-search-autocomplete-list {\n    display: none;\n    position: absolute;\n    width: 20vw;\n    left: calc(61px + 1vw);\n    background: white;\n    border-radius: 10px;\n    border-left: 1px solid #ccc;\n    border-right: 1px solid #ccc;\n    border-bottom: 1px solid #ccc; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item {\n      border-top: 1px solid #ccc;\n      padding: 5px;\n      display: block; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected {\n      border: 1px solid blue; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected:first-child {\n      border-top-left-radius: 10px;\n      border-top-right-radius: 10px; }\n    .user-search .user-search-autocomplete-list .user-search-autocomplete-list-item.selected:last-child {\n      border-bottom-left-radius: 10px;\n      border-bottom-right-radius: 10px; }\n  .user-search .user-search-autocomplete-list.show {\n    display: block; }\n\n.options .options-list {\n  display: none;\n  position: absolute;\n  cursor: pointer; }\n\n.options:hover .options-list {\n  display: block; }\n\n.sign-up-page h1, .sign-up-page h2 {\n  text-align: center; }\n\n.sign-up-page .sign-up-form {\n  width: 200px;\n  margin: auto; }\n  .sign-up-page .sign-up-form .sign-up-form-wrapper {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    margin: 50px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper * {\n      margin: 5px 0; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper label, .sign-up-page .sign-up-form .sign-up-form-wrapper a {\n      text-align: center; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper a:hover {\n      color: blue;\n      text-decoration: underline; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper input {\n      width: 100%; }\n    .sign-up-page .sign-up-form .sign-up-form-wrapper .sign-up-form-avatar-preview {\n      width: 200px;\n      height: 200px; }\n", ""]);
 	
 	// exports
 
@@ -36526,6 +36529,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserHomePage).call(this, props, context));
 	
+	    _this.navigateToSearchResultsPage = _this.navigateToSearchResultsPage.bind(_this);
 	    _this.__ensureLoggedIn = _this.__ensureLoggedIn.bind(_this);
 	    return _this;
 	  }
@@ -36546,6 +36550,14 @@
 	      _current_user_store2.default.removeChangeListener(this.__ensureLoggedIn);
 	    }
 	  }, {
+	    key: 'navigateToSearchResultsPage',
+	    value: function navigateToSearchResultsPage(username) {
+	      this.context.router.push({
+	        pathname: '/users/search',
+	        query: { username: username }
+	      });
+	    }
+	  }, {
 	    key: '__ensureLoggedIn',
 	    value: function __ensureLoggedIn() {
 	      if (!_current_user_store2.default.isLoggedIn()) {
@@ -36558,7 +36570,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'user-home-page' },
-	        _react2.default.createElement(_nav_bar2.default, null),
+	        _react2.default.createElement(_nav_bar2.default, { successfulUserSearch: this.navigateToSearchResultsPage }),
 	        _react2.default.createElement(_friends_list2.default, null)
 	      );
 	    }
@@ -36928,6 +36940,144 @@
 	
 	  return _class;
 	})())();
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _current_user_store = __webpack_require__(225);
+	
+	var _current_user_store2 = _interopRequireDefault(_current_user_store);
+	
+	var _nav_bar = __webpack_require__(253);
+	
+	var _nav_bar2 = _interopRequireDefault(_nav_bar);
+	
+	var _users_index = __webpack_require__(270);
+	
+	var _users_index2 = _interopRequireDefault(_users_index);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UsersSearchResultsPage = (function (_React$Component) {
+	  _inherits(UsersSearchResultsPage, _React$Component);
+	
+	  function UsersSearchResultsPage(props, context) {
+	    _classCallCheck(this, UsersSearchResultsPage);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UsersSearchResultsPage).call(this, props, context));
+	
+	    _this.navigateToSearchResultsPage = _this.navigateToSearchResultsPage.bind(_this);
+	    _this.__ensureLoggedIn = _this.__ensureLoggedIn.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(UsersSearchResultsPage, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.__ensureLoggedIn();
+	    }
+	  }, {
+	    key: 'navigateToSearchResultsPage',
+	    value: function navigateToSearchResultsPage(username) {
+	      this.context.router.push({
+	        pathname: '/users/search',
+	        query: { username: username }
+	      });
+	    }
+	  }, {
+	    key: '__ensureLoggedIn',
+	    value: function __ensureLoggedIn() {
+	      if (!_current_user_store2.default.isLoggedIn()) {
+	        this.context.router.push('/');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'users-search-results-page' },
+	        _react2.default.createElement(_nav_bar2.default, { successfulUserSearch: this.navigateToSearchResultsPage }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'users-search-results' },
+	          _react2.default.createElement(_users_index2.default, null)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return UsersSearchResultsPage;
+	})(_react2.default.Component);
+	
+	UsersSearchResultsPage.contextTypes = {
+	  router: _react2.default.PropTypes.object.isRequired
+	};
+	exports.default = UsersSearchResultsPage;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UsersIndex = (function (_React$Component) {
+	  _inherits(UsersIndex, _React$Component);
+	
+	  function UsersIndex(props, context) {
+	    _classCallCheck(this, UsersIndex);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(UsersIndex).call(this, props, context));
+	  }
+	
+	  _createClass(UsersIndex, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement("div", { className: "users-index" });
+	    }
+	  }]);
+	
+	  return UsersIndex;
+	})(_react2.default.Component);
+	
+	exports.default = UsersIndex;
 
 /***/ }
 /******/ ]);

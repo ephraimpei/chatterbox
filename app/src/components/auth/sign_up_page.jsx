@@ -18,7 +18,7 @@ class SignUpPage extends React.Component {
   }
 
   successfulSignUp (message, username) {
-    this.context.router.push('/users/' + username);
+    this.context.router.push('/user/' + username);
 
     displayFlashMessage(message);
   }

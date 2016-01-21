@@ -15,9 +15,9 @@ class Options extends React.Component {
   render () {
     let options = ["Update profile", "Logout"];
 
-    let optionListItems = options.map( function(option, idx) {
-      return <li key={ idx }>{ option }</li>;
-    });
+    let optionListItems = options.map( (option, idx) =>
+      <li key={ idx }>{ option }</li>
+    );
 
     return (
       <div className="options">Options
