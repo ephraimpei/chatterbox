@@ -5,7 +5,7 @@ import SearchActions from "../actions/search_actions.js";
 class ApiUserUtil {
   create (formData, success, failure) {
     $.ajax({
-      url: "/api/users/post",
+      url: "/users/api",
       method: "POST",
       processData: false,
       contentType: false,
@@ -22,12 +22,12 @@ class ApiUserUtil {
   }
 
   fetchUsersForAutocomplete (username, isAutoCompleteSelection) {
+    let mode = isAutoCompleteSelection ? "autocomplete" : "index";
+
     $.ajax({
-      url: "/api/users/get",
+      url: "/users/api/" + username + "/" + isAutoCompleteSelection,
       method: "GET",
       contentType: "application/json",
-      dataType: "json",
-      data: { username: username },
       success: function (data) {
         SearchActions.receiveUsers(data.users, isAutoCompleteSelection);
       }

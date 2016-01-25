@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, PasswordField, validators
-from app.models.validations import check_if_username_exists, validate_user_credentials
+from app.api.models.validations import check_if_username_exists, validate_user_credentials
 
 class LoginForm(Form):
     username = StringField('username', [

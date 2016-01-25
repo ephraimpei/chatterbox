@@ -1,13 +1,21 @@
 from app import app
 from flask import request, session, jsonify
-from app.controllers import application_controller
-from app.models import User
-from app.models.forms import LoginForm
-from app.utilities import *
+from app.api.controllers import application_controller
+from app.api.models import User
+from app.api.models.forms import LoginForm
+from app.api.utilities import *
 import pdb
 
-@app.route("/api/session/get", methods=["GET"])
-def fetch_session():
+@app.route("/api/session", methods=["GET", "POST", "DELETE"])
+def handle_session_api_request():
+    if request.method == "GET":
+        return __fetch_session()
+    elif request.method == "POST":
+        return __create_session()
+    elif request.method == "DELETE":
+        return __destroy_session()
+
+def __fetch_session():
     if application_controller.logged_in():
         user = application_controller.current_user()
         user_response = build_user_response_object(user)
@@ -15,8 +23,7 @@ def fetch_session():
     else:
         return jsonify(user={})
 
-@app.route("/api/session/post", methods=["POST"])
-def create_session():
+def __create_session():
     form = LoginForm(request.form)
 
     if form.validate():
@@ -31,10 +38,11 @@ def create_session():
     else:
         return jsonify(errors=form.errors.items()), 401
 
-@app.route("/api/session/delete", methods=["DELETE"])
-def destroy_session():
-    user = application_controller.current_user()
-
+def __destroy_session():
+    username = application_controller.current_user().username \
+        if application_controller.logged_in() \
+        else None
+        
     application_controller.logout()
 
-    return jsonify(message="Goodbye {0}!".format(user.username))
+    return jsonify(message="Goodbye {0}!".format(username))

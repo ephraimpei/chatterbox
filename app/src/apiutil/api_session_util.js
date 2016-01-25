@@ -4,7 +4,7 @@ import CurrentUserActions from "../actions/current_user_actions.js";
 class ApiSessionUtil {
   login(formData, success, failure) {
     $.ajax({
-      url: "/api/session/post",
+      url: "/api/session",
       method: "POST",
       processData: false,
       contentType: false,
@@ -22,7 +22,7 @@ class ApiSessionUtil {
 
   logout(success) {
     $.ajax({
-      url: '/api/session/delete',
+      url: '/api/session',
       method: 'DELETE',
       dataType: 'json',
       success: function (data) {
@@ -34,7 +34,7 @@ class ApiSessionUtil {
 
   fetchCurrentUser() {
     $.ajax({
-      url: '/api/session/get',
+      url: '/api/session',
       method: 'GET',
       dataType: 'json',
       success: function (data) {

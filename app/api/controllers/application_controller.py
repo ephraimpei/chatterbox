@@ -1,5 +1,5 @@
 from flask import session
-from app.models import User
+from app.api.models import User
 import pdb
 
 def current_user():

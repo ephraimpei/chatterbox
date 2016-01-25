@@ -21,7 +21,7 @@ $(document).ready(function () {
       <IndexRoute component={ LoginPage } />
       <Route path="/users/new" component={ SignUpPage } />
       <Route path="/users/search" component={ UsersSearchResultsPage } />
-      <Route path="/user/:username" component={ UserHomePage } />
+      <Route path="/users/:username" component={ UserHomePage } />
     </Route>
   );
 

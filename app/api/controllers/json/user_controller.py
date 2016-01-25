@@ -1,20 +1,22 @@
 from app import app
 from flask import request, session, jsonify
-from app.models import User
-from app.models.forms import RegistrationForm
-from app.controllers import application_controller
-from app.utilities import *
+from app.api.models import User
+from app.api.models.forms import RegistrationForm
+from app.api.controllers import application_controller
+from app.api.utilities import *
 import pdb
 
-@app.route("/api/users/get", methods=["GET"])
-def fetch_users():
-    username = request.args.get('username')
+@app.route("/users/api/<username>/<mode>", methods=["GET", "PUT", "DELETE"])
+def handle_user_api_request(username, mode):
+    pdb.set_trace()
+    if request.method == "GET":
+        return __fetch_users(username, mode)
+    elif request.method == "PUT":
+        return __update_user(username)
+    elif request.method == "DELETE":
+        return __destroy_user(username)
 
-    users = User.objects.filter(username__icontains=username).only('username')[:5]
-
-    return jsonify(users = users)
-
-@app.route("/api/users/post", methods=["POST"])
+@app.route("/users/api", methods=["POST"])
 def create_user():
     form = RegistrationForm(request.form)
 
@@ -36,17 +38,23 @@ def create_user():
         else:
             return jsonify(error="Could not create user."), 401
     else:
-        return jsonify(errors=form.errors.items()), 401
+        return jsonify(errors=form.errors.items()), 400
 
-@app.route("/api/users/<username>/put", methods=["PUT"])
-def update_user(username):
+def __fetch_users(username, mode):
+    limit = 5 if mode == "autocomplete" else 20
+
+    users = User.objects.filter(username__icontains=username).only('username')[:limit]
+
+    return jsonify(users = users)
+
+def __update_user(username):
     password = request.form['password']
     option = request.form['option']
 
     user = User.find_by_username(username)[0]
 
     if user and User.validate_user_credentials(user, password):
-        updated_user = __update_user(user, option)
+        updated_user = __updated_user(user, option)
 
         user.username = new_username
         user.generate_password_digest(new_password)
@@ -59,8 +67,7 @@ def update_user(username):
     else:
         return jsonify(error="Could not validate user credentials.")
 
-@app.route("/api/users/<username>/delete", methods=["DELETE"])
-def destroy_user(username):
+def __destroy_user(username):
     password = request.form['password']
 
     user = User.find_by_username(username)[0]

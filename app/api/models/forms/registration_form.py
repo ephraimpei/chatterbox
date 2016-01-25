@@ -1,5 +1,5 @@
 from wtforms import Form, StringField, PasswordField, validators
-from app.models.validations import check_if_username_taken
+from app.api.models.validations import check_if_username_taken
 
 class RegistrationForm(Form):
     username = StringField('username', [

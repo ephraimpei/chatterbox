@@ -1,4 +1,4 @@
-from app.models import User
+from app.api.models import User
 from wtforms import ValidationError
 import pdb
 

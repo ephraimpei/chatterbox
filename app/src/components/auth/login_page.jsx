@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
   }
 
   successfulLogin (message, username) {
-    this.context.router.push('/user/' + username);
+    this.context.router.push('/users/' + username);
 
     displayFlashMessage(message);
   }
@@ -56,7 +56,7 @@ class LoginPage extends React.Component {
 
   __checkIfLoggedIn() {
     if (currentUserStore.isLoggedIn()) {
-      this.context.router.push('/user/' + currentUserStore.getCurrentUser().username);
+      this.context.router.push('/users/' + currentUserStore.getCurrentUser().username);
     }
   }
 

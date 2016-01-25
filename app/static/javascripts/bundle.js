@@ -98,7 +98,7 @@
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _login_page2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/users/new', component: _sign_up_page2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/users/search', component: _users_search_results_page2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/user/:username', component: _user_home_page2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/users/:username', component: _user_home_page2.default })
 	  );
 	
 	  (0, _reactDom.render)(_react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory, routes: routes }), document.getElementById('content'));
@@ -33216,7 +33216,7 @@
 	  }, {
 	    key: 'successfulLogin',
 	    value: function successfulLogin(message, username) {
-	      this.context.router.push('/user/' + username);
+	      this.context.router.push('/users/' + username);
 	
 	      (0, _flash.displayFlashMessage)(message);
 	    }
@@ -33249,7 +33249,7 @@
 	    key: '__checkIfLoggedIn',
 	    value: function __checkIfLoggedIn() {
 	      if (_current_user_store2.default.isLoggedIn()) {
-	        this.context.router.push('/user/' + _current_user_store2.default.getCurrentUser().username);
+	        this.context.router.push('/users/' + _current_user_store2.default.getCurrentUser().username);
 	      }
 	    }
 	  }, {
@@ -33916,7 +33916,7 @@
 	  _createClass(SignUpPage, [{
 	    key: 'successfulSignUp',
 	    value: function successfulSignUp(message, username) {
-	      this.context.router.push('/user/' + username);
+	      this.context.router.push('/users/' + username);
 	
 	      (0, _flash.displayFlashMessage)(message);
 	    }
@@ -34929,7 +34929,7 @@
 	    key: "create",
 	    value: function create(formData, _success, failure) {
 	      _jquery2.default.ajax({
-	        url: "/api/users/post",
+	        url: "/users/api",
 	        method: "POST",
 	        processData: false,
 	        contentType: false,
@@ -34947,12 +34947,12 @@
 	  }, {
 	    key: "fetchUsersForAutocomplete",
 	    value: function fetchUsersForAutocomplete(username, isAutoCompleteSelection) {
+	      var mode = isAutoCompleteSelection ? "autocomplete" : "index";
+	
 	      _jquery2.default.ajax({
-	        url: "/api/users/get",
+	        url: "/users/api/" + username + "/" + isAutoCompleteSelection,
 	        method: "GET",
 	        contentType: "application/json",
-	        dataType: "json",
-	        data: { username: username },
 	        success: function success(data) {
 	          _search_actions2.default.receiveUsers(data.users, isAutoCompleteSelection);
 	        }
@@ -36398,7 +36398,7 @@
 	    key: "login",
 	    value: function login(formData, _success, failure) {
 	      _jquery2.default.ajax({
-	        url: "/api/session/post",
+	        url: "/api/session",
 	        method: "POST",
 	        processData: false,
 	        contentType: false,
@@ -36417,7 +36417,7 @@
 	    key: "logout",
 	    value: function logout(_success2) {
 	      _jquery2.default.ajax({
-	        url: '/api/session/delete',
+	        url: '/api/session',
 	        method: 'DELETE',
 	        dataType: 'json',
 	        success: function success(data) {
@@ -36430,7 +36430,7 @@
 	    key: "fetchCurrentUser",
 	    value: function fetchCurrentUser() {
 	      _jquery2.default.ajax({
-	        url: '/api/session/get',
+	        url: '/api/session',
 	        method: 'GET',
 	        dataType: 'json',
 	        success: function success(data) {
