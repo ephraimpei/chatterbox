@@ -38,12 +38,9 @@ class LoginPage extends React.Component {
   }
 
   failedLogin (errors) {
-    let [usernameErrors, passwordErrors] = failedAuthErrors(errors);
+    const [usernameErrors, passwordErrors] = failedAuthErrors(errors);
 
-    this.setState({
-      usernameErrors: usernameErrors,
-      passwordErrors: passwordErrors
-    });
+    this.setState({ usernameErrors, passwordErrors });
   }
 
   deleteUsernameErrors () {

@@ -17,6 +17,8 @@ class UserSearch extends React.Component {
     this.removeDOMListeners = this.removeDOMListeners.bind(this);
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
+    this.highlightUser = this.highlightUser.bind(this);
+    this.unhighlightUser = this.unhighlightUser.bind(this);
     this.__onChange = this.__onChange.bind(this);
     this.state = { username: "", showUserSearchAutoCompleteList: false };
   }
@@ -50,12 +52,12 @@ class UserSearch extends React.Component {
   }
 
   handleUserSearchInput (e, isAutoCompleteSelection) {
-    let username = e.currentTarget.value || e.currentTarget.textContent;
+    var username = e.currentTarget.value || e.currentTarget.textContent;
 
     isAutoCompleteSelection = typeof isAutoCompleteSelection === "undefined" ?
       false : true;
 
-    this.setState({ username: username });
+    this.setState({ username });
 
     this.handleUserSearchAutoComplete(username, isAutoCompleteSelection);
   }
@@ -78,11 +80,9 @@ class UserSearch extends React.Component {
   }
 
   usernameInBounds (username) {
-    if (username.length >= 4 && username.length <= 25) {
-      return true;
-    } else {
-      return false;
-    }
+    const isInBounds = username.length >= 4 && username.length <= 25 ? true : false;
+
+    return isInBounds;
   }
 
   handleKeyDown (e) {
@@ -141,6 +141,14 @@ class UserSearch extends React.Component {
     }
   }
 
+  highlightUser (e) {
+    $(e.currentTarget).addClass("selected");
+  }
+
+  unhighlightUser (e) {
+    $(e.currentTarget).removeClass("selected");
+  }
+
   handleUserSearchInputFocus (e) {
     if (typeof e === "undefined") {
       this.setState({ showUserSearchAutoCompleteList: false });
@@ -156,18 +164,19 @@ class UserSearch extends React.Component {
   }
 
   render () {
-    let users, userSearchAutoCompleteItems;
-    let userSearchAutoCompleteListClass = "user-search-autocomplete-list ";
+    const users = userSearchAutoCompleteStore.getUsers();
 
-    users = userSearchAutoCompleteStore.getUsers();
-
-    userSearchAutoCompleteItems = users.map( (user, idx) => {
+    const userSearchAutoCompleteItems = users.map( (user, idx) => {
       return <a key={ idx }
                 className="user-search-autocomplete-list-item"
-                onClick={ this.selectUser }>
+                onClick={ this.selectUser }
+                onMouseOver={ this.highlightUser }
+                onMouseOut={ this.unhighlightUser }>
                 { user.username }
               </a>;
     });
+
+    let userSearchAutoCompleteListClass = "user-search-autocomplete-list ";
 
     if (this.state.showUserSearchAutoCompleteList) {
       userSearchAutoCompleteListClass += "show";

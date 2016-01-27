@@ -8,7 +8,7 @@ import pdb
 
 @app.route("/users/api/<username>/<mode>", methods=["GET", "PUT", "DELETE"])
 def handle_user_api_request(username, mode):
-    pdb.set_trace()
+    # pdb.set_trace()
     if request.method == "GET":
         return __fetch_users(username, mode)
     elif request.method == "PUT":

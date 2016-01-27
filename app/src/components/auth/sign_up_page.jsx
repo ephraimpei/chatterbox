@@ -26,10 +26,7 @@ class SignUpPage extends React.Component {
   failedSignUp (errors) {
     let [usernameErrors, passwordErrors] = failedAuthErrors(errors);
 
-    this.setState({
-      usernameErrors: usernameErrors,
-      passwordErrors: passwordErrors
-    });
+    this.setState({ usernameErrors, passwordErrors });
   }
 
   deleteUsernameErrors () {

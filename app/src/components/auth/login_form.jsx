@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
 
     $(".submit").addClass("disabled").prop("disabled", true);
 
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append("username", this.state.username);
     formData.append("password", this.state.password);
@@ -56,11 +56,11 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    let usernameErrors = this.props.usernameErrors.map( (err, idx) =>
+    const usernameErrors = this.props.usernameErrors.map( (err, idx) =>
       <li key={ idx }>{ err }</li>
     );
 
-    let passwordErrors = this.props.passwordErrors.map( (err, idx) => 
+    const passwordErrors = this.props.passwordErrors.map( (err, idx) =>
       <li key={ idx }>{ err }</li>
     );
 

@@ -27,7 +27,7 @@ class SignUpForm extends React.Component {
 
     $(".submit").addClass("disabled").prop("disabled", true);
 
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append("username", this.state.username);
     formData.append("password", this.state.password);
@@ -66,25 +66,21 @@ class SignUpForm extends React.Component {
   }
 
   changeFile (e) {
-    let reader = new FileReader();
-    let file = e.currentTarget.files[0];
+    const reader = new FileReader();
+    const file = e.currentTarget.files[0];
 
     reader.onloadend = () =>
       this.setState({ imageUrl: reader.result, imageFile: file });
 
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      this.setState({ imageUrl: "", imageFile: null });
-    }
+    file ? reader.readAsDataURL(file) : this.setState({ imageUrl: "", imageFile: null });
   }
 
   render() {
-    let usernameErrors = this.props.usernameErrors.map( (err, idx) =>
+    const usernameErrors = this.props.usernameErrors.map( (err, idx) =>
       <li key={ idx }>{ err }</li>
     );
 
-    let passwordErrors = this.props.passwordErrors.map( (err, idx) =>
+    const passwordErrors = this.props.passwordErrors.map( (err, idx) =>
       <li key={ idx }>{ err }</li>
     );
     return (

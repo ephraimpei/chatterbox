@@ -23,11 +23,8 @@ class CurrentUserStore extends EventEmitter {
   }
 
   isLoggedIn() {
-    if (Object.keys(this.currentUser).length > 0) {
-      return true;
-    } else {
-      return false;
-    }
+    const result = Object.keys(this.currentUser).length > 0 ? true : false;
+    return result;
   }
 
   setCurrentUser(user) {
