@@ -5,29 +5,29 @@ import EventEmitter from 'eventemitter3';
 const CHANGE_EVENT = "change";
 
 class CurrentUserStore extends EventEmitter {
-  constructor() {
+  constructor () {
     super();
     this.currentUser = {};
   }
 
-  addChangeListener(callback) {
+  addChangeListener (callback) {
     this.on(CHANGE_EVENT, callback);
   }
 
-  removeChangeListener(callback) {
+  removeChangeListener (callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  getCurrentUser() {
+  get () {
     return Object.assign({}, this.currentUser);
   }
 
-  isLoggedIn() {
+  isLoggedIn () {
     const result = Object.keys(this.currentUser).length > 0 ? true : false;
     return result;
   }
 
-  setCurrentUser(user) {
+  set (user) {
     this.currentUser = user;
   }
 }
@@ -37,7 +37,7 @@ const currentUserStore = new CurrentUserStore();
 AppDispatcher.register(function (payload) {
   switch (payload.actionType) {
     case CurrentUserConstants.RECEIVE_CURRENT_USER:
-      currentUserStore.setCurrentUser(payload.currentUser);
+      currentUserStore.set(payload.currentUser);
       currentUserStore.emit(CHANGE_EVENT);
       break;
   }

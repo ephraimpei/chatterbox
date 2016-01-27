@@ -164,7 +164,7 @@ class UserSearch extends React.Component {
   }
 
   render () {
-    const users = userSearchAutoCompleteStore.getUsers();
+    const users = userSearchAutoCompleteStore.get();
 
     const userSearchAutoCompleteItems = users.map( (user, idx) => {
       return <a key={ idx }

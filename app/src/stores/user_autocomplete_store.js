@@ -5,24 +5,24 @@ import EventEmitter from 'eventemitter3';
 const CHANGE_EVENT = "change";
 
 class UserSearchAutoCompleteStore extends EventEmitter {
-  constructor() {
+  constructor () {
     super();
     this.users = [];
   }
 
-  addChangeListener(callback) {
+  addChangeListener (callback) {
     this.on(CHANGE_EVENT, callback);
   }
 
-  removeChangeListener(callback) {
+  removeChangeListener (callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  getUsers() {
+  get () {
     return this.users.slice();
   }
 
-  setUsers(users) {
+  set (users) {
     this.users = users;
   }
 }
@@ -32,7 +32,7 @@ const userSearchAutoCompleteStore = new UserSearchAutoCompleteStore();
 AppDispatcher.register(function (payload) {
   switch (payload.actionType) {
     case SearchConstants.RECEIVE_USERS:
-      userSearchAutoCompleteStore.setUsers(payload.users);
+      userSearchAutoCompleteStore.set(payload.users);
 
       if (!payload.isAutoCompleteSelection) {
         userSearchAutoCompleteStore.emit(CHANGE_EVENT);

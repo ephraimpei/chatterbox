@@ -78,14 +78,14 @@
 	
 	var _user_home_page2 = _interopRequireDefault(_user_home_page);
 	
-	var _users_search_results_page = __webpack_require__(245);
+	var _users_search_results_page = __webpack_require__(246);
 	
 	var _users_search_results_page2 = _interopRequireDefault(_users_search_results_page);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// main sass file
-	__webpack_require__(247);
+	__webpack_require__(248);
 	
 	// core modules
 	
@@ -34033,7 +34033,7 @@
 	    key: '__checkIfLoggedIn',
 	    value: function __checkIfLoggedIn() {
 	      if (_current_user_store2.default.isLoggedIn()) {
-	        this.context.router.push('/users/' + _current_user_store2.default.getCurrentUser().username);
+	        this.context.router.push('/users/' + _current_user_store2.default.get().username);
 	      }
 	    }
 	  }, {
@@ -34818,8 +34818,8 @@
 	      this.removeListener(CHANGE_EVENT, callback);
 	    }
 	  }, {
-	    key: 'getCurrentUser',
-	    value: function getCurrentUser() {
+	    key: 'get',
+	    value: function get() {
 	      return Object.assign({}, this.currentUser);
 	    }
 	  }, {
@@ -34829,8 +34829,8 @@
 	      return result;
 	    }
 	  }, {
-	    key: 'setCurrentUser',
-	    value: function setCurrentUser(user) {
+	    key: 'set',
+	    value: function set(user) {
 	      this.currentUser = user;
 	    }
 	  }]);
@@ -34843,7 +34843,7 @@
 	_dispatcher2.default.register(function (payload) {
 	  switch (payload.actionType) {
 	    case _current_user_constants2.default.RECEIVE_CURRENT_USER:
-	      currentUserStore.setCurrentUser(payload.currentUser);
+	      currentUserStore.set(payload.currentUser);
 	      currentUserStore.emit(CHANGE_EVENT);
 	      break;
 	  }
@@ -35705,7 +35705,7 @@
 	
 	var _nav_bar2 = _interopRequireDefault(_nav_bar);
 	
-	var _friends_list = __webpack_require__(243);
+	var _friends_list = __webpack_require__(244);
 	
 	var _friends_list2 = _interopRequireDefault(_friends_list);
 	
@@ -35804,11 +35804,11 @@
 	
 	var _user_search2 = _interopRequireDefault(_user_search);
 	
-	var _notifications = __webpack_require__(241);
+	var _notifications = __webpack_require__(242);
 	
 	var _notifications2 = _interopRequireDefault(_notifications);
 	
-	var _options = __webpack_require__(242);
+	var _options = __webpack_require__(243);
 	
 	var _options2 = _interopRequireDefault(_options);
 	
@@ -35886,7 +35886,7 @@
 	
 	var _api_user_util2 = _interopRequireDefault(_api_user_util);
 	
-	var _user_autocomplete_store = __webpack_require__(251);
+	var _user_autocomplete_store = __webpack_require__(241);
 	
 	var _user_autocomplete_store2 = _interopRequireDefault(_user_autocomplete_store);
 	
@@ -36075,7 +36075,7 @@
 	    value: function render() {
 	      var _this3 = this;
 	
-	      var users = _user_autocomplete_store2.default.getUsers();
+	      var users = _user_autocomplete_store2.default.get();
 	
 	      var userSearchAutoCompleteItems = users.map(function (user, idx) {
 	        return _react2.default.createElement(
@@ -36134,6 +36134,93 @@
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _dispatcher = __webpack_require__(223);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _search_constants = __webpack_require__(237);
+	
+	var _search_constants2 = _interopRequireDefault(_search_constants);
+	
+	var _eventemitter = __webpack_require__(230);
+	
+	var _eventemitter2 = _interopRequireDefault(_eventemitter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CHANGE_EVENT = "change";
+	
+	var UserSearchAutoCompleteStore = (function (_EventEmitter) {
+	  _inherits(UserSearchAutoCompleteStore, _EventEmitter);
+	
+	  function UserSearchAutoCompleteStore() {
+	    _classCallCheck(this, UserSearchAutoCompleteStore);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserSearchAutoCompleteStore).call(this));
+	
+	    _this.users = [];
+	    return _this;
+	  }
+	
+	  _createClass(UserSearchAutoCompleteStore, [{
+	    key: 'addChangeListener',
+	    value: function addChangeListener(callback) {
+	      this.on(CHANGE_EVENT, callback);
+	    }
+	  }, {
+	    key: 'removeChangeListener',
+	    value: function removeChangeListener(callback) {
+	      this.removeListener(CHANGE_EVENT, callback);
+	    }
+	  }, {
+	    key: 'get',
+	    value: function get() {
+	      return this.users.slice();
+	    }
+	  }, {
+	    key: 'set',
+	    value: function set(users) {
+	      this.users = users;
+	    }
+	  }]);
+	
+	  return UserSearchAutoCompleteStore;
+	})(_eventemitter2.default);
+	
+	var userSearchAutoCompleteStore = new UserSearchAutoCompleteStore();
+	
+	_dispatcher2.default.register(function (payload) {
+	  switch (payload.actionType) {
+	    case _search_constants2.default.RECEIVE_USERS:
+	      userSearchAutoCompleteStore.set(payload.users);
+	
+	      if (!payload.isAutoCompleteSelection) {
+	        userSearchAutoCompleteStore.emit(CHANGE_EVENT);
+	      }
+	      break;
+	  }
+	});
+	
+	exports.default = userSearchAutoCompleteStore;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -36180,7 +36267,7 @@
 	exports.default = Notifications;
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36267,7 +36354,7 @@
 	exports.default = Options;
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -36282,7 +36369,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _friends_index = __webpack_require__(244);
+	var _friends_index = __webpack_require__(245);
 	
 	var _friends_index2 = _interopRequireDefault(_friends_index);
 	
@@ -36320,7 +36407,7 @@
 	exports.default = FriendsList;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -36365,7 +36452,7 @@
 	exports.default = FriendsIndex;
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36388,7 +36475,7 @@
 	
 	var _nav_bar2 = _interopRequireDefault(_nav_bar);
 	
-	var _users_index = __webpack_require__(246);
+	var _users_index = __webpack_require__(247);
 	
 	var _users_index2 = _interopRequireDefault(_users_index);
 	
@@ -36458,7 +36545,7 @@
 	exports.default = UsersSearchResultsPage;
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -36503,16 +36590,16 @@
 	exports.default = UsersIndex;
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(248);
+	var content = __webpack_require__(249);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(250)(content, {});
+	var update = __webpack_require__(251)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36529,10 +36616,10 @@
 	}
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(249)();
+	exports = module.exports = __webpack_require__(250)();
 	// imports
 	
 	
@@ -36543,7 +36630,7 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports) {
 
 	/*
@@ -36599,7 +36686,7 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -36851,93 +36938,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 251 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _dispatcher = __webpack_require__(223);
-	
-	var _dispatcher2 = _interopRequireDefault(_dispatcher);
-	
-	var _search_constants = __webpack_require__(237);
-	
-	var _search_constants2 = _interopRequireDefault(_search_constants);
-	
-	var _eventemitter = __webpack_require__(230);
-	
-	var _eventemitter2 = _interopRequireDefault(_eventemitter);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var CHANGE_EVENT = "change";
-	
-	var UserSearchAutoCompleteStore = (function (_EventEmitter) {
-	  _inherits(UserSearchAutoCompleteStore, _EventEmitter);
-	
-	  function UserSearchAutoCompleteStore() {
-	    _classCallCheck(this, UserSearchAutoCompleteStore);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserSearchAutoCompleteStore).call(this));
-	
-	    _this.users = [];
-	    return _this;
-	  }
-	
-	  _createClass(UserSearchAutoCompleteStore, [{
-	    key: 'addChangeListener',
-	    value: function addChangeListener(callback) {
-	      this.on(CHANGE_EVENT, callback);
-	    }
-	  }, {
-	    key: 'removeChangeListener',
-	    value: function removeChangeListener(callback) {
-	      this.removeListener(CHANGE_EVENT, callback);
-	    }
-	  }, {
-	    key: 'getUsers',
-	    value: function getUsers() {
-	      return this.users.slice();
-	    }
-	  }, {
-	    key: 'setUsers',
-	    value: function setUsers(users) {
-	      this.users = users;
-	    }
-	  }]);
-	
-	  return UserSearchAutoCompleteStore;
-	})(_eventemitter2.default);
-	
-	var userSearchAutoCompleteStore = new UserSearchAutoCompleteStore();
-	
-	_dispatcher2.default.register(function (payload) {
-	  switch (payload.actionType) {
-	    case _search_constants2.default.RECEIVE_USERS:
-	      userSearchAutoCompleteStore.setUsers(payload.users);
-	
-	      if (!payload.isAutoCompleteSelection) {
-	        userSearchAutoCompleteStore.emit(CHANGE_EVENT);
-	      }
-	      break;
-	  }
-	});
-	
-	exports.default = userSearchAutoCompleteStore;
 
 /***/ }
 /******/ ]);

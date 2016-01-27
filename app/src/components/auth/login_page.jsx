@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
 
   __checkIfLoggedIn() {
     if (currentUserStore.isLoggedIn()) {
-      this.context.router.push('/users/' + currentUserStore.getCurrentUser().username);
+      this.context.router.push('/users/' + currentUserStore.get().username);
     }
   }
 
