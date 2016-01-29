@@ -4,10 +4,9 @@ import bcrypt
 import uuid
 
 class User(db.Document):
-    username = db.StringField(max_length=255, required=True)
+    username = db.StringField(max_length=25, required=True)
     password_digest = db.StringField(max_length=255, required=True)
     session_token = db.StringField(max_length=255, required=True)
-    friends = db.ListField(db.EmbeddedDocumentField('User'))
 
     @classmethod
     def generate_session_token(cls):
@@ -44,6 +43,9 @@ class User(db.Document):
     def get_absolute_url(self):
         return url_for('user', kwargs={"username": self.username})
 
+    def __repr__(self):
+        return '<username {}>'.format(self.username)
+        
     meta = {
         'allow_inheritance': True,
         'indexes': ['username', 'session_token'],

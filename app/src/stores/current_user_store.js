@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/dispatcher.js';
 import CurrentUserConstants from "../constants/current_user_constants.js";
+import loggedInUsersStore from "./logged_in_users_store.js";
 import EventEmitter from 'eventemitter3';
 
 const CHANGE_EVENT = "change";
@@ -39,6 +40,14 @@ AppDispatcher.register(function (payload) {
     case CurrentUserConstants.RECEIVE_CURRENT_USER:
       currentUserStore.set(payload.currentUser);
       currentUserStore.emit(CHANGE_EVENT);
+      loggedInUsersStore.add(payload.currentUser);
+      loggedInUsersStore.emit(CHANGE_EVENT);
+      break;
+    case CurrentUserConstants.LOG_OUT_CURRENT_USER:
+      currentUserStore.set({});
+      currentUserStore.emit(CHANGE_EVENT);
+      loggedInUsersStore.remove(payload.currentUser);
+      loggedInUsersStore.emit(CHANGE_EVENT);
       break;
   }
 });

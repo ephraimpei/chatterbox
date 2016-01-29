@@ -1,12 +1,12 @@
 import React from 'react';
-import NavBar from '../nav-bar/nav_bar.jsx';
-import UsersList from '../sidebar/users_list.jsx';
-import currentUserStore from '../../stores/current_user_store.js';
+import currentUserStore from '../../../stores/current_user_store.js';
+import NavBar from '../../nav-bar/nav_bar.jsx';
+import UsersSearchIndex from './users_search_index.jsx';
 
-class UserHomePage extends React.Component {
+class UsersSearchResultsPage extends React.Component {
   constructor (props, context) {
     super(props, context);
-    this._ensureLoggedIn = this._ensureLoggedIn.bind(this);
+    this._ensureLoggedIn = this.__ensureLoggedIn.bind(this);
   }
 
   static contextTypes = {
@@ -25,17 +25,19 @@ class UserHomePage extends React.Component {
     currentUserStore.removeChangeListener(this._ensureLoggedIn);
   }
 
-  _ensureLoggedIn () {
+  __ensureLoggedIn () {
     if (!currentUserStore.isLoggedIn()) { this.context.router.push('/'); }
   }
 
   render () {
     return (
-        <div className="user-home-page">
-          <UsersList />
+      <div className="users-search-results-page">
+        <div className="users-search-results">
+          <UsersSearchIndex />
         </div>
-     );
+      </div>
+    );
   }
 }
 
-export default UserHomePage;
+export default UsersSearchResultsPage;

@@ -4,35 +4,39 @@ WIP - Live Site coming
 
 ## Summary
 
-Chatterbox is a social-themed chat app which uses the latest technologies such as WebSockets to enable the chat feature.
+Chatterbox is a slack-like chat app which uses the latest technologies such as WebSockets to enable the chat feature.
 
 ### Languages
+
 * Python
 * JavaScript
 * HTML
 * SASS/CSS
 
 ### Frameworks
+
 * Flask
-* React.js
+* React and Flux
 
 ### Libraries and Technologies
+
 * Node technologies
   + Webpack
   + jQuery
   + ReactRouter
 * Python technologies
-  + MongoEngine (MongoDB wrapper)
+  + MongoEngine
   + BCrypt
-  + Flask-Script (Shell for dev servers)
+  + Flask-Script
+  + Flask-WTForms
+  + Flask-SocketIO
 * DB technologies
   + MongoDB
 
 ### App features
+
 You can:
 - Create an account with an avatar
 - Log in / Log out (demo account available too)
-- Search and friend other users
-- Accept and/or reject friend requests
-- Chat with any of your friends
-- Search for chat messages
+- Chat in a global chat room
+- Search for other users and start a private chat room

@@ -6,7 +6,7 @@ from app.api.models.forms import LoginForm
 from app.api.utilities import *
 import pdb
 
-@app.route("/api/session", methods=["GET", "POST", "DELETE"])
+@app.route("/session", methods=["GET", "POST", "DELETE"])
 def handle_session_api_request():
     if request.method == "GET":
         return __fetch_session()
@@ -39,10 +39,10 @@ def __create_session():
         return jsonify(errors=form.errors.items()), 401
 
 def __destroy_session():
-    username = application_controller.current_user().username \
+    user = application_controller.current_user() \
         if application_controller.logged_in() \
         else None
-        
+
     application_controller.logout()
 
-    return jsonify(message="Goodbye {0}!".format(username))
+    return jsonify(user=user, message="Goodbye {0}!".format(user.username))

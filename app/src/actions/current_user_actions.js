@@ -8,4 +8,11 @@ export default new class {
       currentUser: currentUser
     });
   }
+
+  logoutCurrentUser (currentUser) {
+    AppDispatcher.dispatch({
+      actionType: CurrentUserConstants.LOG_OUT_CURRENT_USER,
+      currentUser: currentUser
+    });
+  }
 }();

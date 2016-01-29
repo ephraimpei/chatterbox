@@ -4,34 +4,29 @@ import SearchActions from "../actions/search_actions.js";
 
 class ApiUserUtil {
   create (formData, success, failure) {
+    const receiveCurrentUser = (data) => {
+      CurrentUserActions.receiveCurrentUser(data.user);
+      success(data.message, data.user.username);
+    };
+
+    const receiveError = (data) => failure(data.responseJSON.errors);
+
     $.ajax({
       url: "/users/api",
       method: "POST",
       processData: false,
       contentType: false,
       dataType: "json",
-      data: formData,
-      success: function (data) {
-        CurrentUserActions.receiveCurrentUser(data.user);
-        success(data.message, data.user.username);
-      },
-      error: function (data) {
-        failure(data.responseJSON.errors);
-      }
-    });
+      data: formData
+    }).done(receiveCurrentUser).fail(receiveError);
   }
 
   fetchUsersForAutocomplete (username, isAutoCompleteSelection) {
-    let mode = isAutoCompleteSelection ? "autocomplete" : "index";
+    const mode = isAutoCompleteSelection ? "autocomplete" : "index";
+    const urlUserAutoComplete = "/users/api/" + username + "/" + isAutoCompleteSelection;
+    const receiveUsers = (data) => SearchActions.receiveUsers(data.users, isAutoCompleteSelection);
 
-    $.ajax({
-      url: "/users/api/" + username + "/" + isAutoCompleteSelection,
-      method: "GET",
-      contentType: "application/json",
-      success: function (data) {
-        SearchActions.receiveUsers(data.users, isAutoCompleteSelection);
-      }
-    });
+    $.get(urlUserAutoComplete, receiveUsers);
   }
 }
 

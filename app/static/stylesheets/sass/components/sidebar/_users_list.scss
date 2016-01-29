@@ -1,0 +1,8 @@
+.users-list {
+  background: $users-list-background;
+  height: $users-list-height;
+  width: $users-list-width;
+  opacity: $users-list-opacity;
+}
+
+@import 'users_index'

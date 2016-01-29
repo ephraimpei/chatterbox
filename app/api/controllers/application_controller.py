@@ -3,7 +3,10 @@ from app.api.models import User
 import pdb
 
 def current_user():
-    if session['uid']:
+    if 'uid' not in session:
+        session['uid'] = None
+        return None
+    elif session['uid']:
         return User.find_by_session_token(session['uid'])[0]
     else:
         return None

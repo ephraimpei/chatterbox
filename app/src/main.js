@@ -13,7 +13,7 @@ import Footer from './components/main/footer.jsx';
 import LoginPage from './components/auth/login_page.jsx';
 import SignUpPage from './components/auth/sign_up_page.jsx';
 import UserHomePage from './components/user/user_home_page.jsx';
-import UsersSearchResultsPage from './components/user/users_search_results_page.jsx';
+import UsersSearchResultsPage from './components/user/search/users_search_results_page.jsx';
 
 $(document).ready(function () {
   const routes = (

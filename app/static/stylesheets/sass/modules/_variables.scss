@@ -79,16 +79,27 @@ $avatar-preview-height: 200px;
 $header-background: lightblue;
 $header-bottom-border: $standard-border;
 $nav-bar-width: 70vw;
+$logo-dimension: 75px;
 
-/* user search */
-$user-search-input-margin: 0 1vw;
-$user-search-input-width: 20vw;
-$user-autocomplete-list-left: calc(61px + 1vw);
-$user-autocomplete-list-background: white;
-$user-autocomplete-list-width: $user-search-input-width;
-$user-autocomplete-list-border-radius: $base-border-radius;
-$user-autocomplete-list-border-left: $standard-border;
-$user-autocomplete-list-border-right: $standard-border;
-$user-autocomplete-list-border-bottom: $standard-border;
-$user-autocomplete-list-item-border-top: $standard-border;
-$user-autocomplete-list-item-padding: 5px;
+    /* user search bar */
+    $user-search-input-margin: 0 1vw;
+    $user-search-input-width: 20vw;
+
+    /* user autocomplete list */
+    $user-autocomplete-list-left: calc(61px + 1vw);
+    $user-autocomplete-list-background: white;
+    $user-autocomplete-list-width: $user-search-input-width;
+    $user-autocomplete-list-border-radius: $base-border-radius;
+    $user-autocomplete-list-border-left: $standard-border;
+    $user-autocomplete-list-border-right: $standard-border;
+    $user-autocomplete-list-border-bottom: $standard-border;
+    $user-autocomplete-list-item-border-top: $standard-border;
+    $user-autocomplete-list-item-padding: 5px;
+
+/* side bar */
+
+    /* users list */
+    $users-list-background: black;
+    $users-list-height: calc(100vh - 76px - 73px);
+    $users-list-width: 15vw;
+    $users-list-opacity: .6;

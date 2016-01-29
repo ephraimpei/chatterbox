@@ -16,9 +16,10 @@ class NavBar extends React.Component {
 
   render () {
     return (
-      <div className="header">
+      <div className={ this.props.headerClass }>
         <div className="nav-bar">
-          <img src="/images/chatterbox_logo_angelic_version_by_spartasaurus.png"/>
+          <img className="logo" onClick={ this.props.clickOnLogo }
+            src="/images/chatterbox_logo_angelic_version_by_spartasaurus.png"/>
           <UserSearch successfulUserSearch={ this.props.successfulUserSearch }/>
           <Notifications/>
           <Options logoutSuccess={ this.logoutSuccess }/>

@@ -6,10 +6,13 @@ class UsersIndex extends React.Component {
   }
 
   render () {
-    return (
-      <div className="users-index">
+    console.log(this.props.users);
+    const users = this.props.users.map((user, idx) => <li key={ idx }>{ user.username }</li>);
 
-      </div>
+    return (
+      <ul className="users-index">
+        { users }
+      </ul>
     );
   }
 }

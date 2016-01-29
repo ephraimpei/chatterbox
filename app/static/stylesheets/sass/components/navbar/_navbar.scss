@@ -9,11 +9,16 @@
     align-items: center;
     justify-content: space-between;
 
-    img {
-      width: 75px;
-      height: 75px;
+    .logo {
+      width: $logo-dimension;
+      height: $logo-dimension;
+      cursor: pointer;
     }
   }
+}
+
+.header.not-visible {
+  display: none;
 }
 
 @import "user_search";
