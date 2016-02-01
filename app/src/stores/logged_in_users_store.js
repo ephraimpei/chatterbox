@@ -20,17 +20,20 @@ class LoggedInUsersStore extends EventEmitter {
     return this.loggedInUsers.slice();
   }
 
-  add (user) {
-    debugger;
-    const findUser = this.loggedInUsers.find(user => user.username === user.username);
+  add (username) {
+    const findUser = this.loggedInUsers.find((el) => el === username);
 
-    if (typeof findUser === 'undefined') { this.loggedInUsers.push(user); }
+    if (typeof findUser === 'undefined') { this.loggedInUsers.push(username); }
+    
+    this.emit(CHANGE_EVENT);
   }
 
-  remove (user) {
-    const userIdx = this.loggedInUsers.findIndex(user => user.username === user.username);
+  remove (username) {
+    const userIdx = this.loggedInUsers.findIndex(username);
 
     if (typeof userIdx === -1) { this.loggedInUsers.splice(userIdx, 1);}
+
+    this.emit(CHANGE_EVENT);
   }
 }
 

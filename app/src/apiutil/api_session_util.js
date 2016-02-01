@@ -8,7 +8,10 @@ class ApiSessionUtil {
       success(data.message, data.user.username);
     };
 
-    const receiveErrors = (data) => failure(data.responseJSON.errors);
+    const receiveErrors = (data) => {
+      debugger;
+      failure(data.responseJSON.errors);
+    };
 
     $.ajax({
       url: "/session",
