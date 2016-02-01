@@ -1,6 +1,17 @@
 #!venv/bin/python
 
-from app import app
+from app import app, socketio
+
+@socketio.on('connect', namespace='/test')
+def connect():
+    emit('my response', {'data': 'Connected'})
+
+@socketio.on('disconnect', namespace='/test')
+def disconnect():
+    print('Client disconnected')
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app)
