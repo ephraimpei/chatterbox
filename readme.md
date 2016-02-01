@@ -35,8 +35,7 @@ Chatterbox is a slack-like chat app which uses the latest technologies such as W
 
 ### App features
 
-You can:
-- Create an account with an avatar
-- Log in / Log out (demo account available too)
-- Chat in a global chat room
-- Search for other users and start a private chat room
+- Incorporates latest JavaScript ES6 features and syntax
+- Webpack used to manage JavaScript module dependencies and to load ES6 and SASS files Logging in - establishes client to server WebSocket connection
+- Global chat room and private, peer to peer, chat rooms supported
+- Stores user and chat messages in MongoDB (user credentials hashed with BCrypt)
