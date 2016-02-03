@@ -16,8 +16,11 @@ def handle_session_api_request():
         return __destroy_session()
 
 def __fetch_session():
-    if application_controller.logged_in():
-        user = application_controller.current_user()
+    cookie = request.cookies.get('chatterbox')
+
+    user = application_controller.current_user(cookie)
+
+    if user:
         user_response = build_user_response_object(user)
         return jsonify(user=user_response)
     else:
@@ -28,21 +31,27 @@ def __create_session():
 
     if form.validate():
         user = User.find_by_username(form.username.data)[0]
-
+        print user.session_token
         application_controller.login(user)
 
         user_response = build_user_response_object(user)
 
-        return jsonify(user=user_response,
+        response = jsonify(user=user_response,
             message = "Login successful! Welcome {0}!".format(user.username))
+        response.set_cookie('chatterbox', user.session_token)
+
+        return response
     else:
         return jsonify(errors=form.errors.items()), 401
 
 def __destroy_session():
-    user = application_controller.current_user() \
-        if application_controller.logged_in() \
-        else None
+    cookie = request.cookies.get('chatterbox')
 
-    application_controller.logout()
+    user = application_controller.current_user(cookie)
 
-    return jsonify(user=user, message="Goodbye {0}!".format(user.username))
+    application_controller.logout(cookie)
+
+    response = jsonify(user=user, message="Goodbye {0}!".format(user.username))
+    response.set_cookie('chatterbox', '', expires=0)
+
+    return response

@@ -31,7 +31,7 @@ class UserHomePage extends React.Component {
   }
 
   componentWillUnmount () {
-    this.socket.emit('disconnect');
+    this.socket.emit('disconnect', { query: { username: currentUserStore.get().username } });
     this.socket.off();
     this.socket.close();
     currentUserStore.removeChangeListener(this._ensureLoggedIn);

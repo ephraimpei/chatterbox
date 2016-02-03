@@ -38,6 +38,7 @@ class User(db.Document):
 
     def reset_session_token(self):
         self.session_token = User.generate_session_token()
+        self.save()
         return self.session_token
 
     def get_absolute_url(self):
@@ -45,7 +46,7 @@ class User(db.Document):
 
     def __repr__(self):
         return '<username {}>'.format(self.username)
-        
+
     meta = {
         'allow_inheritance': True,
         'indexes': ['username', 'session_token'],

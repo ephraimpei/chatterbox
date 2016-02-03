@@ -2,25 +2,28 @@ from flask import session
 from app.api.models import User
 import pdb
 
-def current_user():
-    if 'uid' not in session:
-        session['uid'] = None
+def current_user(cookie):
+    if not session:
         return None
-    elif session['uid']:
-        return User.find_by_session_token(session['uid'])[0]
     else:
+        for token in session:
+            if cookie == token and User.find_by_session_token(token):
+                return User.find_by_session_token(token)[0]
         return None
 
 def login(user):
-    session['uid'] = user.reset_session_token()
-    user.save()
+    session[user.reset_session_token()] = user.username
 
-def logout():
-    current_user().reset_session_token()
-    session['uid'] = None
+def logout(cookie):
+    current_user(cookie).reset_session_token()
+    session.pop(cookie, None)
 
-def logged_in():
-    if current_user():
-        return True
-    else:
-        return False
+def logged_in_users():
+    users = []
+
+    for token in session:
+        user = User.find_by_session_token(token)
+        if user:
+            users.append(user[0].username)
+
+    return users

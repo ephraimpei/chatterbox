@@ -51,20 +51,19 @@ class UserSearch extends React.Component {
     $(".user-search-bar").off();
   }
 
-  handleUserSearchInput (e, isAutoCompleteSelection) {
-    var username = e.currentTarget.value || e.currentTarget.textContent;
+  handleUserSearchInput (e, mode) {
+    const username = e.currentTarget.value || e.currentTarget.textContent;
 
-    isAutoCompleteSelection = typeof isAutoCompleteSelection === "undefined" ?
-      false : true;
-
+    if (typeof mode === "undefined") { mode = "autocomplete-input"; }
     this.setState({ username });
 
-    this.handleUserSearchAutoComplete(username, isAutoCompleteSelection);
+    this.handleUserSearchAutoComplete(username, mode);
   }
 
-  handleUserSearchAutoComplete (username, isAutoCompleteSelection) {
+  handleUserSearchAutoComplete (username, mode) {
     if (this.usernameInBounds(username)) {
-      ApiUserUtil.fetchUsersForAutocomplete(username, isAutoCompleteSelection);
+      debugger;
+      ApiUserUtil.fetchUsers(username, mode);
     } else {
       this.setState({ showUserSearchAutoCompleteList: false });
     }
@@ -76,7 +75,7 @@ class UserSearch extends React.Component {
   }
 
   selectUser (e) {
-    this.handleUserSearchInput(e, true);
+    this.handleUserSearchInput(e, "autocomplete-selection");
   }
 
   usernameInBounds (username) {

@@ -15,4 +15,12 @@ export default new class {
       user: user
     });
   }
+
+  receiveLoggedInUsers (users) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.RECEIVE_LOGGED_IN_USERS,
+      users: users
+    });
+  }
+
 }();

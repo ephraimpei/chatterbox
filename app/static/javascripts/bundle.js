@@ -34164,20 +34164,22 @@
 	    }
 	  }, {
 	    key: 'handleUserSearchInput',
-	    value: function handleUserSearchInput(e, isAutoCompleteSelection) {
+	    value: function handleUserSearchInput(e, mode) {
 	      var username = e.currentTarget.value || e.currentTarget.textContent;
 	
-	      isAutoCompleteSelection = typeof isAutoCompleteSelection === "undefined" ? false : true;
-	
+	      if (typeof mode === "undefined") {
+	        mode = "autocomplete-input";
+	      }
 	      this.setState({ username: username });
 	
-	      this.handleUserSearchAutoComplete(username, isAutoCompleteSelection);
+	      this.handleUserSearchAutoComplete(username, mode);
 	    }
 	  }, {
 	    key: 'handleUserSearchAutoComplete',
-	    value: function handleUserSearchAutoComplete(username, isAutoCompleteSelection) {
+	    value: function handleUserSearchAutoComplete(username, mode) {
 	      if (this.usernameInBounds(username)) {
-	        _api_user_util2.default.fetchUsersForAutocomplete(username, isAutoCompleteSelection);
+	        debugger;
+	        _api_user_util2.default.fetchUsers(username, mode);
 	      } else {
 	        this.setState({ showUserSearchAutoCompleteList: false });
 	      }
@@ -34191,7 +34193,7 @@
 	  }, {
 	    key: 'selectUser',
 	    value: function selectUser(e) {
-	      this.handleUserSearchInput(e, true);
+	      this.handleUserSearchInput(e, "autocomplete-selection");
 	    }
 	  }, {
 	    key: 'usernameInBounds',
@@ -34351,6 +34353,10 @@
 	
 	var _current_user_actions2 = _interopRequireDefault(_current_user_actions);
 	
+	var _user_actions = __webpack_require__(301);
+	
+	var _user_actions2 = _interopRequireDefault(_user_actions);
+	
 	var _search_actions = __webpack_require__(228);
 	
 	var _search_actions2 = _interopRequireDefault(_search_actions);
@@ -34386,11 +34392,15 @@
 	      }).done(receiveCurrentUser).fail(receiveError);
 	    }
 	  }, {
-	    key: "fetchUsersForAutocomplete",
-	    value: function fetchUsersForAutocomplete(username, isAutoCompleteSelection) {
-	      var mode = isAutoCompleteSelection ? "autocomplete" : "index";
-	      var urlUserAutoComplete = "/users/api/" + username + "/" + isAutoCompleteSelection;
-	      var receiveUsers = function receiveUsers(data) {
+	    key: "fetchUsers",
+	    value: function fetchUsers(username, mode) {
+	      var urlUserAutoComplete = "/users/api/" + username + "/" + mode;
+	
+	      var isAutoCompleteSelection = mode === "autocomplete-selection" ? true : false;
+	
+	      var receiveUsers = mode === "loggedinusers" ? function (data) {
+	        return _user_actions2.default.receiveLoggedInUsers(data.users);
+	      } : function (data) {
 	        return _search_actions2.default.receiveUsers(data.users, isAutoCompleteSelection);
 	      };
 	
@@ -35375,7 +35385,6 @@
 	      };
 	
 	      var receiveErrors = function receiveErrors(data) {
-	        debugger;
 	        failure(data.responseJSON.errors);
 	      };
 	
@@ -35555,13 +35564,19 @@
 	  value: true
 	});
 	
+	var _dispatcher = __webpack_require__(223);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	var _user_constants = __webpack_require__(302);
+	
+	var _user_constants2 = _interopRequireDefault(_user_constants);
+	
 	var _eventemitter = __webpack_require__(231);
 	
 	var _eventemitter2 = _interopRequireDefault(_eventemitter);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -35614,13 +35629,19 @@
 	  }, {
 	    key: 'remove',
 	    value: function remove(username) {
-	      var userIdx = this.loggedInUsers.findIndex(username);
+	      var userIdx = this.loggedInUsers.indexOf(username);
 	
-	      if ((typeof userIdx === 'undefined' ? 'undefined' : _typeof(userIdx)) === -1) {
+	      if (userIdx !== -1) {
 	        this.loggedInUsers.splice(userIdx, 1);
 	      }
 	
 	      this.emit(CHANGE_EVENT);
+	    }
+	  }, {
+	    key: 'set',
+	    value: function set(users) {
+	      debugger;
+	      this.loggedInUsers = users;
 	    }
 	  }]);
 	
@@ -35628,6 +35649,15 @@
 	})(_eventemitter2.default);
 	
 	var loggedInUsersStore = new LoggedInUsersStore();
+	
+	_dispatcher2.default.register(function (payload) {
+	  switch (payload.actionType) {
+	    case _user_constants2.default.RECEIVE_LOGGED_IN_USERS:
+	      loggedInUsersStore.set(payload.users);
+	      loggedInUsersStore.emit(CHANGE_EVENT);
+	      break;
+	  }
+	});
 	
 	exports.default = loggedInUsersStore;
 
@@ -35673,7 +35703,7 @@
 	        _react2.default.createElement(
 	          "label",
 	          { className: "about" },
-	          "Copyright © 2015 Ephraim Pei"
+	          "Copyright © 2016 Ephraim Pei"
 	        ),
 	        _react2.default.createElement(
 	          "ul",
@@ -36491,7 +36521,7 @@
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      this.socket.emit('disconnect');
+	      this.socket.emit('disconnect', { query: { username: _current_user_store2.default.get().username } });
 	      this.socket.off();
 	      this.socket.close();
 	      _current_user_store2.default.removeChangeListener(this._ensureLoggedIn);
@@ -44158,6 +44188,10 @@
 	
 	var _api_user_util2 = _interopRequireDefault(_api_user_util);
 	
+	var _current_user_store = __webpack_require__(236);
+	
+	var _current_user_store2 = _interopRequireDefault(_current_user_store);
+	
 	var _logged_in_users_store = __webpack_require__(237);
 	
 	var _logged_in_users_store2 = _interopRequireDefault(_logged_in_users_store);
@@ -44184,6 +44218,12 @@
 	  }
 	
 	  _createClass(UsersList, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var username = _current_user_store2.default.get().username;
+	      _api_user_util2.default.fetchUsers(username, "loggedinusers");
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      _logged_in_users_store2.default.addChangeListener(this._onChange);
@@ -44201,6 +44241,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.state.loggedInUsers);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'users-list' },
@@ -44758,6 +44799,79 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _user_constants = __webpack_require__(302);
+	
+	var _user_constants2 = _interopRequireDefault(_user_constants);
+	
+	var _dispatcher = __webpack_require__(223);
+	
+	var _dispatcher2 = _interopRequireDefault(_dispatcher);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	exports.default = new ((function () {
+	  function _class() {
+	    _classCallCheck(this, _class);
+	  }
+	
+	  _createClass(_class, [{
+	    key: "receiveUsers",
+	    value: function receiveUsers(users) {
+	      _dispatcher2.default.dispatch({
+	        actionType: _user_constants2.default.RECEIVE_USERS,
+	        users: users
+	      });
+	    }
+	  }, {
+	    key: "receiveSingleUser",
+	    value: function receiveSingleUser(user) {
+	      _dispatcher2.default.dispatch({
+	        actionType: _user_constants2.default.RECEIVE_SINGLE_USER,
+	        user: user
+	      });
+	    }
+	  }, {
+	    key: "receiveLoggedInUsers",
+	    value: function receiveLoggedInUsers(users) {
+	      _dispatcher2.default.dispatch({
+	        actionType: _user_constants2.default.RECEIVE_LOGGED_IN_USERS,
+	        users: users
+	      });
+	    }
+	  }]);
+	
+	  return _class;
+	})())();
+
+/***/ },
+/* 302 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  RECEIVE_USERS: "RECEIVE_USERS",
+	  RECEIVE_SINGLE_USER: "RECEIVE_SINGLE_USER",
+	  RECEIVE_LOGGED_IN_USERS: "RECEIVE_LOGGED_IN_USERS"
+	};
 
 /***/ }
 /******/ ]);

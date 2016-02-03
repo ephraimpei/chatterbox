@@ -8,7 +8,7 @@ class Footer extends React.Component {
   render () {
     return (
       <div className="footer group">
-        <label className="about">Copyright © 2015 Ephraim Pei</label>
+        <label className="about">Copyright © 2016 Ephraim Pei</label>
 
         <ul className="links group">
           <a className="my-website-icon" href="http://www.ephraimpei.com">

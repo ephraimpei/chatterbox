@@ -16,12 +16,12 @@ def global_message(message):
 @socketio.on('connect', namespace='/chat')
 def connect():
     username = request.args.get('username')
-    emit('a user connected', {
-        'broadcast': "{0} connected".format(username),
+    emit('a user connected', { 'broadcast': "{0} connected".format(username),
         'username': username}, broadcast=True)
 
 @socketio.on('disconnect', namespace='/chat')
 def disconnect():
-    username = application_controller.current_user().username
-    emit('a user disconnected', { 'broadcast': "{0} connected".format(username) }, broadcast=True)
+    username = request.args.get('username')
+    emit('a user disconnected', { 'broadcast': "{0} disconnected".format(username),
+        'username': username}, broadcast=True)
     print('Client disconnected', request.sid)

@@ -25,9 +25,6 @@ def create_user():
         new_user.reset_session_token()
 
         if new_user.save():
-            if application_controller.logged_in():
-                application_controller.logout()
-
             application_controller.login(new_user)
 
             user_response = build_user_response_object(new_user)
@@ -40,9 +37,10 @@ def create_user():
         return jsonify(errors=form.errors.items()), 400
 
 def __fetch_users(username, mode):
-    limit = 5 if mode == "autocomplete" else 20
-
-    users = User.objects.filter(username__icontains=username).only('username')[:limit]
+    if mode == "autocomplete-selection" or mode == "autocomplete-input":
+        users = User.objects.filter(username__icontains=username).only('username')[:5]
+    else:
+        users = application_controller.logged_in_users()
 
     return jsonify(users = users)
 

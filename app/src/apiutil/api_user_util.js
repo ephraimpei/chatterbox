@@ -1,5 +1,6 @@
 import $ from "jquery";
 import CurrentUserActions from "../actions/current_user_actions.js";
+import UsersActions from "../actions/user_actions.js";
 import SearchActions from "../actions/search_actions.js";
 
 class ApiUserUtil {
@@ -21,11 +22,14 @@ class ApiUserUtil {
     }).done(receiveCurrentUser).fail(receiveError);
   }
 
-  fetchUsersForAutocomplete (username, isAutoCompleteSelection) {
-    const mode = isAutoCompleteSelection ? "autocomplete" : "index";
-    const urlUserAutoComplete = "/users/api/" + username + "/" + isAutoCompleteSelection;
-    const receiveUsers = (data) => SearchActions.receiveUsers(data.users, isAutoCompleteSelection);
+  fetchUsers (username, mode) {
+    const urlUserAutoComplete = "/users/api/" + username + "/" + mode;
 
+    const isAutoCompleteSelection = mode === "autocomplete-selection" ? true : false;
+
+    const receiveUsers = mode === "loggedinusers" ? (data) => UsersActions.receiveLoggedInUsers(data.users)
+      : (data) => SearchActions.receiveUsers(data.users, isAutoCompleteSelection);
+      
     $.get(urlUserAutoComplete, receiveUsers);
   }
 }

@@ -9,7 +9,6 @@ class ApiSessionUtil {
     };
 
     const receiveErrors = (data) => {
-      debugger;
       failure(data.responseJSON.errors);
     };
 
