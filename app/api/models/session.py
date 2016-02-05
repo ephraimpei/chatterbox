@@ -14,8 +14,8 @@ class Session(db.Document):
         return User.objects(session_token = session_token)
 
     @classmethod
-    def destroy(cls, user):
-        if user.delete():
+    def destroy(cls, session):
+        if session.delete():
             return True
         else:
             return False
