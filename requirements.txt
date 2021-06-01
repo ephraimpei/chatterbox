@@ -18,7 +18,7 @@ python-engineio==0.8.7
 python-socketio==1.0
 simplejson==3.8.1
 six==1.10.0
-urllib3==1.13.1
+urllib3==1.26.5
 Werkzeug==0.11.3
 wheel==0.24.0
 WTForms==2.1
