@@ -1,4 +1,4 @@
-certifi==2015.11.20.1
+certifi==2022.12.7
 enum34==1.1.2
 eventlet==0.18.1
 Flask==0.10.1
